@@ -16,10 +16,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     nkweb.cpp \
-    nkmecevi.cpp
+    nkmecevi.cpp \
+    nkgames.cpp
 
 HEADERS  += mainwindow.h \
     nkweb.h \
-    nkmecevi.h
+    nkmecevi.h \
+    nkgames.h
 
 FORMS    += mainwindow.ui

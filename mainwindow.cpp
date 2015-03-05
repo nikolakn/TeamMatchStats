@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    strana=1;
     adresaLabel = new QLabel(tr("Adresa:"));
     adresa = new QLineEdit();
     adresa->setText("http://www.chess.com/groups/team_match_archive?id=8083");
@@ -43,10 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     listview = new QListView();
     model = new QStandardItemModel();
-    Item = new QStandardItem();
-    Item->setCheckable( true );
-    Item->setCheckState( Qt::Checked );
-    model->setItem( 0, Item );
+
     listview->setModel( model );
 
     resultView = new QTableView();
@@ -71,9 +68,28 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::makeList()
+{
+    QList<QString> spisak=mecevi.getList();
+    int i=0;
+    for(QString s : spisak){
+        Item = new QStandardItem();
+        Item->setCheckable( true );
+        Item->setText(s);
+        Item->setCheckState( Qt::Checked );
+        model->setItem( i++, Item );
+    }
+    QString str;
+    str.setNum(spisak.size());
+    setWindowTitle("Ukupno Meceva: "+str);
+}
+
 void MainWindow::onOK_click()
 {
-    web.getPage(adresa->text());
+    model->clear();
+    mecevi.clear();
+    strana=1;
+    web.getPage(adresa->text()+"&page=1");
 }
 
 void MainWindow::stranicaSpremna()
@@ -84,8 +100,18 @@ void MainWindow::stranicaSpremna()
     if (rx.indexIn(pp) != -1)
         pp = rx.cap(1);
 
-    NkMecevi mecevi;
-    mecevi.parsPage(pp);
 
+    if(mecevi.parsPage(pp,strana)){
+        strana++;
+        QString str;
+        str.setNum(strana);
+        web.getPage(adresa->text()+"&page="+str);
+        setWindowTitle("Ucitavam Stranice: "+str);
+    }
+    else{
+        makeList();
+        return;
+    }
+    return;
 
 }

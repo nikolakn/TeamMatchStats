@@ -34,6 +34,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void makeList();
+
 public slots:
     void onOK_click();
     void stranicaSpremna();
@@ -50,7 +52,8 @@ private:
     QStandardItem *Item;
     QTableView *resultView;
     NkWeb web;
-
+    NkMecevi mecevi;
+    int strana;
 };
 
 #endif // MAINWINDOW_H

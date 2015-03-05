@@ -6,17 +6,26 @@
 #include <QWebFrame>
 #include <QWebElement>
 #include <QWebView>
+#include <QVector>
+#include <QList>
+
+struct mecevi{
+    QString timovi;
+    QString link;
+};
 
 class NkMecevi : public QObject
 {
     Q_OBJECT
 public:
     explicit NkMecevi(QObject *parent = 0);
-    void parsPage(QString html);
+    bool parsPage(QString html, int st);
+    QList<QString> getList();
+    void clear();
 signals:
 
-public slots:
-
+private:
+    QVector<mecevi> spisak;
 };
 
 #endif // NKMECEVI_H
