@@ -1,0 +1,46 @@
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
+#include <QMainWindow>
+#include <QSplitter>
+#include <QListView>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QTableView>
+#include <QLineEdit>
+#include <QStandardItemModel>
+#include <QPushButton>
+#include "nkweb.h"
+
+namespace Ui {
+class MainWindow;
+}
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
+public slots:
+    void onOK_click();
+    void stranicaSpremna();
+private:
+    Ui::MainWindow *ui;
+
+    QLabel *adresaLabel;
+    QLineEdit *adresa;
+    QLabel *timLabel;
+    QLineEdit *tim;
+    QPushButton *dugme1;
+    QListView *listview;
+    QStandardItemModel *model;
+    QStandardItem *Item;
+    QTableView *resultView;
+    NkWeb web;
+
+};
+
+#endif // MAINWINDOW_H
