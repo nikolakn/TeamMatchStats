@@ -1,11 +1,19 @@
+/*
+* (C) Copyright 2015
+* Author: Nikola Knezevic <nkcodeplus@gmail.com>
+*
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public License
+* as published by the Free Software Foundation; version 2
+* of the License.
+*/
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QDebug>
-#include <QWebPage>
-#include <QWebFrame>
-#include <QWebElement>
-#include <QWebView>
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -70,31 +78,14 @@ void MainWindow::onOK_click()
 
 void MainWindow::stranicaSpremna()
 {
-     QString pp=web.get();
+    QString pp=web.get();
 
     QRegExp rx("<body>(.+)</body>");
     if (rx.indexIn(pp) != -1)
         pp = rx.cap(1);
 
-    //qDebug()<<pp;
-
-
-
-    QWebPage page;
-    QWebFrame * frame = page.mainFrame();
-    frame->setHtml(pp);
-    QWebElement parse = frame->documentElement();
-
-    //QWebElement result = parse.firstChild();
-    QWebElement result = parse.findFirst("table.alternate tbody");
-    QWebElementCollection result2 = result.findAll("tr");
-    for(QWebElement x : result2){
-        //QWebElementCollection result2 = result.findAll("td");
-        QWebElement link = x.findFirst("a");
-         qDebug() << link.toPlainText() << link.attribute("href");
-    }
-    int numTables = result2.count();
-    qDebug() << numTables;
+    NkMecevi mecevi;
+    mecevi.parsPage(pp);
 
 
 }
