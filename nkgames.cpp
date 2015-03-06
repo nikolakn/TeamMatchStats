@@ -1,7 +1,8 @@
 #include "nkgames.h"
 #include <QDebug>
 #include <QStringList>
-
+#include "TableItem.h"
+#include "TableItemDouble.h"
 NkGames::NkGames(QObject *parent) :
     QObject(parent)
 {
@@ -39,7 +40,7 @@ bool NkGames::parsPage(QString html, QString Tim){
         QStringList partija= ll.split(QRegExp("\\s+"));
         //qDebug()<<ll;
         bool ok;
-        partija.at(1).toUInt(&ok);
+        partija.at(0).toInt(&ok);
         if(ok==0){
             return false;
         }
@@ -59,7 +60,7 @@ bool NkGames::parsPage(QString html, QString Tim){
         }
         bool nasao = false;
 
-        for(players x : igraci){
+        for(players &x : igraci){
             if (x.Ime==ime){
                 //////////
                 x.bodova+=bodovi;
@@ -69,8 +70,7 @@ bool NkGames::parsPage(QString html, QString Tim){
                     x.poraza+=2;
                 }
                 if(bodovi==0.5){
-                    x.poraza+=1;
-                    x.remija+=1;
+                    x.remija+=2;
                 }
                 if(bodovi==1){
                     x.poraza+=1;
@@ -105,8 +105,8 @@ bool NkGames::parsPage(QString html, QString Tim){
                 i.poraza=2;
             }
             if(bodovi==0.5){
-                i.poraza=1;
-                i.remija=1;
+                //i.poraza=1;
+                i.remija=2;
             }
             if(bodovi==1){
                 i.poraza=1;
@@ -138,26 +138,26 @@ void NkGames::print(QTableWidget *resultView)
     resultView->setRowCount(igraci.size());
     int row=0;
     for(players x : igraci){
-             qDebug()<<x.Ime;
+
              QTableWidgetItem *newItem1 = new QTableWidgetItem(x.Ime);
              resultView->setItem(row, 0, newItem1);
 
-             QTableWidgetItem *newItem2 = new QTableWidgetItem(tr("%1").arg(x.brojOdigranih));
+             TableItem *newItem2 = new TableItem(tr("%1").arg(x.brojOdigranih));
              resultView->setItem(row, 1, newItem2);
 
-             QTableWidgetItem *newItem3 = new QTableWidgetItem(tr("%1").arg(x.bodova));
+             TableItem *newItem3 = new TableItem(tr("%1").arg(x.bodova));
              resultView->setItem(row, 2, newItem3);
 
-             QTableWidgetItem *newItem4 = new QTableWidgetItem(tr("%1").arg(x.pobeda));
+             TableItem *newItem4 = new TableItem(tr("%1").arg(x.pobeda));
              resultView->setItem(row, 3, newItem4);
 
-             QTableWidgetItem *newItem5 = new QTableWidgetItem(tr("%1").arg(x.poraza));
+             TableItem *newItem5 = new TableItem(tr("%1").arg(x.poraza));
              resultView->setItem(row, 4, newItem5);
 
-             QTableWidgetItem *newItem6 = new QTableWidgetItem(tr("%1").arg(x.remija));
+             TableItem *newItem6 = new TableItem(tr("%1").arg(x.remija));
              resultView->setItem(row, 5, newItem6);
 
-             QTableWidgetItem *newItem7 = new QTableWidgetItem(tr("%1").arg(x.procenatPobeda));
+             TableItemDouble *newItem7 = new TableItemDouble(tr("%1").arg(x.procenatPobeda));
              resultView->setItem(row, 6, newItem7);
 
              row++;

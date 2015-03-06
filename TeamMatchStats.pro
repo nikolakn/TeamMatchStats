@@ -22,6 +22,8 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     nkweb.h \
     nkmecevi.h \
-    nkgames.h
+    nkgames.h \
+    TableItem.h \
+    TableItemDouble.h
 
 FORMS    += mainwindow.ui

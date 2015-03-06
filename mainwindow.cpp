@@ -98,21 +98,21 @@ void MainWindow::makeTable()
     QList<QString> linkovi=mecevi.getLinks();
     int i=0;
     for(QString s : linkovi){
-
+        i++;
         isGame=true;
-        if(i>linkovi.size()-1)
+        if(i==linkovi.size())
             kraj=1;
         web.getPage("http://www.chess.com"+s);
-        i++;
+
     }
 
 }
 
 void MainWindow::onOK_click()
 {
-     games.print(resultView);
+    // games.print(resultView);
     model->clear();
-    games.clear();
+    //games.clear();
     mecevi.clear();
     kraj=0;
     isGame=false;
