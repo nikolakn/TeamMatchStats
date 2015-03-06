@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     tim->setText("Srbija Tim");
     dugme1 = new QPushButton(tr("Ok"));
-    dugme2 = new QPushButton(tr("Copy CVS"));
+    dugme2 = new QPushButton(tr("Copy CSV"));
 
     QHBoxLayout *adresaLayout = new QHBoxLayout;
     adresaLayout->addWidget(adresaLabel);
