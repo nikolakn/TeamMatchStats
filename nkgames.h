@@ -5,7 +5,6 @@
 #include <QWebPage>
 #include <QWebFrame>
 #include <QWebElement>
-#include <QWebView>
 #include <QVector>
 #include <QList>
 #include <QTableWidget>
