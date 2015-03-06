@@ -2,6 +2,22 @@
 #define NKGAMES_H
 
 #include <QObject>
+#include <QWebPage>
+#include <QWebFrame>
+#include <QWebElement>
+#include <QWebView>
+#include <QVector>
+#include <QList>
+
+struct players{
+    QString Ime;
+    int brojOdigranih;
+    int bodova;
+    int pobeda;
+    int poraza;
+    int remija;
+    double procenatPobeda;
+};
 
 class NkGames : public QObject
 {
@@ -9,8 +25,10 @@ class NkGames : public QObject
 public:
     explicit NkGames(QObject *parent = 0);
     bool parsPage(QString html, QString Tim);
+    void print();
     void clear();
-
+private:
+    QVector<players> igraci;
 
 };
 

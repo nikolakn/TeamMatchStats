@@ -3,6 +3,8 @@
 NkMecevi::NkMecevi(QObject *parent) :
     QObject(parent)
 {
+QStringList list;
+
 }
 
 bool NkMecevi::parsPage(QString html, int st)
@@ -48,8 +50,10 @@ QList<QString> NkMecevi::getLinks()
 {
     QList<QString> l;
     for(auto x : spisak){
-        if(x.selekted)
+        if(x.selekted){
             l.push_back(x.link);
+            return l;
+         }
     }
     return l;
 }

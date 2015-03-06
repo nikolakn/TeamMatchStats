@@ -113,11 +113,6 @@ void MainWindow::stranicaSpremna()
         //if page with team_match lists are loaded
         QString pp=web.get();
 
-        QRegExp rx("<body>(.+)</body>");
-        if (rx.indexIn(pp) != -1)
-            pp = rx.cap(1);
-
-
         if(mecevi.parsPage(pp,strana)){
             strana++;
             QString str;
@@ -136,11 +131,6 @@ void MainWindow::stranicaSpremna()
     else{
     //lodad page with games
         QString pp=web.get();
-
-        QRegExp rx("<body>(.+)</body>");
-        if (rx.indexIn(pp) != -1)
-            pp = rx.cap(1);
-
 
         if(games.parsPage(pp,tim->text())){
             return;
