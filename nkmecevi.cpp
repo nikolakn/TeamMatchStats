@@ -52,7 +52,7 @@ QList<QString> NkMecevi::getLinks()
     for(auto x : spisak){
         if(x.selekted){
             l.push_back(x.link);
-            return l;
+            //return l;
          }
     }
     return l;

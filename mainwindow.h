@@ -17,7 +17,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QTableView>
+#include <QTableWidget>
 #include <QLineEdit>
 #include <QStandardItemModel>
 #include <QPushButton>
@@ -53,12 +53,14 @@ private:
     QListView *listview;
     QStandardItemModel *model;
     QStandardItem *Item;
-    QTableView *resultView;
+    QTableWidget *resultView;
+
     NkWeb web;
     NkMecevi mecevi;
     NkGames games;
     int strana;
     bool isGame;
+    int kraj;
 };
 
 #endif // MAINWINDOW_H

@@ -8,7 +8,7 @@
 #include <QWebView>
 #include <QVector>
 #include <QList>
-
+#include <QTableWidget>
 struct players{
     QString Ime;
     int brojOdigranih;
@@ -25,7 +25,7 @@ class NkGames : public QObject
 public:
     explicit NkGames(QObject *parent = 0);
     bool parsPage(QString html, QString Tim);
-    void print();
+    void print(QTableWidget *resultView);
     void clear();
 private:
     QVector<players> igraci;

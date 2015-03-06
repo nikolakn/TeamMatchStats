@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     strana=1;
     isGame=false;
+    kraj=0;
     adresaLabel = new QLabel(tr("Adresa:"));
     adresa = new QLineEdit();
     adresa->setText("http://www.chess.com/groups/team_match_archive?id=8083");
@@ -47,10 +48,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     listview->setModel( model );
 
-    resultView = new QTableView();
+    resultView = new QTableWidget();
+    resultView->setSortingEnabled(true);
+    resultView->setColumnCount(7);
+
 
     splitter->addWidget(listview);
     splitter->addWidget(resultView);
+
+
+
     QList<int> a={200,600};
     splitter->setSizes(a);
 
@@ -91,17 +98,23 @@ void MainWindow::makeTable()
     QList<QString> linkovi=mecevi.getLinks();
     int i=0;
     for(QString s : linkovi){
+
         isGame=true;
+        if(i>linkovi.size()-1)
+            kraj=1;
         web.getPage("http://www.chess.com"+s);
+        i++;
     }
-    //qDebug() << "ucitana";
+
 }
 
 void MainWindow::onOK_click()
 {
+     games.print(resultView);
     model->clear();
     games.clear();
     mecevi.clear();
+    kraj=0;
     isGame=false;
     strana=1;
     web.getPage(adresa->text()+"&page=1");
@@ -133,6 +146,8 @@ void MainWindow::stranicaSpremna()
         QString pp=web.get();
 
         if(games.parsPage(pp,tim->text())){
+            if(kraj==1)
+               games.print(resultView);
             return;
         }
 
