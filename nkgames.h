@@ -18,6 +18,7 @@ struct players{
     int remija;
     int bilans;
     double procenatPobeda;
+    long doprinos;
 };
 
 class NkGames : public QObject
@@ -28,6 +29,7 @@ public:
     bool parsPage(QString html, QString Tim);
     void print(QTableWidget *resultView);
     void clear();
+    QString copyToClip();
 private:
     QVector<players> igraci;
 

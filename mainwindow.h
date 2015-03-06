@@ -24,7 +24,7 @@
 #include "nkweb.h"
 #include "nkmecevi.h"
 #include "nkgames.h"
-
+#include <QClipboard>
 namespace Ui {
 class MainWindow;
 }
@@ -41,6 +41,7 @@ public:
 
 public slots:
     void onOK_click();
+    void onCVS_click();
     void stranicaSpremna();
 private:
     Ui::MainWindow *ui;
@@ -50,6 +51,7 @@ private:
     QLabel *timLabel;
     QLineEdit *tim;
     QPushButton *dugme1;
+    QPushButton *dugme2;
     QListView *listview;
     QStandardItemModel *model;
     QStandardItem *Item;

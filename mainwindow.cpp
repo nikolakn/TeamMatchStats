@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     tim->setText("Srbija Tim");
     dugme1 = new QPushButton(tr("Ok"));
+    dugme2 = new QPushButton(tr("Copy CVS"));
 
     QHBoxLayout *adresaLayout = new QHBoxLayout;
     adresaLayout->addWidget(adresaLabel);
@@ -40,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     adresaLayout->addWidget(timLabel);
     adresaLayout->addWidget(tim);
     adresaLayout->addWidget(dugme1);
+    adresaLayout->addWidget(dugme2);
 
     QSplitter *splitter = new QSplitter(parent);
 
@@ -68,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->centralWidget()->setLayout(mainLayout);
     setWindowTitle(tr("Team Match Stats"));
     connect(dugme1, SIGNAL(clicked()), this, SLOT(onOK_click()));
+    connect(dugme2, SIGNAL(clicked()), this, SLOT(onCVS_click()));
     connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
 }
 
@@ -119,6 +122,12 @@ void MainWindow::onOK_click()
     isGame=false;
     strana=1;
     web.getPage(adresa->text()+"&page=1");
+}
+
+void MainWindow::onCVS_click()
+{
+    QClipboard *p_Clipboard = QApplication::clipboard();
+    p_Clipboard->setText(games.copyToClip());
 }
 
 void MainWindow::stranicaSpremna()
