@@ -205,7 +205,7 @@ QString NkGames::copyToClip()
 {
     QString oo;
     QTextStream s(&oo);
-    s << "Ime;"<<"Odigrano;"<<"bodovi;"<<"pobede"<<"porazi"<<"remi"<<"bilans;"<<"%;"<<"bilans*odigrano;"<<endl;
+    s << "Ime;"<<"Odigrano;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<"bilans*odigrano;"<<endl;
 
     for(players x : igraci){
 
