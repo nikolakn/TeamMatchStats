@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     strana=1;
+    isGame=false;
     adresaLabel = new QLabel(tr("Adresa:"));
     adresa = new QLineEdit();
     adresa->setText("http://www.chess.com/groups/team_match_archive?id=8083");
@@ -82,36 +83,69 @@ void MainWindow::makeList()
     QString str;
     str.setNum(spisak.size());
     setWindowTitle("Ukupno Meceva: "+str);
+    makeTable();
+}
+
+void MainWindow::makeTable()
+{
+    QList<QString> linkovi=mecevi.getLinks();
+    int i=0;
+    for(QString s : linkovi){
+        isGame=true;
+        web.getPage("http://www.chess.com"+s);
+    }
+    //qDebug() << "ucitana";
 }
 
 void MainWindow::onOK_click()
 {
     model->clear();
+    games.clear();
     mecevi.clear();
+    isGame=false;
     strana=1;
     web.getPage(adresa->text()+"&page=1");
 }
 
 void MainWindow::stranicaSpremna()
 {
-    QString pp=web.get();
+    if(!isGame){
+        //if page with team_match lists are loaded
+        QString pp=web.get();
 
-    QRegExp rx("<body>(.+)</body>");
-    if (rx.indexIn(pp) != -1)
-        pp = rx.cap(1);
+        QRegExp rx("<body>(.+)</body>");
+        if (rx.indexIn(pp) != -1)
+            pp = rx.cap(1);
 
 
-    if(mecevi.parsPage(pp,strana)){
-        strana++;
-        QString str;
-        str.setNum(strana);
-        web.getPage(adresa->text()+"&page="+str);
-        setWindowTitle("Ucitavam Stranice: "+str);
+        if(mecevi.parsPage(pp,strana)){
+            strana++;
+            QString str;
+            str.setNum(strana);
+            isGame=false;
+            setWindowTitle("Ucitavam Stranice: "+str);
+            web.getPage(adresa->text()+"&page="+str);
+            return;
+
+        }
+        else{
+            makeList();
+            return;
+        }
     }
     else{
-        makeList();
-        return;
+    //lodad page with games
+        QString pp=web.get();
+
+        QRegExp rx("<body>(.+)</body>");
+        if (rx.indexIn(pp) != -1)
+            pp = rx.cap(1);
+
+
+        if(games.parsPage(pp,tim->text())){
+            return;
+        }
+
     }
-    return;
 
 }

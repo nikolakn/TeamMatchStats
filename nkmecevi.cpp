@@ -27,7 +27,7 @@ bool NkMecevi::parsPage(QString html, int st)
     for(QWebElement x : result2){
         //QWebElementCollection result2 = result.findAll("td");
         QWebElement link = x.findFirst("a");
-        mecevi m={link.toPlainText(),link.attribute("href")};
+        mecevi m={link.toPlainText(),link.attribute("href"),true};
         spisak.push_back(m);
         //qDebug() << link.toPlainText() << link.attribute("href");
     }
@@ -38,7 +38,18 @@ QList<QString> NkMecevi::getList()
 {
     QList<QString> l;
     for(auto x : spisak){
+
         l.push_back(x.timovi);
+    }
+    return l;
+}
+
+QList<QString> NkMecevi::getLinks()
+{
+    QList<QString> l;
+    for(auto x : spisak){
+        if(x.selekted)
+            l.push_back(x.link);
     }
     return l;
 }

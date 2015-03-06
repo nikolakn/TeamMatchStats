@@ -12,6 +12,7 @@
 struct mecevi{
     QString timovi;
     QString link;
+    bool selekted;
 };
 
 class NkMecevi : public QObject
@@ -21,6 +22,7 @@ public:
     explicit NkMecevi(QObject *parent = 0);
     bool parsPage(QString html, int st);
     QList<QString> getList();
+    QList<QString> getLinks();
     void clear();
 signals:
 

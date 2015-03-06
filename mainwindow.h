@@ -23,6 +23,8 @@
 #include <QPushButton>
 #include "nkweb.h"
 #include "nkmecevi.h"
+#include "nkgames.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -35,6 +37,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void makeList();
+    void makeTable();
 
 public slots:
     void onOK_click();
@@ -53,7 +56,9 @@ private:
     QTableView *resultView;
     NkWeb web;
     NkMecevi mecevi;
+    NkGames games;
     int strana;
+    bool isGame;
 };
 
 #endif // MAINWINDOW_H
