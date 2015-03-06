@@ -12,10 +12,11 @@
 struct players{
     QString Ime;
     int brojOdigranih;
-    int bodova;
+    double bodova;
     int pobeda;
     int poraza;
     int remija;
+    int bilans;
     double procenatPobeda;
 };
 

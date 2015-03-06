@@ -17,12 +17,9 @@ public:
 
     bool operator< (const QTableWidgetItem &other) const
     {
-        if (other.column() == 1) {
 
-            // Compare cell data as integers for the second column.
             return text().toDouble() < other.text().toDouble();
-        }
-        return other.text() < text();
+
     }
 };
 #endif // TABLEITEMDOUBLE_H

@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     resultView = new QTableWidget();
     resultView->setSortingEnabled(true);
-    resultView->setColumnCount(7);
+    //resultView->setColumnCount(7);
 
 
     splitter->addWidget(listview);
@@ -102,6 +102,7 @@ void MainWindow::makeTable()
         isGame=true;
         if(i==linkovi.size())
             kraj=1;
+
         web.getPage("http://www.chess.com"+s);
 
     }
@@ -112,7 +113,7 @@ void MainWindow::onOK_click()
 {
     // games.print(resultView);
     model->clear();
-    //games.clear();
+    games.clear();
     mecevi.clear();
     kraj=0;
     isGame=false;

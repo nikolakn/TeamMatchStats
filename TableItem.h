@@ -17,11 +17,9 @@ public:
 
     bool operator< (const QTableWidgetItem &other) const
     {
-        if (other.column() == 1) {
-            // Compare cell data as integers for the second column.
-            return text().toInt() < other.text().toInt();
-        }
-        return other.text() < text();
+
+       return text().toInt() < other.text().toInt();
+
     }
 };
 #endif // TABLEITEM_H
