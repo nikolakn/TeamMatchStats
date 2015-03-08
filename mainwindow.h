@@ -44,6 +44,11 @@ public slots:
     void onCVS_click();
     void stranicaSpremna();
     void onUcitajTabelu();
+    void onM1();
+    void onM2();
+    void onM3();
+    void onM4();
+    void onM5();
 private:
     Ui::MainWindow *ui;
 

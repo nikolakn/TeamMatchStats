@@ -94,6 +94,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
 
     connect(m6, SIGNAL(clicked()), this, SLOT(onUcitajTabelu()));
+    connect(m1, SIGNAL(clicked()), this, SLOT(onM1()));
+    connect(m2, SIGNAL(clicked()), this, SLOT(onM1()));
+    connect(m3, SIGNAL(clicked()), this, SLOT(onM1()));
+    connect(m4, SIGNAL(clicked()), this, SLOT(onM1()));
+    connect(m5, SIGNAL(clicked()), this, SLOT(onM1()));
 }
 
 MainWindow::~MainWindow()
@@ -190,4 +195,29 @@ void MainWindow::stranicaSpremna()
 void MainWindow::onUcitajTabelu()
 {
     makeTable();
+}
+
+void MainWindow::onM1()
+{
+
+}
+
+void MainWindow::onM2()
+{
+
+}
+
+void MainWindow::onM3()
+{
+
+}
+
+void MainWindow::onM4()
+{
+
+}
+
+void MainWindow::onM5()
+{
+
 }
