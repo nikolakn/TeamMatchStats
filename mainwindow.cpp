@@ -13,7 +13,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QScrollArea>
-
+#include <QInputDialog>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -95,10 +95,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(m6, SIGNAL(clicked()), this, SLOT(onUcitajTabelu()));
     connect(m1, SIGNAL(clicked()), this, SLOT(onM1()));
-    connect(m2, SIGNAL(clicked()), this, SLOT(onM1()));
-    connect(m3, SIGNAL(clicked()), this, SLOT(onM1()));
-    connect(m4, SIGNAL(clicked()), this, SLOT(onM1()));
-    connect(m5, SIGNAL(clicked()), this, SLOT(onM1()));
+    connect(m2, SIGNAL(clicked()), this, SLOT(onM2()));
+    connect(m3, SIGNAL(clicked()), this, SLOT(onM3()));
+    connect(m4, SIGNAL(clicked()), this, SLOT(onM4()));
+    connect(m5, SIGNAL(clicked()), this, SLOT(onM5()));
 }
 
 MainWindow::~MainWindow()
@@ -125,16 +125,35 @@ void MainWindow::makeList()
 
 void MainWindow::makeTable()
 {
+    games.clear();
+    resultView->clear();
+    mecevi.unCheckAll();
+    // qDebug() << mecevi.getSelected();
+    for(int i=0;i< model->rowCount();i++){
+        if(model->item(i)->checkState()==Qt::Checked ){
+            mecevi.Check(i);
+
+        }
+
+    }
+
     QList<QString> linkovi=mecevi.getLinks();
+    int rez=mecevi.getSelected();
+    //qDebug()<<linkovi.size()<<" aaaa "<<rez;
     int i=0;
+    int dodato=0;
     for(QString s : linkovi){
+        if(model->item(i)->checkState()==Qt::Checked ){
+
+            dodato++;
+            isGame=true;
+            //qDebug()<< dodato<<" !!! "<<rez;
+            if(dodato==rez)
+                kraj=1;
+
+            web.getPage("http://www.chess.com"+s);
+        }
         i++;
-        isGame=true;
-        if(i==linkovi.size())
-            kraj=1;
-
-        web.getPage("http://www.chess.com"+s);
-
     }
 
 }
@@ -142,6 +161,7 @@ void MainWindow::makeTable()
 void MainWindow::onOK_click()
 {
     // games.print(resultView);
+    resultView->clear();
     model->clear();
     games.clear();
     mecevi.clear();
@@ -179,12 +199,12 @@ void MainWindow::stranicaSpremna()
         }
     }
     else{
-    //lodad page with games
+        //lodad page with games
         QString pp=web.get();
 
         if(games.parsPage(pp,tim->text())){
             if(kraj==1)
-               games.print(resultView);
+                games.print(resultView);
             return;
         }
 
@@ -199,25 +219,52 @@ void MainWindow::onUcitajTabelu()
 
 void MainWindow::onM1()
 {
-
+    for(int i=0;i< model->rowCount();i++){
+        model->item(i)-> setCheckState( Qt::Checked );
+    }
 }
 
 void MainWindow::onM2()
 {
-
+    for(int i=0;i< model->rowCount();i++){
+        model->item(i)-> setCheckState( Qt::Unchecked );
+    }
 }
 
 void MainWindow::onM3()
 {
+    int r = QInputDialog::getInt(this,"Input","Prvih:",model->rowCount(),0,
+                                 model->rowCount());
 
+    onM2();
+    if(model->rowCount()<r)
+        r=model->rowCount();
+    for(int i=0;i< r;i++){
+        model->item(i)-> setCheckState( Qt::Checked );
+    }
 }
 
 void MainWindow::onM4()
 {
+    QString text = QInputDialog::getText(this, tr("Input"),
+                                         tr("Naziv sadrzi:"), QLineEdit::Normal);
+    onM2();
+    for(int i=0;i< model->rowCount();i++){
+        QString naz = model->item(i)->text();
+        if(naz.contains(text))
+            model->item(i)-> setCheckState( Qt::Checked );
 
+    }
 }
 
 void MainWindow::onM5()
 {
-
+    QString link = QInputDialog::getText(this, tr("Input"),
+                                         tr("Unesite Id meca (broj u linku od meca):"), QLineEdit::Normal);
+    Item = new QStandardItem();
+    Item->setCheckable( true );
+    Item->setText(link);
+    Item->setCheckState( Qt::Checked );
+    model->appendRow(Item );
+    mecevi.addLink(link);
 }

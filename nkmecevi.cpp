@@ -60,10 +60,10 @@ QList<QString> NkMecevi::getLinks()
 {
     QList<QString> l;
     for(auto x : spisak){
-        if(x.selekted){
+        //if(x.selekted){
             l.push_back(x.link);
             //return l;
-         }
+        // }
     }
     return l;
 }
@@ -71,4 +71,33 @@ QList<QString> NkMecevi::getLinks()
 void NkMecevi::clear()
 {
     spisak.clear();
+}
+
+void NkMecevi::addLink(QString naziv)
+{
+    mecevi m={naziv,"/groups/team_match?id="+naziv,true};
+    spisak.push_back(m);
+}
+
+void NkMecevi::unCheckAll()
+{
+    for(auto &x : spisak){
+        x.selekted=false;
+    }
+}
+
+void NkMecevi::Check(int i)
+{
+    spisak[i].selekted=true;
+}
+
+int NkMecevi::getSelected()
+{
+    int rez=0;
+    for(auto x : spisak){
+        if(x.selekted){
+            rez++;
+        }
+    }
+    return rez;
 }

@@ -170,7 +170,7 @@ void NkGames::print(QTableWidget *resultView)
     resultView->setHorizontalHeaderItem(5,h6);
     resultView->setHorizontalHeaderItem(6,h7);
     resultView->setHorizontalHeaderItem(7,h8);
-    resultView->setHorizontalHeaderItem(8,h9);
+    //resultView->setHorizontalHeaderItem(8,h9);
     int row=0;
     for(players x : igraci){
 
@@ -195,8 +195,8 @@ void NkGames::print(QTableWidget *resultView)
              TableItem *newItem8 = new TableItem(tr("%1").arg(x.bilans));
              resultView->setItem(row, 6, newItem8);
 
-             TableItem *newItem9 = new TableItem(tr("%1").arg(x.doprinos));
-             resultView->setItem(row, 8, newItem9);
+             //TableItem *newItem9 = new TableItem(tr("%1").arg(x.doprinos));
+             //resultView->setItem(row, 8, newItem9);
 
              TableItemDouble *newItem7 = new TableItemDouble(tr("%1").arg(x.procenatPobeda));
              resultView->setItem(row, 7, newItem7);
@@ -215,7 +215,7 @@ QString NkGames::copyToClip()
 {
     QString oo;
     QTextStream s(&oo);
-    s << "Ime;"<<"Odigrano;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"bilans*odigrano;"<<"%;"<<endl;
+    s << "Ime;"<<"Odigrano;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<endl;
 
     for(players x : igraci){
 
@@ -226,7 +226,7 @@ QString NkGames::copyToClip()
         s << x.poraza<< ";";
         s << x.remija<< ";";
         s << x.bilans<< ";";
-        s << x.doprinos<< ";";
+        //s << x.doprinos<< ";";
         s << x.procenatPobeda<< ";"<<endl;
 
     }

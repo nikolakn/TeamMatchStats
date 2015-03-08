@@ -33,6 +33,10 @@ public:
     QList<QString> getList();
     QList<QString> getLinks();
     void clear();
+    void addLink(QString naziv);
+    void unCheckAll();
+    void Check(int i);
+    int getSelected();
 signals:
 
 private:
