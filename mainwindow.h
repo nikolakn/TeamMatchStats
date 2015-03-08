@@ -43,6 +43,7 @@ public slots:
     void onOK_click();
     void onCVS_click();
     void stranicaSpremna();
+    void onUcitajTabelu();
 private:
     Ui::MainWindow *ui;
 
@@ -56,7 +57,13 @@ private:
     QStandardItemModel *model;
     QStandardItem *Item;
     QTableWidget *resultView;
-
+    QPushButton *m1;
+    QPushButton *m2;
+    QPushButton *m3;
+    QPushButton *m4;
+    QPushButton *m5;
+    QPushButton *m6;
+    QPushButton *m7;
     NkWeb web;
     NkMecevi mecevi;
     NkGames games;

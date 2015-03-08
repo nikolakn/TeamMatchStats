@@ -12,7 +12,7 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QDebug>
-
+#include <QScrollArea>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tim->setFixedWidth(100);
 
     tim->setText("Srbija Tim");
-    dugme1 = new QPushButton(tr("Ok"));
+    dugme1 = new QPushButton(tr("Ucitaj Mečeve"));
     dugme2 = new QPushButton(tr("Copy CSV"));
 
     QHBoxLayout *adresaLayout = new QHBoxLayout;
@@ -44,8 +44,28 @@ MainWindow::MainWindow(QWidget *parent) :
     adresaLayout->addWidget(dugme2);
 
     QSplitter *splitter = new QSplitter(parent);
+    QWidget *leftSide = new QWidget;
+
 
     listview = new QListView();
+    QVBoxLayout *levo = new QVBoxLayout;
+    m1 = new QPushButton(tr("Čekiraj Sve"));
+    m2 = new QPushButton(tr("Nista"));
+    m3 = new QPushButton(tr("Prvih x meceva"));
+    m4 = new QPushButton(tr("Naziv sadrzi..."));
+    m5 = new QPushButton(tr("Unesi rucno link od meča..."));
+    m6 = new QPushButton(tr("Napravi tabelu>>>"));
+    levo->addWidget(m1);
+    levo->addWidget(m2);
+    levo->addWidget(m3);
+    levo->addWidget(m4);
+    levo->addWidget(m5);
+    levo->addWidget(m6);
+    levo->addWidget(listview);
+    leftSide->setLayout( levo );
+
+
+
     model = new QStandardItemModel();
 
     listview->setModel( model );
@@ -55,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //resultView->setColumnCount(7);
 
 
-    splitter->addWidget(listview);
+    splitter->addWidget(leftSide);
     splitter->addWidget(resultView);
 
 
@@ -72,6 +92,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(dugme1, SIGNAL(clicked()), this, SLOT(onOK_click()));
     connect(dugme2, SIGNAL(clicked()), this, SLOT(onCVS_click()));
     connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
+
+    connect(m6, SIGNAL(clicked()), this, SLOT(onUcitajTabelu()));
 }
 
 MainWindow::~MainWindow()
@@ -93,7 +115,7 @@ void MainWindow::makeList()
     QString str;
     str.setNum(spisak.size());
     setWindowTitle("Ukupno Meceva: "+str);
-    makeTable();
+
 }
 
 void MainWindow::makeTable()
@@ -163,4 +185,9 @@ void MainWindow::stranicaSpremna()
 
     }
 
+}
+
+void MainWindow::onUcitajTabelu()
+{
+    makeTable();
 }
