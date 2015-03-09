@@ -64,8 +64,6 @@ MainWindow::MainWindow(QWidget *parent) :
     levo->addWidget(listview);
     leftSide->setLayout( levo );
 
-
-
     model = new QStandardItemModel();
 
     listview->setModel( model );
@@ -74,11 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     resultView->setSortingEnabled(true);
     //resultView->setColumnCount(7);
 
-
     splitter->addWidget(leftSide);
     splitter->addWidget(resultView);
-
-
 
     QList<int> a={200,600};
     splitter->setSizes(a);
@@ -132,9 +127,7 @@ void MainWindow::makeTable()
     for(int i=0;i< model->rowCount();i++){
         if(model->item(i)->checkState()==Qt::Checked ){
             mecevi.Check(i);
-
         }
-
     }
 
     QList<QString> linkovi=mecevi.getLinks();
@@ -207,9 +200,7 @@ void MainWindow::stranicaSpremna()
                 games.print(resultView);
             return;
         }
-
     }
-
 }
 
 void MainWindow::onUcitajTabelu()
