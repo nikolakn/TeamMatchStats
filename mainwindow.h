@@ -25,6 +25,8 @@
 #include "nkmecevi.h"
 #include "nkgames.h"
 #include <QClipboard>
+#include <QMenuBar>
+
 namespace Ui {
 class MainWindow;
 }
@@ -49,9 +51,15 @@ public slots:
     void onM3();
     void onM4();
     void onM5();
+    void newFile();
+    void open();
+    void save();
 private:
     Ui::MainWindow *ui;
-
+    QMenu *fileMenu;
+    QAction *newAct;
+    QAction *openAct;
+    QAction *saveAct;
     QLabel *adresaLabel;
     QLineEdit *adresa;
     QLabel *timLabel;

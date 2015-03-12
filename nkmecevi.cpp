@@ -101,3 +101,13 @@ int NkMecevi::getSelected()
     }
     return rez;
 }
+
+void NkMecevi::save(QDataStream &out)
+{
+    out << spisak.size();
+    for(auto x : spisak){
+        out << x.timovi;
+        out << x.link;
+        out << x.selekted;
+    }
+}

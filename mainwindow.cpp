@@ -14,11 +14,13 @@
 #include <QDebug>
 #include <QScrollArea>
 #include <QInputDialog>
+#include <QFileDialog>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     strana=1;
     isGame=false;
     kraj=0;
@@ -84,6 +86,32 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->centralWidget()->setLayout(mainLayout);
     setWindowTitle(tr("Team Match Stats"));
+
+
+    newAct = new QAction(tr("&Novi"), this);
+    newAct->setShortcuts(QKeySequence::New);
+    newAct->setStatusTip(tr("Novi"));
+    connect(newAct, SIGNAL(triggered()), this, SLOT(newFile()));
+
+
+    openAct = new QAction(tr("&Otvori listu"), this);
+    openAct->setShortcuts(QKeySequence::Open);
+    openAct->setStatusTip(tr("otvori sacuvanu listu"));
+    connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
+
+
+    saveAct = new QAction(tr("&Sacuvaj listu"), this);
+    saveAct->setShortcuts(QKeySequence::Save);
+    saveAct->setStatusTip(tr("snimi listu"));
+    connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
+
+
+    fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu->addAction(newAct);
+    fileMenu->addAction(openAct);
+    fileMenu->addAction(saveAct);
+    fileMenu->addSeparator();
+
     connect(dugme1, SIGNAL(clicked()), this, SLOT(onOK_click()));
     connect(dugme2, SIGNAL(clicked()), this, SLOT(onCVS_click()));
     connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
@@ -259,3 +287,40 @@ void MainWindow::onM5()
     model->appendRow(Item );
     mecevi.addLink(link);
 }
+
+void MainWindow::newFile()
+{
+    resultView->clear();
+    model->clear();
+    games.clear();
+    mecevi.clear();
+    kraj=0;
+    isGame=false;
+    strana=1;
+}
+
+void MainWindow::open()
+{
+    qDebug() << "open";
+}
+
+void MainWindow::save()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Sacuvaj listu partija"), "",
+                                                    tr("Lista partija (*.mec);;All Files (*)"));
+    if (fileName.isEmpty())
+        return;
+    else {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly)) {
+            QMessageBox::information(this, tr("Nemogu da otvorim fajl"),file.errorString());
+            return;
+        }
+        QDataStream out(&file);
+        out.setVersion(QDataStream::Qt_4_5);
+        mecevi.save(out);
+    }
+
+}
+

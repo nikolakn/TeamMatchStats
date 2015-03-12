@@ -37,6 +37,7 @@ public:
     void unCheckAll();
     void Check(int i);
     int getSelected();
+    void save(QDataStream &out);
 signals:
 
 private:
