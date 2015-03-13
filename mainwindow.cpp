@@ -122,6 +122,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m3, SIGNAL(clicked()), this, SLOT(onM3()));
     connect(m4, SIGNAL(clicked()), this, SLOT(onM4()));
     connect(m5, SIGNAL(clicked()), this, SLOT(onM5()));
+
+    connect(model,
+          SIGNAL(itemChanged(QStandardItem*)), this, SLOT(ReceiveChange(QStandardItem*)));
+    ucitavanje=true;
 }
 
 MainWindow::~MainWindow()
@@ -131,19 +135,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::makeList()
 {
-    QList<QString> spisak=mecevi.getList();
+    ucitavanje=true;
     int i=0;
-    for(QString s : spisak){
+    QVector<Mec> mm= mecevi.getMecevi();
+    for(Mec s : mm){
         Item = new QStandardItem();
         Item->setCheckable( true );
-        Item->setText(s);
-        Item->setCheckState( Qt::Checked );
+        Item->setText(s.timovi);
+        if(s.selekted)
+            Item->setCheckState( Qt::Checked );
+        else
+            Item->setCheckState( Qt::Unchecked );
         model->setItem( i++, Item );
     }
     QString str;
-    str.setNum(spisak.size());
+    str.setNum(mm.size());
     setWindowTitle("Ukupno Meceva: "+str);
-
+    ucitavanje=false;
 }
 
 void MainWindow::makeTable()
@@ -247,6 +255,7 @@ void MainWindow::onM2()
 {
     for(int i=0;i< model->rowCount();i++){
         model->item(i)-> setCheckState( Qt::Unchecked );
+        mecevi.UnCheck(i);
     }
 }
 
@@ -260,6 +269,7 @@ void MainWindow::onM3()
         r=model->rowCount();
     for(int i=0;i< r;i++){
         model->item(i)-> setCheckState( Qt::Checked );
+        mecevi.Check(i);
     }
 }
 
@@ -272,7 +282,7 @@ void MainWindow::onM4()
         QString naz = model->item(i)->text();
         if(naz.contains(text))
             model->item(i)-> setCheckState( Qt::Checked );
-
+            mecevi.Check(i);
     }
 }
 
@@ -301,14 +311,35 @@ void MainWindow::newFile()
 
 void MainWindow::open()
 {
-    qDebug() << "open";
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Otvori listu meceva"), "",
+                                                    tr("Lista meceva (*.mec);;All Files (*)"));
+    if (fileName.isEmpty())
+        return;
+    else {
+
+        QFile file(fileName);
+
+        if (!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::information(this, tr("Ne mogu da otvorim fajl"),
+                                     file.errorString());
+            return;
+        }
+
+        QDataStream in(&file);
+        in.setVersion(QDataStream::Qt_4_5);
+        newFile();
+        mecevi.open(in);
+        makeList();
+    }
+    //in >> contacts;
 }
 
 void MainWindow::save()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Sacuvaj listu partija"), "",
-                                                    tr("Lista partija (*.mec);;All Files (*)"));
+                                                    tr("Sacuvaj listu meceva"), "",
+                                                    tr("Lista meceva (*.mec);;All Files (*)"));
     if (fileName.isEmpty())
         return;
     else {
@@ -322,5 +353,18 @@ void MainWindow::save()
         mecevi.save(out);
     }
 
+}
+
+void MainWindow::klik()
+{
+
+}
+
+void MainWindow::ReceiveChange(QStandardItem *i)
+{
+    if(i->checkState()==Qt::Checked)
+        mecevi.Check(i->index().row());
+    else
+        mecevi.UnCheck(i->index().row());
 }
 

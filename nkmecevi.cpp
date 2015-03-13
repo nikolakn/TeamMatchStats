@@ -39,7 +39,7 @@ bool NkMecevi::parsPage(QString html, int st)
     for(QWebElement x : result2){
         //QWebElementCollection result2 = result.findAll("td");
         QWebElement link = x.findFirst("a");
-        mecevi m={link.toPlainText(),link.attribute("href"),true};
+        Mec m={link.toPlainText(),link.attribute("href"),true};
         spisak.push_back(m);
         //qDebug() << link.toPlainText() << link.attribute("href");
     }
@@ -75,7 +75,7 @@ void NkMecevi::clear()
 
 void NkMecevi::addLink(QString naziv)
 {
-    mecevi m={naziv,"/groups/team_match?id="+naziv,true};
+    Mec m={naziv,"/groups/team_match?id="+naziv,true};
     spisak.push_back(m);
 }
 
@@ -89,6 +89,11 @@ void NkMecevi::unCheckAll()
 void NkMecevi::Check(int i)
 {
     spisak[i].selekted=true;
+}
+
+void NkMecevi::UnCheck(int i)
+{
+    spisak[i].selekted=false;
 }
 
 int NkMecevi::getSelected()
@@ -108,6 +113,33 @@ void NkMecevi::save(QDataStream &out)
     for(auto x : spisak){
         out << x.timovi;
         out << x.link;
-        out << x.selekted;
+        if( x.selekted)
+           out << (int)1;
+        else
+           out << (int)0;
     }
+}
+
+void NkMecevi::open(QDataStream &in)
+{
+    int ss=0;
+    in >> ss;
+    Mec m;
+
+    for(int i=0;i<ss;i++){
+       in >> m.timovi;
+
+       in >> m.link;
+       int tt;
+       in >> tt;
+       m.selekted=tt;
+       spisak.push_back(m);
+
+    }
+
+}
+
+void NkMecevi::toggle(int i)
+{
+    spisak[i].selekted=!spisak[i].selekted;
 }

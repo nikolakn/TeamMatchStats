@@ -18,7 +18,7 @@
 #include <QVector>
 #include <QList>
 
-struct mecevi{
+struct Mec{
     QString timovi;
     QString link;
     bool selekted;
@@ -36,12 +36,16 @@ public:
     void addLink(QString naziv);
     void unCheckAll();
     void Check(int i);
+    void UnCheck(int i);
     int getSelected();
     void save(QDataStream &out);
+    void open(QDataStream &in);
+    void toggle(int i);
+    QVector<Mec> getMecevi() {return spisak;}
 signals:
 
 private:
-    QVector<mecevi> spisak;
+    QVector<Mec> spisak;
 };
 
 #endif // NKMECEVI_H

@@ -54,6 +54,8 @@ public slots:
     void newFile();
     void open();
     void save();
+    void klik();
+    void ReceiveChange(QStandardItem* i);
 private:
     Ui::MainWindow *ui;
     QMenu *fileMenu;
@@ -83,6 +85,7 @@ private:
     int strana;
     bool isGame;
     int kraj;
+    bool ucitavanje;
 };
 
 #endif // MAINWINDOW_H
