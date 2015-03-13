@@ -248,6 +248,7 @@ void MainWindow::onM1()
 {
     for(int i=0;i< model->rowCount();i++){
         model->item(i)-> setCheckState( Qt::Checked );
+        mecevi.Check(i);
     }
 }
 
@@ -280,9 +281,10 @@ void MainWindow::onM4()
     onM2();
     for(int i=0;i< model->rowCount();i++){
         QString naz = model->item(i)->text();
-        if(naz.contains(text))
+        if(naz.contains(text)){
             model->item(i)-> setCheckState( Qt::Checked );
             mecevi.Check(i);
+        }
     }
 }
 
