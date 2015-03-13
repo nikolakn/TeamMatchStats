@@ -28,6 +28,8 @@ struct players{
     int bilans;
     double procenatPobeda;
     long doprinos;
+    int rejting;
+    int rejtingprotivnika;
 };
 
 class NkGames : public QObject

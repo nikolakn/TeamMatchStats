@@ -59,16 +59,22 @@ bool NkGames::parsPage(QString html, QString Tim){
         QString ime="";
         double bodovi=0;
         double bodoviProt=0;
+        QString r1,r2;
         if(beli){
             ime=partija.at(1);
             bodovi = partija.at(3).toDouble();
             bodoviProt = partija.at(7).toDouble();
+            r1=partija.at(2);
+            r2=partija.at(9);
         }
         else{
             ime=partija.at(8);
             bodovi = partija.at(7).toDouble();
             bodoviProt = partija.at(3).toDouble();
+            r1=partija.at(9);
+            r2=partija.at(2);
         }
+
         bool nasao = false;
 
         for(players &x : igraci){
@@ -109,7 +115,9 @@ bool NkGames::parsPage(QString html, QString Tim){
 
             players i;
             i.Ime=ime;
-
+            r1=r1.left(r1.size()-1);
+            r1=r1.right(r1.size()-1);
+            i.rejting=r1.toInt();
             i.brojOdigranih=2;
             i.poraza=0;
             i.remija=0;
@@ -150,7 +158,7 @@ void NkGames::print(QTableWidget *resultView)
 {
     resultView->clear();
     resultView->setSortingEnabled(false);
-    resultView->setColumnCount(8);
+    resultView->setColumnCount(9);
     resultView->setRowCount(igraci.size());
 
     QTableWidgetItem *h1 = new QTableWidgetItem("Ime");
@@ -162,15 +170,16 @@ void NkGames::print(QTableWidget *resultView)
     QTableWidgetItem *h7 = new QTableWidgetItem("bilans");
     QTableWidgetItem *h8 = new QTableWidgetItem("%");
     QTableWidgetItem *h9 = new QTableWidgetItem("bilans*odigrano");
+    QTableWidgetItem *h10 = new QTableWidgetItem("rejting");
     resultView->setHorizontalHeaderItem(0,h1);
-    resultView->setHorizontalHeaderItem(1,h2);
-    resultView->setHorizontalHeaderItem(2,h3);
-    resultView->setHorizontalHeaderItem(3,h4);
-    resultView->setHorizontalHeaderItem(4,h5);
-    resultView->setHorizontalHeaderItem(5,h6);
-    resultView->setHorizontalHeaderItem(6,h7);
-    resultView->setHorizontalHeaderItem(7,h8);
-    //resultView->setHorizontalHeaderItem(8,h9);
+    resultView->setHorizontalHeaderItem(1,h10);
+    resultView->setHorizontalHeaderItem(2,h2);
+    resultView->setHorizontalHeaderItem(3,h3);
+    resultView->setHorizontalHeaderItem(4,h4);
+    resultView->setHorizontalHeaderItem(5,h5);
+    resultView->setHorizontalHeaderItem(6,h6);
+    resultView->setHorizontalHeaderItem(7,h7);
+    resultView->setHorizontalHeaderItem(8,h8);
     int row=0;
     for(players x : igraci){
 
@@ -178,33 +187,35 @@ void NkGames::print(QTableWidget *resultView)
              resultView->setItem(row, 0, newItem1);
 
              TableItem *newItem2 = new TableItem(tr("%1").arg(x.brojOdigranih));
-             resultView->setItem(row, 1, newItem2);
+             resultView->setItem(row, 2, newItem2);
 
              TableItemDouble *newItem3 = new TableItemDouble(tr("%1").arg(x.bodova));
-             resultView->setItem(row, 2, newItem3);
+             resultView->setItem(row, 3, newItem3);
 
              TableItem *newItem4 = new TableItem(tr("%1").arg(x.pobeda));
-             resultView->setItem(row, 3, newItem4);
+             resultView->setItem(row, 4, newItem4);
 
              TableItem *newItem5 = new TableItem(tr("%1").arg(x.poraza));
-             resultView->setItem(row, 4, newItem5);
+             resultView->setItem(row, 5, newItem5);
 
              TableItem *newItem6 = new TableItem(tr("%1").arg(x.remija));
-             resultView->setItem(row, 5, newItem6);
+             resultView->setItem(row, 6, newItem6);
 
              TableItem *newItem8 = new TableItem(tr("%1").arg(x.bilans));
-             resultView->setItem(row, 6, newItem8);
+             resultView->setItem(row, 7, newItem8);
 
              //TableItem *newItem9 = new TableItem(tr("%1").arg(x.doprinos));
              //resultView->setItem(row, 8, newItem9);
 
              TableItemDouble *newItem7 = new TableItemDouble(tr("%1").arg(x.procenatPobeda));
-             resultView->setItem(row, 7, newItem7);
+             resultView->setItem(row, 8, newItem7);
 
+             TableItem *newItem10 = new TableItem(tr("%1").arg(x.rejting));
+             resultView->setItem(row, 1, newItem10);
              row++;
     }
     resultView->setSortingEnabled(true);
-    resultView->sortByColumn(6);
+    resultView->sortByColumn(1);
 }
 
 void NkGames::clear(){
@@ -215,11 +226,12 @@ QString NkGames::copyToClip()
 {
     QString oo;
     QTextStream s(&oo);
-    s << "Ime;"<<"Odigrano;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<endl;
+    s << "Ime;"<<"Rejting;" <<"Odigrano;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<endl;
 
     for(players x : igraci){
 
         s << x.Ime << ";";
+        s << x.rejting << ";";
         s << x.brojOdigranih<< ";";
         s << x.bodova<< ";";
         s << x.pobeda<< ";";
