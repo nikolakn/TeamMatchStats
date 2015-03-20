@@ -18,6 +18,7 @@
 #include <QVector>
 #include <QList>
 #include <QTableWidget>
+
 struct players{
     QString Ime;
     int brojOdigranih;
@@ -40,8 +41,10 @@ public:
     bool parsPage(QString html, QString Tim);
     void print(QTableWidget *resultView);
     void clear();
+    //copy table to clipbord
     QString copyToClip();
 private:
+
     QVector<players> igraci;
 
 };
