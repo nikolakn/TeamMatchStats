@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     strana=1;
     odabrano=0;
     isGame=false;
@@ -31,9 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     adresa = new QComboBox();
     adresa->addItem("http://www.chess.com/groups/team_match_archive?id=8083");
     adresa->addItem("http://www.chess.com/groups/matches/srbija-tim?show_all_current=1");
-
-    //adresa->setText("http://www.chess.com/groups/team_match_archive?id=8083");
-
+    adresa->setEditable(true);
     timLabel = new QLabel(tr("Tim:"));
     tim = new QLineEdit();
     tim->setMaximumWidth(80);
@@ -53,7 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QSplitter *splitter = new QSplitter(parent);
     QWidget *leftSide = new QWidget;
-
 
     listview = new QListView();
     QVBoxLayout *levo = new QVBoxLayout;
@@ -93,12 +89,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->centralWidget()->setLayout(mainLayout);
     setWindowTitle(tr("Team Match Stats"));
 
-
     newAct = new QAction(tr("&Novi"), this);
     newAct->setShortcuts(QKeySequence::New);
     newAct->setStatusTip(tr("Novi"));
     connect(newAct, SIGNAL(triggered()), this, SLOT(newFile()));
-
 
     openAct = new QAction(tr("&Otvori listu"), this);
     openAct->setShortcuts(QKeySequence::Open);
@@ -132,14 +126,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(dugme1, SIGNAL(clicked()), this, SLOT(onOK_click()));
     connect(dugme2, SIGNAL(clicked()), this, SLOT(onCVS_click()));
     connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
-
     connect(m6, SIGNAL(clicked()), this, SLOT(onUcitajTabelu()));
     connect(m1, SIGNAL(clicked()), this, SLOT(onM1()));
     connect(m2, SIGNAL(clicked()), this, SLOT(onM2()));
     connect(m3, SIGNAL(clicked()), this, SLOT(onM3()));
     connect(m4, SIGNAL(clicked()), this, SLOT(onM4()));
     connect(m5, SIGNAL(clicked()), this, SLOT(onM5()));
-
     connect(model,
             SIGNAL(itemChanged(QStandardItem*)), this, SLOT(ReceiveChange(QStandardItem*)));
     ucitavanje=true;
@@ -183,7 +175,6 @@ void MainWindow::makeTable()
             mecevi.Check(i);
         }
     }
-
     QList<QString> linkovi=mecevi.getLinks();
     int rez=mecevi.getSelected();
     //qDebug()<<linkovi.size()<<" aaaa "<<rez;
@@ -197,7 +188,6 @@ void MainWindow::makeTable()
             //qDebug()<< dodato<<" !!! "<<rez;
             if(dodato==rez)
                 kraj=1;
-
             web.getPage("http://www.chess.com"+s);
         }
         i++;
@@ -215,7 +205,6 @@ void MainWindow::prebrojcekirane()
     }
     QString str="";
     setWindowTitle("broj odabranih: "+str.setNum(brojcekiranih));
-
 }
 
 void MainWindow::onOK_click()
@@ -258,7 +247,6 @@ void MainWindow::stranicaSpremna()
                 setWindowTitle("Ucitavam Stranice: "+str);
                 web.getPage(adresa->currentText()+"&page="+str);
                 return;
-
             }
             else{
                 makeList();
@@ -268,15 +256,10 @@ void MainWindow::stranicaSpremna()
             //qDebug() <<"utoku";
             //if page with team_match lists are loaded
             QString pp=web.get();
-
             mecevi.parsPageUtoku(pp);
-
             makeList();
             return;
-
         }
-
-
     }
     else{
         //lodad page with games
@@ -292,7 +275,6 @@ void MainWindow::stranicaSpremna()
 
 void MainWindow::onUcitajTabelu()
 {
-
     Dialog2 d(this);
     d.exec();
     odabrano = d.getOdabrano();
@@ -321,7 +303,6 @@ void MainWindow::onM3()
 {
     int r = QInputDialog::getInt(this,"Input","Prvih:",model->rowCount(),0,
                                  model->rowCount());
-
     onM2();
     if(model->rowCount()<r)
         r=model->rowCount();
@@ -363,11 +344,9 @@ void MainWindow::onM5()
     if(aa == QDialog::Accepted) {
         link = dd.getID();
         ime=dd.getIme();
-
     } else{
         return;
     }
-
     if(link=="" || link==" ")
         return;
     Item = new QStandardItem();
