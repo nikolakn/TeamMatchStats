@@ -153,8 +153,9 @@ void MainWindow::makeList()
     }
     QString str;
     str.setNum(mm.size());
-    setWindowTitle("Ukupno Meceva: "+str);
+    //setWindowTitle("Ukupno Meceva: "+str);
     ucitavanje=false;
+    prebrojcekirane();
 }
 
 void MainWindow::makeTable()
@@ -187,6 +188,19 @@ void MainWindow::makeTable()
         }
         i++;
     }
+
+}
+
+void MainWindow::prebrojcekirane()
+{
+    int brojcekiranih=0;
+    for(int i=0;i< model->rowCount();i++){
+        if(model->item(i)->checkState()==Qt::Checked ){
+            brojcekiranih++;
+        }
+    }
+    QString str="";
+    setWindowTitle("broj odabranih: "+str.setNum(brojcekiranih));
 
 }
 
@@ -257,6 +271,7 @@ void MainWindow::onM1()
         model->item(i)-> setCheckState( Qt::Checked );
         mecevi.Check(i);
     }
+    prebrojcekirane();
 }
 
 void MainWindow::onM2()
@@ -265,6 +280,7 @@ void MainWindow::onM2()
         model->item(i)-> setCheckState( Qt::Unchecked );
         mecevi.UnCheck(i);
     }
+    prebrojcekirane();
 }
 
 void MainWindow::onM3()
@@ -279,6 +295,7 @@ void MainWindow::onM3()
         model->item(i)-> setCheckState( Qt::Checked );
         mecevi.Check(i);
     }
+    prebrojcekirane();
 }
 
 void MainWindow::onM4()
@@ -297,6 +314,7 @@ void MainWindow::onM4()
             mecevi.Check(i);
         }
     }
+    prebrojcekirane();
 }
 
 void MainWindow::onM5()
@@ -318,13 +336,13 @@ void MainWindow::onM5()
 
     if(link=="" || link==" ")
         return;
-        Item = new QStandardItem();
-        Item->setCheckable( true );
-        Item->setText(ime);
-        Item->setCheckState( Qt::Checked );
-        model->appendRow(Item );
-        mecevi.addLink(link,ime);
-
+    Item = new QStandardItem();
+    Item->setCheckable( true );
+    Item->setText(ime);
+    Item->setCheckState( Qt::Checked );
+    model->appendRow(Item );
+    mecevi.addLink(link,ime);
+    prebrojcekirane();
 }
 
 void MainWindow::newFile()
@@ -336,6 +354,7 @@ void MainWindow::newFile()
     kraj=0;
     isGame=false;
     strana=1;
+    prebrojcekirane();
 }
 
 void MainWindow::open()
@@ -395,5 +414,6 @@ void MainWindow::ReceiveChange(QStandardItem *i)
         mecevi.Check(i->index().row());
     else
         mecevi.UnCheck(i->index().row());
+    prebrojcekirane();
 }
 

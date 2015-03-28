@@ -236,7 +236,7 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                     i.remija=0;
                 }
             }  else{
-                qDebug()<<"nezavrsena";
+                //qDebug()<<"nezavrsena";
                 if(bodovi==0){
                     if(bodoviProt==1){
                         i.poraza=1;

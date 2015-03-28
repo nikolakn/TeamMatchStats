@@ -40,7 +40,7 @@ public:
     ~MainWindow();
     void makeList();
     void makeTable();
-
+    void prebrojcekirane();
 public slots:
     void onOK_click();
     void onCVS_click();
