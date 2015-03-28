@@ -122,23 +122,19 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 r2=r2.left(r2.size()-1);
                 r2=r2.right(r2.size()-1);
                 int rp = r2.toInt();
-                if(vrsta == 0 && !tip){
 
-                } else{
-                if(rp > x.rejtingprotivnika)
+                if(rp > x.rejtingprotivnika){
                     x.rejtingprotivnika=(x.rejtingprotivnika+rp)/2;
                 }
 
                 r1=r1.left(r1.size()-1);
                 r1=r1.right(r1.size()-1);
                 int raiting=r1.toInt();
-                if(vrsta == 0 && !tip){
 
-                } else{
                 if(raiting > x.rejting){
                         x.rejting=raiting;
                 }
-                }
+
                 //dali je zavrsena
                 if((bodovi+bodoviProt)== 2){
                     x.brojzavrsenih+=2;
@@ -199,15 +195,21 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
             i.Ime=ime;
             r1=r1.left(r1.size()-1);
             r1=r1.right(r1.size()-1);
+
             i.rejting=r1.toInt();
+
             i.brojOdigranih=2;
             i.poraza=0;
             i.remija=0;
             i.pobeda=0;
 
+
             r2=r2.left(r2.size()-1);
             r2=r2.right(r2.size()-1);
-            i.rejtingprotivnika=r2.toInt();
+            int rp = r2.toInt();
+
+            i.rejtingprotivnika=rp;
+
 
             i.bodova = bodovi;
             //dali je zavrsena
@@ -424,10 +426,14 @@ QString NkGames::toolbar()
         if(raiting==0)
             raiting=x.rejting;
         else
+            if(x.rejting!=0)
             raiting=(raiting+x.rejting)/2;
+
         if(protivnik==0)
+
             protivnik=x.rejtingprotivnika;
         else
+            if(x.rejtingprotivnika!=0)
             protivnik=(protivnik+x.rejtingprotivnika)/2;
         pobeda+=x.pobeda;
         poraza+=x.poraza;
