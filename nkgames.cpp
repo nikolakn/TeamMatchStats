@@ -85,27 +85,51 @@ bool NkGames::parsPage(QString html, QString Tim){
                 r2=r2.right(r2.size()-1);
                 x.rejtingprotivnika=(x.rejtingprotivnika+r2.toInt())/2;
 
-                if(bodovi==0){
-                    x.poraza+=2;
+                //dali je zavrsena
+                if((bodovi+bodoviProt)== 2){
+                    if(bodovi==0){
+                        x.poraza+=2;
+                    }
+                    if(bodovi==0.5){
+                        x.poraza+=1;
+                        x.remija+=1;
+                    }
+                    if(bodovi==1){
+                        x.poraza+=1;
+                        x.pobeda+=1;
+                    }
+                    if(bodovi==1.5){
+                        x.pobeda+=1;
+                        x.remija+=1;
+                    }
+                    if(bodovi==2){
+                        x.pobeda+=2;
+                        x.remija+=0;
+                    }
+                }  else{
+                    if(bodovi==0){
+                        if(bodoviProt==1){
+                            x.poraza+=1;
+                        }
+                    }
+                    if(bodovi==0.5){
+                        if(bodoviProt==0.5){
+                            x.remija+=1;
+                        }
+
+                    }
+                    if(bodovi==1){
+                        if(bodoviProt==0){
+                           x.pobeda+=1;
+                        }
+                    }
+
                 }
-                if(bodovi==0.5){
-                    x.remija+=2;
-                }
-                if(bodovi==1){
-                    x.poraza+=1;
-                    x.pobeda+=1;
-                }
-                if(bodovi==1.5){
-                    x.remija+=1;
-                    x.pobeda+=1;
-                }
-                if(bodovi==2){
-                    x.pobeda+=2;
-                }
+                x.bodova+=bodovi;
                 x.bilans = x.pobeda - x.poraza;
-                x.bodova=x.pobeda+x.remija/2;
+
                 x.doprinos=x.bilans*x.bodova;
-                x.procenatPobeda=((double)x.bodova*100.0/x.brojOdigranih);
+                x.procenatPobeda=(x.bodova*100.0/x.brojOdigranih);
                 ////////////
                 nasao = true;
                 goto petlja;
@@ -130,28 +154,59 @@ bool NkGames::parsPage(QString html, QString Tim){
             r2=r2.right(r2.size()-1);
             i.rejtingprotivnika=r2.toInt();
 
-            if(bodovi==0){
-                i.poraza=2;
+            i.bodova = bodovi;
+            //dali je zavrsena
+            if((bodovi+bodoviProt)== 2){
+                if(bodovi==0){
+                    i.poraza=2;
+                    i.pobeda=0;
+                    i.remija=0;
+                }
+                if(bodovi==0.5){
+                    i.poraza=1;
+                    i.pobeda=0;
+                    i.remija=1;
+                }
+                if(bodovi==1){
+                    i.poraza=1;
+                    i.pobeda=1;
+                    i.remija=0;
+                }
+                if(bodovi==1.5){
+                    i.poraza=0;
+                    i.pobeda=1;
+                    i.remija=1;
+                }
+                if(bodovi==2){
+                    i.poraza=0;
+                    i.pobeda=2;
+                    i.remija=0;
+                }
+            }  else{
+                qDebug()<<"nezavrsena";
+                if(bodovi==0){
+                    if(bodoviProt==1){
+                        i.poraza=1;
+                    }
+                }
+                if(bodovi==0.5){
+                    if(bodoviProt==0.5){
+                        i.remija=1;
+                    }
+
+                }
+                if(bodovi==1){
+                    if(bodoviProt==0){
+                       i.pobeda=1;
+                    }
+                }
+
             }
-            if(bodovi==0.5){
-                //i.poraza=1;
-                i.remija=2;
-            }
-            if(bodovi==1){
-                i.poraza=1;
-                i.pobeda=1;
-            }
-            if(bodovi==1.5){
-                i.remija=1;
-                i.pobeda=1;
-            }
-            if(bodovi==2){
-                i.pobeda=2;
-            }
+
             i.bilans = i.pobeda - i.poraza;
-            i.bodova=i.pobeda+i.remija/2;
+            i.bodova=bodovi;
             i.doprinos=i.bilans*i.bodova;
-            i.procenatPobeda=((double)i.bodova*100.0/i.brojOdigranih);
+            i.procenatPobeda=(i.bodova*100.0/i.brojOdigranih);
 
             igraci.push_back(i);
         }
@@ -189,6 +244,15 @@ void NkGames::print(QTableWidget *resultView)
     resultView->setHorizontalHeaderItem(7,h7);
     resultView->setHorizontalHeaderItem(8,h8);
     resultView->setHorizontalHeaderItem(9,h9);
+
+    resultView->setColumnWidth(1,60);
+    resultView->setColumnWidth(2,60);
+    resultView->setColumnWidth(3,60);
+    resultView->setColumnWidth(4,60);
+    resultView->setColumnWidth(5,60);
+    resultView->setColumnWidth(6,60);
+    resultView->setColumnWidth(7,60);
+    resultView->setColumnWidth(8,60);
     int row=0;
     for(players x : igraci){
 
@@ -216,7 +280,7 @@ void NkGames::print(QTableWidget *resultView)
              //TableItem *newItem9 = new TableItem(tr("%1").arg(x.doprinos));
              //resultView->setItem(row, 8, newItem9);
 
-             TableItemDouble *newItem7 = new TableItemDouble(tr("%1").arg(x.procenatPobeda));
+             TableItem *newItem7 = new TableItem(tr("%1").arg(x.procenatPobeda));
              resultView->setItem(row, 8, newItem7);
 
              TableItem *newItem10 = new TableItem(tr("%1").arg(x.rejting));

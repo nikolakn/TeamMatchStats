@@ -25,9 +25,9 @@ struct players{
     double bodova;
     int pobeda;
     int poraza;
-    int remija;
-    int bilans;
-    double procenatPobeda;
+    double remija;
+    double bilans;
+    int procenatPobeda;
     long doprinos;
     int rejting;
     int rejtingprotivnika;
