@@ -28,8 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
     isGame=false;
     kraj=0;
     adresaLabel = new QLabel(tr("Adresa:"));
-    adresa = new QLineEdit();
-    adresa->setText("http://www.chess.com/groups/team_match_archive?id=8083");
+    adresa = new QComboBox();
+    adresa->addItem("http://www.chess.com/groups/team_match_archive?id=8083");
+    adresa->addItem("http://www.chess.com/groups/matches/srbija-tim?show_all_current=1");
+    //adresa->setText("http://www.chess.com/groups/team_match_archive?id=8083");
 
     timLabel = new QLabel(tr("Tim:"));
     tim = new QLineEdit();
@@ -225,12 +227,12 @@ void MainWindow::onOK_click()
     kraj=0;
     isGame=false;
     strana=1;
-    if(adresa->text().left(36)=="http://www.chess.com/groups/matches/"){
+    if(adresa->currentText().left(36)=="http://www.chess.com/groups/matches/"){
         zavrsene=false;
-        web.getPage(adresa->text());
+        web.getPage(adresa->currentText());
     }else{
         zavrsene=true;
-        web.getPage(adresa->text()+"&page=1");
+        web.getPage(adresa->currentText()+"&page=1");
     }
 }
 
@@ -253,7 +255,7 @@ void MainWindow::stranicaSpremna()
                 str.setNum(strana);
                 isGame=false;
                 setWindowTitle("Ucitavam Stranice: "+str);
-                web.getPage(adresa->text()+"&page="+str);
+                web.getPage(adresa->currentText()+"&page="+str);
                 return;
 
             }

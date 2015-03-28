@@ -26,7 +26,7 @@
 #include "nkgames.h"
 #include <QClipboard>
 #include <QMenuBar>
-
+#include <QComboBox>
 namespace Ui {
 class MainWindow;
 }
@@ -68,7 +68,7 @@ private:
     QAction *tablestat;
     QAction *copytablestat;
     QLabel *adresaLabel;
-    QLineEdit *adresa;
+    QComboBox *adresa;
     QLabel *timLabel;
     QLineEdit *tim;
     QPushButton *dugme1;
