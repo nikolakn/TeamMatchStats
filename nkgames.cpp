@@ -441,6 +441,7 @@ QString NkGames::toolbar()
 
     }
     s << "Broj Meceva: " << nkbrojmeceva << endl;
+    s << "ukupno igraca: " << igraci.size() << endl;
     s << "ukupno partija: " << odigranih << endl;
     s << "ukupno zavrsenih: " << zavrsene << endl;
     s << "trenutno se igra: " << odigranih-zavrsene << endl;
