@@ -16,6 +16,7 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include "dialog2.h"
+#include "unosmecadialog.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -300,16 +301,29 @@ void MainWindow::onM4()
 
 void MainWindow::onM5()
 {
-    QString link = QInputDialog::getText(this, tr("Input"),
-                                         tr("Unesite Id meca (broj u linku od meca):"), QLineEdit::Normal);
+    //QString link = QInputDialog::getText(this, tr("Input"),
+    //                                     tr("Unesite Id meca (broj u linku od meca):"), QLineEdit::Normal);
+
+    QString link="";
+    QString ime="";
+    unosmecaDialog dd;
+    int aa = dd.exec();
+    if(aa == QDialog::Accepted) {
+        link = dd.getID();
+        ime=dd.getIme();
+
+    } else{
+        return;
+    }
+
     if(link=="" || link==" ")
         return;
         Item = new QStandardItem();
         Item->setCheckable( true );
-        Item->setText(link);
+        Item->setText(ime);
         Item->setCheckState( Qt::Checked );
         model->appendRow(Item );
-        mecevi.addLink(link);
+        mecevi.addLink(link,ime);
 
 }
 

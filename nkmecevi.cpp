@@ -73,9 +73,10 @@ void NkMecevi::clear()
     spisak.clear();
 }
 
-void NkMecevi::addLink(QString naziv)
+void NkMecevi::addLink(QString naziv,QString ime)
 {
-    Mec m={naziv,"/groups/team_match?id="+naziv,true};
+    Mec m={ime,"/groups/team_match?id="+naziv,true};
+
     spisak.push_back(m);
 }
 

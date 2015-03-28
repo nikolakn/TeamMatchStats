@@ -33,7 +33,7 @@ public:
     QList<QString> getList();
     QList<QString> getLinks();
     void clear();
-    void addLink(QString naziv);
+    void addLink(QString naziv, QString ime);
     void unCheckAll();
     void Check(int i);
     void UnCheck(int i);

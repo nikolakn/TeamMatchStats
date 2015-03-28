@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     nkweb.cpp \
     nkmecevi.cpp \
     nkgames.cpp \
-    dialog2.cpp
+    dialog2.cpp \
+    unosmecadialog.cpp
 
 HEADERS  += mainwindow.h \
     nkweb.h \
@@ -26,8 +27,10 @@ HEADERS  += mainwindow.h \
     nkgames.h \
     TableItem.h \
     TableItemDouble.h \
-    dialog2.h
+    dialog2.h \
+    unosmecadialog.h
 
 FORMS    += mainwindow.ui \
     dialog.ui \
-    dialog2.ui
+    dialog2.ui \
+    unosmecadialog.ui
