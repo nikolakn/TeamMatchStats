@@ -19,7 +19,9 @@ NkGames::NkGames(QObject *parent) :
 {
 }
 
-bool NkGames::parsPage(QString html, QString Tim){
+bool NkGames::parsPage(QString html, QString Tim, int vrsta){
+    //qDebug() <<"prolaz";
+    QString temp=html;
     QRegExp rx("<table class=\"default border-top alternate\">(.+)</table>");
     if (rx.indexIn(html) != -1)
         html = rx.cap(1);
@@ -46,6 +48,41 @@ bool NkGames::parsPage(QString html, QString Tim){
 
     list.removeFirst();
     list.removeLast();
+
+    ///////////////////////////
+
+    QRegExp rx2("<table class=\"simple border-top clearfix alternate\">(.+)</table>");
+    if (rx2.indexIn(temp) != -1)
+        temp = rx2.cap(1);
+    //qDebug()<<html;
+    temp="<table>"+temp+"</table>";
+    QWebPage page2;
+    QWebFrame * frame2 = page2.mainFrame();
+    frame2->setHtml(temp);
+    QWebElement parse2 = frame2->documentElement();
+    QWebElement str = parse2.findFirst("tbody tr");
+
+    //QWebElement tt =str.findFirst("tr");
+    //qDebug() << str.toPlainText();
+    QString info = str.toPlainText();
+    bool tip = true;
+    if(info.contains("Standard Chess"))
+        tip = true;
+    if(info.contains("Chess960"))
+        tip = false;
+
+    if(vrsta==1){
+        if(!tip)
+            return false;
+    }
+    if(vrsta==2){
+        if(tip)
+            return false;
+    }
+
+    ///////////////////////////
+
+
 
     for(QString ll : list){
         QStringList partija= ll.split(QRegExp("\\s+"));
@@ -83,8 +120,24 @@ bool NkGames::parsPage(QString html, QString Tim){
                 x.brojOdigranih+=2;
                 r2=r2.left(r2.size()-1);
                 r2=r2.right(r2.size()-1);
-                x.rejtingprotivnika=(x.rejtingprotivnika+r2.toInt())/2;
+                int rp = r2.toInt();
+                if(vrsta == 0 && !tip){
 
+                } else{
+                if(rp > x.rejtingprotivnika)
+                    x.rejtingprotivnika=(x.rejtingprotivnika+rp)/2;
+                }
+
+                r1=r1.left(r1.size()-1);
+                r1=r1.right(r1.size()-1);
+                int raiting=r1.toInt();
+                if(vrsta == 0 && !tip){
+
+                } else{
+                if(raiting > x.rejting){
+                        x.rejting=raiting;
+                }
+                }
                 //dali je zavrsena
                 if((bodovi+bodoviProt)== 2){
                     if(bodovi==0){

@@ -85,6 +85,7 @@ private:
     int strana;
     bool isGame;
     int kraj;
+    int odabrano;
     bool ucitavanje;
 };
 

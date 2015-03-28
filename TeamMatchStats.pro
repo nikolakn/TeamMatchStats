@@ -17,13 +17,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     nkweb.cpp \
     nkmecevi.cpp \
-    nkgames.cpp
+    nkgames.cpp \
+    dialog2.cpp
 
 HEADERS  += mainwindow.h \
     nkweb.h \
     nkmecevi.h \
     nkgames.h \
     TableItem.h \
-    TableItemDouble.h
+    TableItemDouble.h \
+    dialog2.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialog.ui \
+    dialog2.ui

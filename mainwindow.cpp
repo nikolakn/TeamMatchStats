@@ -15,6 +15,7 @@
 #include <QScrollArea>
 #include <QInputDialog>
 #include <QFileDialog>
+#include "dialog2.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     strana=1;
+    odabrano=0;
     isGame=false;
     kraj=0;
     adresaLabel = new QLabel(tr("Adresa:"));
@@ -231,7 +233,7 @@ void MainWindow::stranicaSpremna()
         //lodad page with games
         QString pp=web.get();
 
-        if(games.parsPage(pp,tim->text())){
+        if(games.parsPage(pp,tim->text(),odabrano)){
             if(kraj==1)
                 games.print(resultView);
             return;
@@ -241,6 +243,10 @@ void MainWindow::stranicaSpremna()
 
 void MainWindow::onUcitajTabelu()
 {
+
+    Dialog2 d(this);
+    d.exec();
+    odabrano = d.getOdabrano();
     makeTable();
 }
 

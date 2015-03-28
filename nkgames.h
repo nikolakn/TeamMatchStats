@@ -38,7 +38,7 @@ class NkGames : public QObject
     Q_OBJECT
 public:
     explicit NkGames(QObject *parent = 0);
-    bool parsPage(QString html, QString Tim);
+    bool parsPage(QString html, QString Tim, int vrsta);
     void print(QTableWidget *resultView);
     void clear();
     //copy table to clipbord
