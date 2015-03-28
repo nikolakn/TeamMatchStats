@@ -333,7 +333,12 @@ void NkGames::print(QTableWidget *resultView)
     resultView->setColumnWidth(12,60);
     int row=0;
     for(players x : igraci){
-             int rp = x.rejtingprotivnika + (400 * x.bilans / x.brojzavrsenih);
+        int rp=0;
+        if(x.brojzavrsenih !=0){
+             rp = x.rejtingprotivnika + (400 * x.bilans / x.brojzavrsenih);
+        }
+        if(rp<0)
+            rp=0;
              QTableWidgetItem *newItem1 = new QTableWidgetItem(x.Ime);
              resultView->setItem(row, 0, newItem1);
 
@@ -395,7 +400,12 @@ QString NkGames::copyToClip()
     s << "Ime;"<<"Rejting;" <<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<"pro.r. protivnika;"<<"Rp"<<endl;
 
     for(players x : igraci){
-        int rp = x.rejtingprotivnika + (400 * x.bilans / x.brojzavrsenih);
+        int rp=0;
+        if(x.brojzavrsenih !=0){
+             rp = x.rejtingprotivnika + (400 * x.bilans / x.brojzavrsenih);
+        }
+        if(rp<0)
+            rp=0;
         s << x.Ime << ";";
         s << x.rejting << ";";
         s << x.brojOdigranih<< ";";
