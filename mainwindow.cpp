@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     adresa = new QComboBox();
     adresa->addItem("http://www.chess.com/groups/team_match_archive?id=8083");
     adresa->addItem("http://www.chess.com/groups/matches/srbija-tim?show_all_current=1");
+
     //adresa->setText("http://www.chess.com/groups/team_match_archive?id=8083");
 
     timLabel = new QLabel(tr("Tim:"));
@@ -44,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QHBoxLayout *adresaLayout = new QHBoxLayout;
     adresaLayout->addWidget(adresaLabel);
-    adresaLayout->addWidget(adresa);
+    adresaLayout->addWidget(adresa,1);
     adresaLayout->addWidget(timLabel);
     adresaLayout->addWidget(tim);
     adresaLayout->addWidget(dugme1);
