@@ -56,6 +56,7 @@ public slots:
     void save();
     void klik();
     void nktableStat();
+    void copynktableStat();
     void ReceiveChange(QStandardItem* i);
 private:
     Ui::MainWindow *ui;
@@ -65,6 +66,7 @@ private:
     QAction *saveAct;
     QMenu *toolMenu;
     QAction *tablestat;
+    QAction *copytablestat;
     QLabel *adresaLabel;
     QLineEdit *adresa;
     QLabel *timLabel;

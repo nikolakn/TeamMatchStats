@@ -112,6 +112,9 @@ MainWindow::MainWindow(QWidget *parent) :
     tablestat->setStatusTip(tr("Timska statistika"));
     connect(tablestat, SIGNAL(triggered()), this, SLOT(nktableStat()));
 
+    copytablestat = new QAction(tr("&Copy Timska statistika"), this);
+    copytablestat->setStatusTip(tr("Copy Timska statistika"));
+    connect(copytablestat, SIGNAL(triggered()), this, SLOT(copynktableStat()));
 
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(newAct);
@@ -121,6 +124,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     toolMenu = menuBar()->addMenu(tr("&Tools"));
     toolMenu->addAction(tablestat);
+    toolMenu->addAction(copytablestat);
 
     connect(dugme1, SIGNAL(clicked()), this, SLOT(onOK_click()));
     connect(dugme2, SIGNAL(clicked()), this, SLOT(onCVS_click()));
@@ -420,6 +424,13 @@ void MainWindow::nktableStat()
     QMessageBox box;
     box.setText(games.toolbar());
     box.exec();
+}
+
+void MainWindow::copynktableStat()
+{
+    QClipboard *p_Clipboard = QApplication::clipboard();
+    p_Clipboard->setText(games.toolbar());
+
 }
 
 void MainWindow::ReceiveChange(QStandardItem *i)
