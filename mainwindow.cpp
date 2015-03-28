@@ -278,9 +278,13 @@ void MainWindow::onM4()
 {
     QString text = QInputDialog::getText(this, tr("Input"),
                                          tr("Naziv sadrzi:"), QLineEdit::Normal);
+    if(text=="" || text==" ")
+        return;
     onM2();
+    text = text.toLower();
     for(int i=0;i< model->rowCount();i++){
         QString naz = model->item(i)->text();
+        naz = naz.toLower();
         if(naz.contains(text)){
             model->item(i)-> setCheckState( Qt::Checked );
             mecevi.Check(i);
@@ -292,12 +296,15 @@ void MainWindow::onM5()
 {
     QString link = QInputDialog::getText(this, tr("Input"),
                                          tr("Unesite Id meca (broj u linku od meca):"), QLineEdit::Normal);
-    Item = new QStandardItem();
-    Item->setCheckable( true );
-    Item->setText(link);
-    Item->setCheckState( Qt::Checked );
-    model->appendRow(Item );
-    mecevi.addLink(link);
+    if(link=="" || link==" ")
+        return;
+        Item = new QStandardItem();
+        Item->setCheckable( true );
+        Item->setText(link);
+        Item->setCheckState( Qt::Checked );
+        model->appendRow(Item );
+        mecevi.addLink(link);
+
 }
 
 void MainWindow::newFile()

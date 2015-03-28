@@ -238,7 +238,7 @@ QString NkGames::copyToClip()
 {
     QString oo;
     QTextStream s(&oo);
-    s << "Ime;"<<"Rejting;" <<"Odigrano;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<"pro.r. protivnika;"<<endl;
+    s << "Ime;"<<"Rejting;" <<"Odigrano;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<"pro.r. protivnika"<<endl;
 
     for(players x : igraci){
 
@@ -251,8 +251,8 @@ QString NkGames::copyToClip()
         s << x.remija<< ";";
         s << x.bilans<< ";";
         //s << x.doprinos<< ";";
-        s << x.procenatPobeda<< ";"<<endl;
-        s << x.rejtingprotivnika<< ";"<<endl;
+        s << x.procenatPobeda<< ";";
+        s << x.rejtingprotivnika << endl;
     }
     return s.readAll();
 }
