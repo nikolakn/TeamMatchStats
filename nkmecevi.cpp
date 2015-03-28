@@ -37,9 +37,12 @@ bool NkMecevi::parsPage(QString html, int st)
     QWebElement result = parse.findFirst("table.alternate tbody");
     QWebElementCollection result2 = result.findAll("tr");
     for(QWebElement x : result2){
-        //QWebElementCollection result2 = result.findAll("td");
+        QWebElementCollection result2 = result.findAll("td");
         QWebElement link = x.findFirst("a");
-        Mec m={link.toPlainText(),link.attribute("href"),true};
+        QWebElementCollection aaa = x.findAll("a");
+        //qDebug()<<aaa[2].toPlainText();
+        Mec m={aaa[2].toPlainText()+" / "+link.toPlainText(),link.attribute("href"),true};
+
         spisak.push_back(m);
         //qDebug() << link.toPlainText() << link.attribute("href");
     }
