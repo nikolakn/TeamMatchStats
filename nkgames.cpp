@@ -202,7 +202,7 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
             i.poraza=0;
             i.remija=0;
             i.pobeda=0;
-
+            i.brojzavrsenih=0;
 
             r2=r2.left(r2.size()-1);
             r2=r2.right(r2.size()-1);
@@ -245,17 +245,20 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 if(bodovi==0){
                     if(bodoviProt==1){
                         i.poraza=1;
+                        i.brojzavrsenih=1;
                     }
                 }
                 if(bodovi==0.5){
                     if(bodoviProt==0.5){
                         i.remija=1;
+                        i.brojzavrsenih=1;
                     }
 
                 }
                 if(bodovi==1){
                     if(bodoviProt==0){
                        i.pobeda=1;
+                       i.brojzavrsenih=1;
                     }
                 }
 
