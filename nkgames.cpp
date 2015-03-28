@@ -17,6 +17,7 @@
 NkGames::NkGames(QObject *parent) :
     QObject(parent)
 {
+    nkbrojmeceva=0;
 }
 
 bool NkGames::parsPage(QString html, QString Tim, int vrsta){
@@ -81,7 +82,7 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
     }
 
     ///////////////////////////
-
+    nkbrojmeceva++;
 
 
     for(QString ll : list){
@@ -276,7 +277,7 @@ void NkGames::print(QTableWidget *resultView)
 {
     resultView->clear();
     resultView->setSortingEnabled(false);
-    resultView->setColumnCount(12);
+    resultView->setColumnCount(13);
     resultView->setRowCount(igraci.size());
 
     QTableWidgetItem *h1 = new QTableWidgetItem("Ime");
@@ -293,6 +294,7 @@ void NkGames::print(QTableWidget *resultView)
     QTableWidgetItem *h8 = new QTableWidgetItem("%");
     QTableWidgetItem *h9 = new QTableWidgetItem("pros.r. protivnika");
     QTableWidgetItem *h10 = new QTableWidgetItem("rejting");
+    QTableWidgetItem *h12 = new QTableWidgetItem("Rp");
     resultView->setHorizontalHeaderItem(0,h1);
     resultView->setHorizontalHeaderItem(1,h10);
     resultView->setHorizontalHeaderItem(2,h2);
@@ -307,6 +309,7 @@ void NkGames::print(QTableWidget *resultView)
     resultView->setHorizontalHeaderItem(9,h7);
     resultView->setHorizontalHeaderItem(10,h8);
     resultView->setHorizontalHeaderItem(11,h9);
+    resultView->setHorizontalHeaderItem(12,h12);
 
     resultView->setColumnWidth(1,60);
     resultView->setColumnWidth(2,60);
@@ -319,9 +322,10 @@ void NkGames::print(QTableWidget *resultView)
     resultView->setColumnWidth(9,60);
     resultView->setColumnWidth(10,60);
     resultView->setColumnWidth(11,60);
+    resultView->setColumnWidth(12,60);
     int row=0;
     for(players x : igraci){
-
+             int rp = x.rejtingprotivnika + (400 * x.bilans / x.brojzavrsenih);
              QTableWidgetItem *newItem1 = new QTableWidgetItem(x.Ime);
              resultView->setItem(row, 0, newItem1);
 
@@ -361,24 +365,29 @@ void NkGames::print(QTableWidget *resultView)
 
              TableItem *newItem11 = new TableItem(tr("%1").arg(x.rejtingprotivnika));
              resultView->setItem(row, 11, newItem11);
+
+             TableItem *newItem12= new TableItem(tr("%1").arg(rp));
+             resultView->setItem(row, 12, newItem12);
              row++;
     }
     resultView->setSortingEnabled(true);
     resultView->sortByColumn(1);
+
 }
 
 void NkGames::clear(){
     igraci.clear();
+    nkbrojmeceva=0;
 }
 
 QString NkGames::copyToClip()
 {
     QString oo;
     QTextStream s(&oo);
-    s << "Ime;"<<"Rejting;" <<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<"pro.r. protivnika"<<endl;
+    s << "Ime;"<<"Rejting;" <<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<"pro.r. protivnika;"<<"Rp"<<endl;
 
     for(players x : igraci){
-
+        int rp = x.rejtingprotivnika + (400 * x.bilans / x.brojzavrsenih);
         s << x.Ime << ";";
         s << x.rejting << ";";
         s << x.brojOdigranih<< ";";
@@ -391,7 +400,48 @@ QString NkGames::copyToClip()
         s << x.bilans<< ";";
         //s << x.doprinos<< ";";
         s << x.procenatPobeda<< ";";
-        s << x.rejtingprotivnika << endl;
+        s << x.rejtingprotivnika << ";";
+        s << rp << endl;
     }
+    return s.readAll();
+}
+
+QString NkGames::toolbar()
+{
+    QString oo;
+    QTextStream s(&oo);
+    int odigranih=0;
+    int utoku=0;
+    int zavrsene=0;
+    int raiting=0;
+    int protivnik=0;
+    int pobeda=0;
+    int poraza=0;
+    int remija=0;
+    for(players x : igraci){
+        odigranih+=x.brojOdigranih;
+        zavrsene+=x.brojzavrsenih;
+        if(raiting==0)
+            raiting=x.rejting;
+        else
+            raiting=(raiting+x.rejting)/2;
+        if(protivnik==0)
+            protivnik=x.rejtingprotivnika;
+        else
+            protivnik=(protivnik+x.rejtingprotivnika)/2;
+        pobeda+=x.pobeda;
+        poraza+=x.poraza;
+        remija+=x.remija;
+
+    }
+    s << "Broj Meceva: " << nkbrojmeceva << endl;
+    s << "ukupno partija: " << odigranih << endl;
+    s << "ukupno zavrsenih: " << zavrsene << endl;
+    s << "trenutno se igra: " << odigranih-zavrsene << endl;
+    s << "Broj pobeda: " << pobeda << endl;
+    s << "Broj poraza: " << poraza << endl;
+    s << "Broj remija: " << remija << endl;
+    s << "Prosecan rejting: " << raiting << endl;
+    s << "Prosecan rejting protivnika: " << protivnik << endl;
     return s.readAll();
 }

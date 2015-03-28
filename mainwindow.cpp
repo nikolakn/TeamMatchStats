@@ -108,12 +108,19 @@ MainWindow::MainWindow(QWidget *parent) :
     saveAct->setStatusTip(tr("snimi listu"));
     connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
+    tablestat = new QAction(tr("&Timska statistika"), this);
+    tablestat->setStatusTip(tr("Timska statistika"));
+    connect(tablestat, SIGNAL(triggered()), this, SLOT(nktableStat()));
+
 
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(newAct);
     fileMenu->addAction(openAct);
     fileMenu->addAction(saveAct);
     fileMenu->addSeparator();
+
+    toolMenu = menuBar()->addMenu(tr("&Tools"));
+    toolMenu->addAction(tablestat);
 
     connect(dugme1, SIGNAL(clicked()), this, SLOT(onOK_click()));
     connect(dugme2, SIGNAL(clicked()), this, SLOT(onCVS_click()));
@@ -406,6 +413,13 @@ void MainWindow::save()
 void MainWindow::klik()
 {
 
+}
+
+void MainWindow::nktableStat()
+{
+    QMessageBox box;
+    box.setText(games.toolbar());
+    box.exec();
 }
 
 void MainWindow::ReceiveChange(QStandardItem *i)

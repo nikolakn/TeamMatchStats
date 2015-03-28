@@ -44,8 +44,9 @@ public:
     void clear();
     //copy table to clipbord
     QString copyToClip();
+    QString toolbar();
 private:
-
+    int nkbrojmeceva;
     QVector<players> igraci;
 
 };
