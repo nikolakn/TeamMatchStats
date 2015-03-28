@@ -31,6 +31,7 @@ struct players{
     long doprinos;
     int rejting;
     int rejtingprotivnika;
+    int brojzavrsenih;
 };
 
 class NkGames : public QObject
