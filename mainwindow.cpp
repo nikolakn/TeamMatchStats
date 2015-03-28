@@ -138,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m5, SIGNAL(clicked()), this, SLOT(onM5()));
 
     connect(model,
-          SIGNAL(itemChanged(QStandardItem*)), this, SLOT(ReceiveChange(QStandardItem*)));
+            SIGNAL(itemChanged(QStandardItem*)), this, SLOT(ReceiveChange(QStandardItem*)));
     ucitavanje=true;
 }
 
@@ -225,7 +225,13 @@ void MainWindow::onOK_click()
     kraj=0;
     isGame=false;
     strana=1;
-    web.getPage(adresa->text()+"&page=1");
+    if(adresa->text().left(36)=="http://www.chess.com/groups/matches/"){
+        zavrsene=false;
+        web.getPage(adresa->text());
+    }else{
+        zavrsene=true;
+        web.getPage(adresa->text()+"&page=1");
+    }
 }
 
 void MainWindow::onCVS_click()
@@ -237,23 +243,37 @@ void MainWindow::onCVS_click()
 void MainWindow::stranicaSpremna()
 {
     if(!isGame){
-        //if page with team_match lists are loaded
-        QString pp=web.get();
+        if(zavrsene){
+            //if page with team_match lists are loaded
+            QString pp=web.get();
 
-        if(mecevi.parsPage(pp,strana)){
-            strana++;
-            QString str;
-            str.setNum(strana);
-            isGame=false;
-            setWindowTitle("Ucitavam Stranice: "+str);
-            web.getPage(adresa->text()+"&page="+str);
-            return;
+            if(mecevi.parsPage(pp,strana)){
+                strana++;
+                QString str;
+                str.setNum(strana);
+                isGame=false;
+                setWindowTitle("Ucitavam Stranice: "+str);
+                web.getPage(adresa->text()+"&page="+str);
+                return;
 
-        }
-        else{
+            }
+            else{
+                makeList();
+                return;
+            }
+        } else{
+            //qDebug() <<"utoku";
+            //if page with team_match lists are loaded
+            QString pp=web.get();
+
+            mecevi.parsPageUtoku(pp);
+
             makeList();
             return;
+
         }
+
+
     }
     else{
         //lodad page with games

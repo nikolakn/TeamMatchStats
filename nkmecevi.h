@@ -30,6 +30,7 @@ class NkMecevi : public QObject
 public:
     explicit NkMecevi(QObject *parent = 0);
     bool parsPage(QString html, int st);
+    bool parsPageUtoku(QString html);
     QList<QString> getList();
     QList<QString> getLinks();
     void clear();

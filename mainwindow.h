@@ -92,6 +92,7 @@ private:
     int kraj;
     int odabrano;
     bool ucitavanje;
+    bool zavrsene;
 };
 
 #endif // MAINWINDOW_H

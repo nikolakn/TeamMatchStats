@@ -41,6 +41,41 @@ bool NkMecevi::parsPage(QString html, int st)
         QWebElement link = x.findFirst("a");
         QWebElementCollection aaa = x.findAll("a");
         //qDebug()<<aaa[2].toPlainText();
+
+        Mec m={aaa[2].toPlainText()+" / "+link.toPlainText(),link.attribute("href"),true};
+
+        spisak.push_back(m);
+        //qDebug() << link.toPlainText() << link.attribute("href");
+    }
+    return true;
+}
+
+bool NkMecevi::parsPageUtoku(QString html)
+{
+    //qDebug() <<html;
+    QRegExp rx("<table id=\"c3\"(.+)</table></div> </div>   <div id=\"");
+    if (rx.indexIn(html) != -1)
+        html = rx.cap(1);
+    html="<table "+html+"</table>";
+    //qDebug() <<html;
+    QWebPage page;
+    QWebFrame * frame = page.mainFrame();
+    frame->setHtml(html);
+    QWebElement parse = frame->documentElement();
+    //page num
+    //qDebug() <<parse.toPlainText();
+    //QWebElement str = parse.findFirst("ul.pagination li.current");
+    //qDebug() <<parse.toPlainText();
+    //QWebElement result = parse.firstChild();
+    QWebElement result = parse.findFirst("tbody");
+    QWebElementCollection result2 = result.findAll("tr");
+    for(QWebElement x : result2){
+
+        QWebElementCollection result2 = result.findAll("td");
+        QWebElement link = x.findFirst("a");
+        QWebElementCollection aaa = x.findAll("a");
+        //qDebug()<<aaa[2].toPlainText();
+        //qDebug() <<link.attribute("href");
         Mec m={aaa[2].toPlainText()+" / "+link.toPlainText(),link.attribute("href"),true};
 
         spisak.push_back(m);
