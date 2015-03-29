@@ -353,6 +353,7 @@ void NkGames::print(QTableWidget *resultView)
     QTableWidgetItem *h9 = new QTableWidgetItem("pros.r. protivnika");
     QTableWidgetItem *h10 = new QTableWidgetItem("rejting");
     QTableWidgetItem *h12 = new QTableWidgetItem("Rp");
+
     resultView->setHorizontalHeaderItem(0,h1);
     resultView->setHorizontalHeaderItem(1,h10);
     resultView->setHorizontalHeaderItem(2,h2);
@@ -360,10 +361,12 @@ void NkGames::print(QTableWidget *resultView)
     resultView->setHorizontalHeaderItem(3,h22);
     resultView->setHorizontalHeaderItem(4,h23);
 
-    resultView->setHorizontalHeaderItem(5,h3);
-    resultView->setHorizontalHeaderItem(6,h4);
+    resultView->setHorizontalHeaderItem(5,h4);
+
+    resultView->setHorizontalHeaderItem(6,h6);
     resultView->setHorizontalHeaderItem(7,h5);
-    resultView->setHorizontalHeaderItem(8,h6);
+    resultView->setHorizontalHeaderItem(8,h3);
+
     resultView->setHorizontalHeaderItem(9,h7);
     resultView->setHorizontalHeaderItem(10,h8);
     resultView->setHorizontalHeaderItem(11,h9);
@@ -382,6 +385,10 @@ void NkGames::print(QTableWidget *resultView)
     resultView->setColumnWidth(11,60);
     resultView->setColumnWidth(12,60);
     int row=0;
+    QColor c1(91,223,131);
+    QColor c2(240,77,77);
+    QColor c3(183,113,132);
+    QColor c4(77,77,240);
     for(players x : igraci){
         int rp=1200;
         if(x.brojzavrsenih !=0){
@@ -393,43 +400,54 @@ void NkGames::print(QTableWidget *resultView)
              resultView->setItem(row, 0, newItem1);
 
              TableItem *newItem2 = new TableItem(tr("%1").arg(x.brojOdigranih));
+             newItem2->setBackgroundColor(c4);
              resultView->setItem(row, 2, newItem2);
 
              TableItem *newItem22 = new TableItem(tr("%1").arg(x.brojzavrsenih));
+             newItem22->setBackgroundColor(c4);
              resultView->setItem(row, 3, newItem22);
 
              TableItem *newItem23 = new TableItem(tr("%1").arg(x.brojOdigranih-x.brojzavrsenih));
+             newItem23->setBackgroundColor(c4);
              resultView->setItem(row, 4, newItem23);
 
 
              TableItemDouble *newItem3 = new TableItemDouble(tr("%1").arg(x.bodova));
-             resultView->setItem(row, 5, newItem3);
+             newItem3->setBackgroundColor(c2);
+             resultView->setItem(row, 8, newItem3);
 
              TableItem *newItem4 = new TableItem(tr("%1").arg(x.pobeda));
-             resultView->setItem(row, 6, newItem4);
+             newItem4->setBackgroundColor(c1);
+             resultView->setItem(row, 5, newItem4);
 
              TableItem *newItem5 = new TableItem(tr("%1").arg(x.poraza));
+             newItem5->setBackgroundColor(c1);
              resultView->setItem(row, 7, newItem5);
 
              TableItem *newItem6 = new TableItem(tr("%1").arg(x.remija));
-             resultView->setItem(row, 8, newItem6);
+             newItem6->setBackgroundColor(c1);
+             resultView->setItem(row, 6, newItem6);
 
              TableItem *newItem8 = new TableItem(tr("%1").arg(x.bilans));
+             newItem8->setBackgroundColor(c2);
              resultView->setItem(row, 9, newItem8);
 
              //TableItem *newItem9 = new TableItem(tr("%1").arg(x.doprinos));
              //resultView->setItem(row, 8, newItem9);
 
              TableItem *newItem7 = new TableItem(tr("%1").arg(x.procenatPobeda));
+             newItem7->setBackgroundColor(c2);
              resultView->setItem(row, 10, newItem7);
 
              TableItem *newItem10 = new TableItem(tr("%1").arg(x.rejting));
              resultView->setItem(row, 1, newItem10);
 
              TableItem *newItem11 = new TableItem(tr("%1").arg(x.rejtingprotivnika));
+             newItem11->setBackgroundColor(c3);
              resultView->setItem(row, 11, newItem11);
 
              TableItem *newItem12= new TableItem(tr("%1").arg(rp));
+             newItem12->setBackgroundColor(c3);
              resultView->setItem(row, 12, newItem12);
              row++;
     }
