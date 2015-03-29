@@ -32,6 +32,7 @@ struct players{
     int rejting;
     int rejtingprotivnika;
     int brojzavrsenih;
+    QVector<int> reitinziprotivnika;
 };
 
 class NkGames : public QObject
