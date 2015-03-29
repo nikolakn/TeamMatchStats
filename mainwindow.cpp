@@ -204,7 +204,8 @@ void MainWindow::prebrojcekirane()
         }
     }
     QString str="";
-    setWindowTitle("broj odabranih: "+str.setNum(brojcekiranih));
+    QString str1="";
+    setWindowTitle("Tim: ("+ tim->text()+") Ukupan broj mečeva u bazi: ("+str1.setNum(model->rowCount()) +") Broj odabranih mečeva: ("+str.setNum(brojcekiranih)+")");
 }
 
 void MainWindow::onOK_click()
