@@ -51,6 +51,7 @@ public slots:
     void onM3();
     void onM4();
     void onM5();
+    void onM8();
     void newFile();
     void open();
     void save();
@@ -84,6 +85,7 @@ private:
     QPushButton *m5;
     QPushButton *m6;
     QPushButton *m7;
+    QPushButton *m8;
     NkWeb web;
     NkMecevi mecevi;
     NkGames games;

@@ -59,9 +59,12 @@ MainWindow::MainWindow(QWidget *parent) :
     m4 = new QPushButton(tr("Naziv sadrzi..."));
     m5 = new QPushButton(tr("Unesi rucno link od meča..."));
     m6 = new QPushButton(tr("Napravi tabelu>>>"));
+
+    m8 = new QPushButton(tr("Poslednjih x meceva"));
     levo->addWidget(m1);
     levo->addWidget(m2);
     levo->addWidget(m3);
+    levo->addWidget(m8);
     levo->addWidget(m4);
     levo->addWidget(m5);
     levo->addWidget(m6);
@@ -130,6 +133,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m1, SIGNAL(clicked()), this, SLOT(onM1()));
     connect(m2, SIGNAL(clicked()), this, SLOT(onM2()));
     connect(m3, SIGNAL(clicked()), this, SLOT(onM3()));
+    connect(m8, SIGNAL(clicked()), this, SLOT(onM8()));
     connect(m4, SIGNAL(clicked()), this, SLOT(onM4()));
     connect(m5, SIGNAL(clicked()), this, SLOT(onM5()));
     connect(model,
@@ -356,6 +360,21 @@ void MainWindow::onM5()
     Item->setCheckState( Qt::Checked );
     model->appendRow(Item );
     mecevi.addLink(link,ime);
+    prebrojcekirane();
+}
+
+void MainWindow::onM8()
+{
+    int r = QInputDialog::getInt(this,"Input","Poslednjih:",model->rowCount(),0,
+                                 model->rowCount());
+    onM2();
+    if(model->rowCount()<r)
+        r=model->rowCount();
+    int start=model->rowCount()-r;
+    for(int i=start;i< model->rowCount();i++){
+        model->item(i)-> setCheckState( Qt::Checked );
+        mecevi.Check(i);
+    }
     prebrojcekirane();
 }
 
