@@ -357,7 +357,7 @@ void NkGames::print(QTableWidget *resultView)
 {
     resultView->clear();
     resultView->setSortingEnabled(false);
-    resultView->setColumnCount(17);
+    resultView->setColumnCount(14);
     resultView->setRowCount(igraci.size());
 
     QTableWidgetItem *h1 = new QTableWidgetItem("Ime");
@@ -377,57 +377,43 @@ void NkGames::print(QTableWidget *resultView)
     QTableWidgetItem *h10 = new QTableWidgetItem("rejting");
     QTableWidgetItem *h12 = new QTableWidgetItem("Rp");
 
-    QTableWidgetItem *h13 = new QTableWidgetItem("dobijenih meč.");
-    QTableWidgetItem *h14 = new QTableWidgetItem("nerešenih meč.");
-    QTableWidgetItem *h15 = new QTableWidgetItem("izgubljenih meč.");
-
     resultView->setHorizontalHeaderItem(0,h1);
     resultView->setHorizontalHeaderItem(1,h10);
     resultView->setHorizontalHeaderItem(2,h11);
-    resultView->setHorizontalHeaderItem(6,h2);
+    resultView->setHorizontalHeaderItem(3,h2);
 
-    resultView->setHorizontalHeaderItem(3,h13);
-    resultView->setHorizontalHeaderItem(4,h14);
-    resultView->setHorizontalHeaderItem(5,h15);
+    resultView->setHorizontalHeaderItem(4,h22);
+    resultView->setHorizontalHeaderItem(5,h23);
 
+    resultView->setHorizontalHeaderItem(6,h4);
 
+    resultView->setHorizontalHeaderItem(7,h6);
+    resultView->setHorizontalHeaderItem(8,h5);
+    resultView->setHorizontalHeaderItem(9,h3);
 
-    resultView->setHorizontalHeaderItem(7,h22);
-    resultView->setHorizontalHeaderItem(8,h23);
-
-    resultView->setHorizontalHeaderItem(9,h4);
-
-    resultView->setHorizontalHeaderItem(10,h6);
-    resultView->setHorizontalHeaderItem(11,h5);
-    resultView->setHorizontalHeaderItem(12,h3);
-
-    resultView->setHorizontalHeaderItem(13,h7);
-    resultView->setHorizontalHeaderItem(14,h8);
-    resultView->setHorizontalHeaderItem(15,h9);
-    resultView->setHorizontalHeaderItem(16,h12);
+    resultView->setHorizontalHeaderItem(10,h7);
+    resultView->setHorizontalHeaderItem(11,h8);
+    resultView->setHorizontalHeaderItem(12,h9);
+    resultView->setHorizontalHeaderItem(13,h12);
 
     resultView->setColumnWidth(1,60);
-    resultView->setColumnWidth(2,50);
-    resultView->setColumnWidth(3,50);
-    resultView->setColumnWidth(4,50);
-    resultView->setColumnWidth(5,50);
-    resultView->setColumnWidth(6,50);
-    resultView->setColumnWidth(7,50);
-    resultView->setColumnWidth(8,50);
-    resultView->setColumnWidth(9,50);
-    resultView->setColumnWidth(10,50);
-    resultView->setColumnWidth(11,50);
-    resultView->setColumnWidth(12,50);
-    resultView->setColumnWidth(13,50);
-    resultView->setColumnWidth(14,50);
-    resultView->setColumnWidth(15,50);
-    resultView->setColumnWidth(16,50);
+    resultView->setColumnWidth(2,60);
+    resultView->setColumnWidth(3,60);
+    resultView->setColumnWidth(4,60);
+    resultView->setColumnWidth(5,60);
+    resultView->setColumnWidth(6,60);
+    resultView->setColumnWidth(7,60);
+    resultView->setColumnWidth(8,60);
+    resultView->setColumnWidth(9,60);
+    resultView->setColumnWidth(10,60);
+    resultView->setColumnWidth(11,60);
+    resultView->setColumnWidth(12,60);
+    resultView->setColumnWidth(13,60);
     int row=0;
     QColor c1(91,223,131);
     QColor c2(240,77,77);
     QColor c3(183,113,132);
     QColor c4(77,77,240);
-    QColor c5(177,177,177);
     for(players x : igraci){
         int rp=1200;
         if(x.brojzavrsenih !=0){
@@ -443,71 +429,54 @@ void NkGames::print(QTableWidget *resultView)
 
              TableItem *newItem2 = new TableItem(tr("%1").arg(x.brojOdigranih));
              newItem2->setBackgroundColor(c4);
-             resultView->setItem(row, 6, newItem2);
+             resultView->setItem(row, 3, newItem2);
 
-
-
-             ///////
-             TableItem *newItemM1 = new TableItem(tr("%1").arg(x.dobijenihmeceva));
-             newItemM1->setBackgroundColor(c5);
-             resultView->setItem(row, 3, newItemM1);
-
-             TableItem *newItemM2 = new TableItem(tr("%1").arg(x.neresenihmeceva));
-             newItemM2->setBackgroundColor(c5);
-             resultView->setItem(row, 4, newItemM2);
-
-             TableItem *newItemM3 = new TableItem(tr("%1").arg(x.izgubljenihmeceva));
-             newItemM3->setBackgroundColor(c5);
-             resultView->setItem(row, 5, newItemM3);
-             ////////////////
-             /// \brief newItem22
-             ///
              TableItem *newItem22 = new TableItem(tr("%1").arg(x.brojzavrsenih));
              newItem22->setBackgroundColor(c4);
-             resultView->setItem(row, 7, newItem22);
+             resultView->setItem(row, 4, newItem22);
 
              TableItem *newItem23 = new TableItem(tr("%1").arg(x.brojOdigranih-x.brojzavrsenih));
              newItem23->setBackgroundColor(c4);
-             resultView->setItem(row, 8, newItem23);
+             resultView->setItem(row, 5, newItem23);
 
 
              TableItemDouble *newItem3 = new TableItemDouble(tr("%1").arg(x.bodova));
              newItem3->setBackgroundColor(c2);
-             resultView->setItem(row, 12, newItem3);
+             resultView->setItem(row, 9, newItem3);
 
              TableItem *newItem4 = new TableItem(tr("%1").arg(x.pobeda));
              newItem4->setBackgroundColor(c1);
-             resultView->setItem(row, 9, newItem4);
+             resultView->setItem(row, 6, newItem4);
 
              TableItem *newItem5 = new TableItem(tr("%1").arg(x.poraza));
              newItem5->setBackgroundColor(c1);
-             resultView->setItem(row, 10, newItem5);
+             resultView->setItem(row, 8, newItem5);
 
              TableItem *newItem6 = new TableItem(tr("%1").arg(x.remija));
              newItem6->setBackgroundColor(c1);
-             resultView->setItem(row, 11, newItem6);
+             resultView->setItem(row, 7, newItem6);
 
              TableItem *newItem8 = new TableItem(tr("%1").arg(x.bilans));
              newItem8->setBackgroundColor(c2);
-             resultView->setItem(row, 13, newItem8);
+             resultView->setItem(row, 10, newItem8);
 
              //TableItem *newItem9 = new TableItem(tr("%1").arg(x.doprinos));
              //resultView->setItem(row, 8, newItem9);
 
              TableItem *newItem7 = new TableItem(tr("%1").arg(x.procenatPobeda));
              newItem7->setBackgroundColor(c2);
-             resultView->setItem(row, 14, newItem7);
+             resultView->setItem(row, 11, newItem7);
 
              TableItem *newItem10 = new TableItem(tr("%1").arg(x.rejting));
              resultView->setItem(row, 1, newItem10);
 
              TableItem *newItem11 = new TableItem(tr("%1").arg(x.rejtingprotivnika));
              newItem11->setBackgroundColor(c3);
-             resultView->setItem(row, 15, newItem11);
+             resultView->setItem(row, 12, newItem11);
 
              TableItem *newItem12= new TableItem(tr("%1").arg(rp));
              newItem12->setBackgroundColor(c3);
-             resultView->setItem(row, 16, newItem12);
+             resultView->setItem(row, 13, newItem12);
              row++;
     }
     resultView->setSortingEnabled(true);
@@ -524,7 +493,7 @@ QString NkGames::copyToClip()
 {
     QString oo;
     QTextStream s(&oo);
-    s << "Ime;"<<"Rejting;" <<"Meceva;"<<"Dobijenih meceva;"<<"Neresenih meceva;"<<"izgubljenih meceva;"<<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"pobede;"<<"remi;"<<"porazi;"<<"bodovi;"<<"bilans;"<<"%;"<<"pro.r. protivnika;"<<"Rp"<<endl;
+    s << "Ime;"<<"Rejting;" <<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"bodovi;"<<"pobede;"<<"porazi;"<<"remi;"<<"bilans;"<<"%;"<<"pro.r. protivnika;"<<"Rp"<<endl;
 
     for(players x : igraci){
         int rp=1200;
@@ -535,17 +504,13 @@ QString NkGames::copyToClip()
             rp=1200;
         s << x.Ime << ";";
         s << x.rejting << ";";
-        s << x.brojOdigranih/2<< ";";
-        s << x.dobijenihmeceva<< ";";
-        s << x.neresenihmeceva<< ";";
-        s << x.izgubljenihmeceva<< ";";
         s << x.brojOdigranih<< ";";
         s << x.brojzavrsenih<< ";";
-        s << (x.brojOdigranih-x.brojzavrsenih)<< ";";   
-        s << x.pobeda<< ";";
-        s << x.remija<< ";";
-        s << x.poraza<< ";";
+        s << (x.brojOdigranih-x.brojzavrsenih)<< ";";
         s << x.bodova<< ";";
+        s << x.pobeda<< ";";
+        s << x.poraza<< ";";
+        s << x.remija<< ";";
         s << x.bilans<< ";";
         //s << x.doprinos<< ";";
         s << x.procenatPobeda<< ";";
