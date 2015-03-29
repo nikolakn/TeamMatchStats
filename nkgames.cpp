@@ -180,9 +180,10 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 r2=r2.right(r2.size()-1);
                 int rp = r2.toInt();
                 //rp=rp;
-                if(rp!=0)
-                    x.reitinziprotivnika.push_back(rp);
-
+                if(rp!=0){
+                    if(trenutnozavrsenih>0)
+                        x.reitinziprotivnika.push_back(rp);
+                }
                 x.bodova+=bodovi;
                 x.bilans = x.pobeda - x.poraza;
 
@@ -293,9 +294,10 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
             i.reitinziprotivnika.clear();
             i.rejtingprotivnika=rp;
             i.rejtingprotivnika=i.rejtingprotivnika;
-            if(i.rejtingprotivnika!=0)
+            if(i.rejtingprotivnika!=0){
+                if(i.brojzavrsenih>0)
                 i.reitinziprotivnika.push_back(i.rejtingprotivnika);
-
+            }
 
             i.bilans = i.pobeda - i.poraza;
             i.bodova=bodovi;

@@ -211,9 +211,9 @@ void MainWindow::onOK_click()
 {
     // games.print(resultView);
     resultView->clear();
-    model->clear();
+    //model->clear();
     games.clear();
-    mecevi.clear();
+    //mecevi.clear();
     kraj=0;
     isGame=false;
     strana=1;
