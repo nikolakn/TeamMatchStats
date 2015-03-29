@@ -32,6 +32,9 @@ struct players{
     int rejting;
     int rejtingprotivnika;
     int brojzavrsenih;
+    int dobijenihmeceva;
+    int izgubljenihmeceva;
+    int neresenihmeceva;
     QVector<int> reitinziprotivnika;
 };
 
