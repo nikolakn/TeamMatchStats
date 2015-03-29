@@ -524,7 +524,7 @@ QString NkGames::copyToClip()
 {
     QString oo;
     QTextStream s(&oo);
-    s << "Ime;"<<"Rejting;" <<"Mečeva;"<<"Dobijenih mečeva;"<<"Nerešenih mečeva;"<<"izgubljenih mečeva;"<<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"pobede;"<<"remi;"<<"porazi;"<<"bodovi;"<<"bilans;"<<"%;"<<"pro.r. protivnika;"<<"Rp"<<endl;
+    s << "Ime;"<<"Rejting;" <<"Meceva;"<<"Dobijenih meceva;"<<"Neresenih meceva;"<<"izgubljenih meceva;"<<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"pobede;"<<"remi;"<<"porazi;"<<"bodovi;"<<"bilans;"<<"%;"<<"pro.r. protivnika;"<<"Rp"<<endl;
 
     for(players x : igraci){
         int rp=1200;
