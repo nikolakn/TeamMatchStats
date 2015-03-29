@@ -182,7 +182,11 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 x.bilans = x.pobeda - x.poraza;
 
                 x.doprinos=x.bilans*x.bodova;
-                x.procenatPobeda=(x.bodova*100.0/x.brojOdigranih);
+                if(x.brojzavrsenih!=0 || x.bodova!=0){
+                    x.procenatPobeda=(x.bodova*100.0/x.brojzavrsenih);
+                } else{
+                    x.procenatPobeda=0;
+                }
                 ////////////
                 nasao = true;
                 goto petlja;
@@ -269,7 +273,11 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
             i.bilans = i.pobeda - i.poraza;
             i.bodova=bodovi;
             i.doprinos=i.bilans*i.bodova;
-            i.procenatPobeda=(i.bodova*100.0/i.brojOdigranih);
+            if(i.brojzavrsenih!=0 || i.bodova!=0){
+                i.procenatPobeda=(i.bodova*100.0/i.brojzavrsenih);
+            } else{
+                i.procenatPobeda=0;
+            }
 
             igraci.push_back(i);
         }
