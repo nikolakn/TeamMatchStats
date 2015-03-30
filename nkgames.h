@@ -30,12 +30,25 @@ struct players{
     int procenatPobeda;
     long doprinos;
     int rejting;
-    int rejtingprotivnika;
+    int Pzp;
+    int Prp;
     int brojzavrsenih;
     int dobijenihmeceva;
     int izgubljenihmeceva;
     int neresenihmeceva;
     QVector<int> reitinziprotivnika;
+    QVector<int> reitinziprotivnika2;
+};
+enum TipColone{CEO_BROJ,DECIMALNI,SLOVA};
+struct TableInfo{
+    int colona;
+    int sirina;
+    QString imekolone;
+    QColor boja;
+    TipColone t;
+    int c;
+    double d;
+    QString s;
 };
 
 class NkGames : public QObject

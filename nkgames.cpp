@@ -13,7 +13,7 @@
 #include <QStringList>
 #include "TableItem.h"
 #include "TableItemDouble.h"
-
+#include "cmath"
 NkGames::NkGames(QObject *parent) :
     QObject(parent)
 {
@@ -125,7 +125,7 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 int raiting=r1.toInt();
 
                 if(raiting > x.rejting){
-                        x.rejting=raiting;
+                    x.rejting=raiting;
                 }
                 int trenutnozavrsenih=0;
                 //dali je zavrsena
@@ -173,9 +173,9 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                     }
                     if(bodovi==1){
                         if(bodoviProt==0){
-                           x.pobeda+=1;
-                           x.brojzavrsenih+=1;
-                           trenutnozavrsenih=1;
+                            x.pobeda+=1;
+                            x.brojzavrsenih+=1;
+                            trenutnozavrsenih=1;
                         }
                     }
                     if(bodoviProt==1.5)
@@ -189,10 +189,17 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 r2=r2.right(r2.size()-1);
                 int rp = r2.toInt();
                 //rp=rp;
-                if(rp!=0){
-                    if(trenutnozavrsenih>0)
-                        x.reitinziprotivnika.push_back(rp);
+                if(rp==0)
+                    rp=1200;
+                if(trenutnozavrsenih==1)
+                    x.reitinziprotivnika.push_back(rp);
+                if(trenutnozavrsenih==2)  {
+                    x.reitinziprotivnika.push_back(rp);
+                    x.reitinziprotivnika.push_back(rp);
                 }
+
+                x.reitinziprotivnika2.push_back(rp);
+
                 x.bodova+=bodovi;
                 x.bilans = x.pobeda - x.poraza;
 
@@ -203,6 +210,7 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 } else{
                     x.procenatPobeda=0;
                 }
+                if(x.procenatPobeda<0) x.procenatPobeda=0;
 
                 long rr2=0;
                 for(int pp1 : x.reitinziprotivnika){
@@ -211,21 +219,42 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                     else
                         rr2+=pp1;
                 }
-                if(x.reitinziprotivnika.size()!=0){
+                if( x.reitinziprotivnika.size()!=0){
 
                     rr2=(rr2/x.reitinziprotivnika.size());
                 }
                 else{
                     rr2=1200;
                 }
-                x.rejtingprotivnika=(int)rr2;
+                if(rr2==0)
+                    rr2=1200;
+                x.Pzp=(int)rr2;
+
+                ///////////////
+                rr2=0;
+                for(int pp2 : x.reitinziprotivnika2){
+                    if(rr2==0)
+                        rr2=pp2;
+                    else
+                        rr2+=pp2;
+                }
+                if( x.reitinziprotivnika2.size()!=0){
+
+                    rr2=(rr2/x.reitinziprotivnika2.size());
+                }
+                else{
+                    rr2=1200;
+                }
+                if(rr2==0)
+                    rr2=1200;
+                x.Prp=(int)rr2;
                 ////////////
                 nasao = true;
                 goto petlja;
             }
         }
 
-        petlja:
+petlja:
 
         if(nasao==false){
 
@@ -298,8 +327,8 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 }
                 if(bodovi==1){
                     if(bodoviProt==0){
-                       i.pobeda=1;
-                       i.brojzavrsenih=1;
+                        i.pobeda=1;
+                        i.brojzavrsenih=1;
                     }
                 }
                 if(bodoviProt==1.5)
@@ -314,22 +343,32 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
             int rp = r2.toInt();
 
             i.reitinziprotivnika.clear();
-            i.rejtingprotivnika=rp;
-            i.rejtingprotivnika=i.rejtingprotivnika;
-            if(i.rejtingprotivnika!=0){
-                if(i.brojzavrsenih>0)
-                i.reitinziprotivnika.push_back(i.rejtingprotivnika);
+            i.Pzp=rp;
+            if(i.Pzp==0) i.Pzp=1200;
+            if(i.brojzavrsenih==1)
+                i.reitinziprotivnika.push_back(i.Pzp);
+            if(i.brojzavrsenih==2){
+                i.reitinziprotivnika.push_back(i.Pzp);
+                i.reitinziprotivnika.push_back(i.Pzp);
             }
 
+            //reiting protivnika 2
+            i.reitinziprotivnika2.clear();
+            i.Prp=rp;
+            if(i.Prp==0)i.Prp=1200;
+
+            i.reitinziprotivnika2.push_back(i.Prp);
+
+            //////
             i.bilans = i.pobeda - i.poraza;
             i.bodova=bodovi;
             i.doprinos=i.bilans*i.bodova;
             if(i.brojzavrsenih!=0 || i.bodova!=0){
-                i.procenatPobeda=(i.bodova*100.0/i.brojzavrsenih);
+                i.procenatPobeda=(i.bodova*100.0/(i.brojzavrsenih/2));
             } else{
                 i.procenatPobeda=0;
             }
-
+            if(i.procenatPobeda<0) i.procenatPobeda=0;
             long rr=0;
             for(auto pp : i.reitinziprotivnika){
                 if(rr==0)
@@ -341,7 +380,25 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 rr=rr/i.reitinziprotivnika.size();
             else
                 rr=1200;
-            i.rejtingprotivnika=(int)rr;
+            if(rr==0)
+                rr=1200;
+            i.Pzp=(int)rr;
+            ////////
+            rr=0;
+            for(auto pp2 : i.reitinziprotivnika2){
+                if(rr==0)
+                    rr=pp2;
+                else
+                    rr+=pp2;
+            }
+            if(i.reitinziprotivnika2.size()!=0)
+                rr=rr/i.reitinziprotivnika2.size();
+            else
+                rr=1200;
+            if(rr==0)
+                rr=1200;
+            i.Prp=(int)rr;
+            /////////
             igraci.push_back(i);
         }
 
@@ -357,7 +414,7 @@ void NkGames::print(QTableWidget *resultView)
 {
     resultView->clear();
     resultView->setSortingEnabled(false);
-    resultView->setColumnCount(17);
+    resultView->setColumnCount(18);
     resultView->setRowCount(igraci.size());
 
     QTableWidgetItem *h1 = new QTableWidgetItem("Ime");
@@ -373,8 +430,9 @@ void NkGames::print(QTableWidget *resultView)
     QTableWidgetItem *h6 = new QTableWidgetItem("remi");
     QTableWidgetItem *h7 = new QTableWidgetItem("bilans");
     QTableWidgetItem *h8 = new QTableWidgetItem("%");
-    QTableWidgetItem *h9 = new QTableWidgetItem("pros.r. protivnika");
+    QTableWidgetItem *h9 = new QTableWidgetItem("Rzp");
     QTableWidgetItem *h10 = new QTableWidgetItem("rejting");
+    QTableWidgetItem *h122 = new QTableWidgetItem("Rrp");
     QTableWidgetItem *h12 = new QTableWidgetItem("Rp");
 
     QTableWidgetItem *h13 = new QTableWidgetItem("dobijenih meč.");
@@ -403,8 +461,10 @@ void NkGames::print(QTableWidget *resultView)
 
     resultView->setHorizontalHeaderItem(13,h7);
     resultView->setHorizontalHeaderItem(14,h8);
-    resultView->setHorizontalHeaderItem(15,h9);
-    resultView->setHorizontalHeaderItem(16,h12);
+
+    resultView->setHorizontalHeaderItem(15,h122);
+    resultView->setHorizontalHeaderItem(16,h9);
+    resultView->setHorizontalHeaderItem(17,h12);
 
     resultView->setColumnWidth(1,60);
     resultView->setColumnWidth(2,50);
@@ -422,6 +482,7 @@ void NkGames::print(QTableWidget *resultView)
     resultView->setColumnWidth(14,50);
     resultView->setColumnWidth(15,50);
     resultView->setColumnWidth(16,50);
+    resultView->setColumnWidth(17,50);
     int row=0;
     QColor c1(91,223,131);
     QColor c2(240,77,77);
@@ -431,84 +492,88 @@ void NkGames::print(QTableWidget *resultView)
     for(players x : igraci){
         int rp=1200;
         if(x.brojzavrsenih !=0){
-             rp = x.rejtingprotivnika + (400 * x.bilans / x.brojzavrsenih);
+            rp = x.Pzp + (400 * x.bilans / x.brojzavrsenih);
         }
         if(rp<0)
             rp=1200;
-             QTableWidgetItem *newItem1 = new QTableWidgetItem(x.Ime);
-             resultView->setItem(row, 0, newItem1);
+        QTableWidgetItem *newItem1 = new QTableWidgetItem(x.Ime);
+        resultView->setItem(row, 0, newItem1);
 
-             TableItem *newItem111 = new TableItem(tr("%1").arg(x.brojOdigranih/2));
-             resultView->setItem(row, 2, newItem111);
+        TableItem *newItem111 = new TableItem(tr("%1").arg(x.brojOdigranih/2));
+        resultView->setItem(row, 2, newItem111);
 
-             TableItem *newItem2 = new TableItem(tr("%1").arg(x.brojOdigranih));
-             newItem2->setBackgroundColor(c4);
-             resultView->setItem(row, 6, newItem2);
-
-
-
-             ///////
-             TableItem *newItemM1 = new TableItem(tr("%1").arg(x.dobijenihmeceva));
-             newItemM1->setBackgroundColor(c5);
-             resultView->setItem(row, 3, newItemM1);
-
-             TableItem *newItemM2 = new TableItem(tr("%1").arg(x.neresenihmeceva));
-             newItemM2->setBackgroundColor(c5);
-             resultView->setItem(row, 4, newItemM2);
-
-             TableItem *newItemM3 = new TableItem(tr("%1").arg(x.izgubljenihmeceva));
-             newItemM3->setBackgroundColor(c5);
-             resultView->setItem(row, 5, newItemM3);
-             ////////////////
-             /// \brief newItem22
-             ///
-             TableItem *newItem22 = new TableItem(tr("%1").arg(x.brojzavrsenih));
-             newItem22->setBackgroundColor(c4);
-             resultView->setItem(row, 7, newItem22);
-
-             TableItem *newItem23 = new TableItem(tr("%1").arg(x.brojOdigranih-x.brojzavrsenih));
-             newItem23->setBackgroundColor(c4);
-             resultView->setItem(row, 8, newItem23);
+        TableItem *newItem2 = new TableItem(tr("%1").arg(x.brojOdigranih));
+        newItem2->setBackgroundColor(c4);
+        resultView->setItem(row, 6, newItem2);
 
 
-             TableItemDouble *newItem3 = new TableItemDouble(tr("%1").arg(x.bodova));
-             newItem3->setBackgroundColor(c2);
-             resultView->setItem(row, 12, newItem3);
 
-             TableItem *newItem4 = new TableItem(tr("%1").arg(x.pobeda));
-             newItem4->setBackgroundColor(c1);
-             resultView->setItem(row, 9, newItem4);
+        ///////
+        TableItem *newItemM1 = new TableItem(tr("%1").arg(x.dobijenihmeceva));
+        newItemM1->setBackgroundColor(c5);
+        resultView->setItem(row, 3, newItemM1);
 
-             TableItem *newItem5 = new TableItem(tr("%1").arg(x.poraza));
-             newItem5->setBackgroundColor(c1);
-             resultView->setItem(row, 11, newItem5);
+        TableItem *newItemM2 = new TableItem(tr("%1").arg(x.neresenihmeceva));
+        newItemM2->setBackgroundColor(c5);
+        resultView->setItem(row, 4, newItemM2);
 
-             TableItem *newItem6 = new TableItem(tr("%1").arg(x.remija));
-             newItem6->setBackgroundColor(c1);
-             resultView->setItem(row, 10, newItem6);
+        TableItem *newItemM3 = new TableItem(tr("%1").arg(x.izgubljenihmeceva));
+        newItemM3->setBackgroundColor(c5);
+        resultView->setItem(row, 5, newItemM3);
+        ////////////////
+        /// \brief newItem22
+        ///
+        TableItem *newItem22 = new TableItem(tr("%1").arg(x.brojzavrsenih));
+        newItem22->setBackgroundColor(c4);
+        resultView->setItem(row, 7, newItem22);
 
-             TableItem *newItem8 = new TableItem(tr("%1").arg(x.bilans));
-             newItem8->setBackgroundColor(c2);
-             resultView->setItem(row, 13, newItem8);
+        TableItem *newItem23 = new TableItem(tr("%1").arg(x.brojOdigranih-x.brojzavrsenih));
+        newItem23->setBackgroundColor(c4);
+        resultView->setItem(row, 8, newItem23);
 
-             //TableItem *newItem9 = new TableItem(tr("%1").arg(x.doprinos));
-             //resultView->setItem(row, 8, newItem9);
 
-             TableItem *newItem7 = new TableItem(tr("%1").arg(x.procenatPobeda));
-             newItem7->setBackgroundColor(c2);
-             resultView->setItem(row, 14, newItem7);
+        TableItemDouble *newItem3 = new TableItemDouble(tr("%1").arg(x.bodova));
+        newItem3->setBackgroundColor(c2);
+        resultView->setItem(row, 12, newItem3);
 
-             TableItem *newItem10 = new TableItem(tr("%1").arg(x.rejting));
-             resultView->setItem(row, 1, newItem10);
+        TableItem *newItem4 = new TableItem(tr("%1").arg(x.pobeda));
+        newItem4->setBackgroundColor(c1);
+        resultView->setItem(row, 9, newItem4);
 
-             TableItem *newItem11 = new TableItem(tr("%1").arg(x.rejtingprotivnika));
-             newItem11->setBackgroundColor(c3);
-             resultView->setItem(row, 15, newItem11);
+        TableItem *newItem5 = new TableItem(tr("%1").arg(x.poraza));
+        newItem5->setBackgroundColor(c1);
+        resultView->setItem(row, 11, newItem5);
 
-             TableItem *newItem12= new TableItem(tr("%1").arg(rp));
-             newItem12->setBackgroundColor(c3);
-             resultView->setItem(row, 16, newItem12);
-             row++;
+        TableItem *newItem6 = new TableItem(tr("%1").arg(x.remija));
+        newItem6->setBackgroundColor(c1);
+        resultView->setItem(row, 10, newItem6);
+
+        TableItem *newItem8 = new TableItem(tr("%1").arg(x.bilans));
+        newItem8->setBackgroundColor(c2);
+        resultView->setItem(row, 13, newItem8);
+
+        //TableItem *newItem9 = new TableItem(tr("%1").arg(x.doprinos));
+        //resultView->setItem(row, 8, newItem9);
+
+        TableItem *newItem7 = new TableItem(tr("%1").arg(x.procenatPobeda));
+        newItem7->setBackgroundColor(c2);
+        resultView->setItem(row, 14, newItem7);
+
+        TableItem *newItem10 = new TableItem(tr("%1").arg(x.rejting));
+        resultView->setItem(row, 1, newItem10);
+
+        TableItem *newItem110 = new TableItem(tr("%1").arg(x.Prp));
+        newItem110->setBackgroundColor(c3);
+        resultView->setItem(row, 15, newItem110);
+
+        TableItem *newItem11 = new TableItem(tr("%1").arg(x.Pzp));
+        newItem11->setBackgroundColor(c3);
+        resultView->setItem(row, 16, newItem11);
+
+        TableItem *newItem12= new TableItem(tr("%1").arg(rp));
+        newItem12->setBackgroundColor(c3);
+        resultView->setItem(row, 17, newItem12);
+        row++;
     }
     resultView->setSortingEnabled(true);
     resultView->sortByColumn(1);
@@ -529,7 +594,7 @@ QString NkGames::copyToClip()
     for(players x : igraci){
         int rp=1200;
         if(x.brojzavrsenih !=0){
-             rp = x.rejtingprotivnika + (400 * x.bilans / x.brojzavrsenih);
+            rp = x.Pzp + (400 * x.bilans / x.brojzavrsenih);
         }
         if(rp<0)
             rp=1200;
@@ -549,7 +614,7 @@ QString NkGames::copyToClip()
         s << x.bilans<< ";";
         //s << x.doprinos<< ";";
         s << x.procenatPobeda<< ";";
-        s << x.rejtingprotivnika << ";";
+        s << x.Pzp << ";";
         s << rp << endl;
     }
     return s.readAll();
@@ -560,29 +625,34 @@ QString NkGames::toolbar()
     QString oo;
     QTextStream s(&oo);
     int odigranih=0;
-    int utoku=0;
     int zavrsene=0;
     long raiting=0;
     long protivnik=0;
     int pobeda=0;
     int poraza=0;
     int remija=0;
+    long dpoena = 0;
+    long ipoena = 0;
+    long rpoena = 0;
     for(players x : igraci){
+        dpoena += x.dobijenihmeceva;
+        ipoena += x.izgubljenihmeceva;
         odigranih+=x.brojOdigranih;
+        rpoena+=x.neresenihmeceva;
         zavrsene+=x.brojzavrsenih;
         if(raiting==0)
             raiting=x.rejting;
         else{
             if(x.rejting!=0)
-            raiting+=x.rejting;
+                raiting+=x.rejting;
 
         }
         if(protivnik==0)
 
-            protivnik=x.rejtingprotivnika;
+            protivnik=x.Pzp;
         else{
-            if(x.rejtingprotivnika!=0)
-                protivnik+=x.rejtingprotivnika;
+            if(x.Pzp!=0)
+                protivnik+=x.Pzp;
         }
         pobeda+=x.pobeda;
         poraza+=x.poraza;
@@ -593,6 +663,12 @@ QString NkGames::toolbar()
         raiting = raiting/igraci.size();
         protivnik = protivnik/igraci.size();
         s << "Broj Meceva: " << nkbrojmeceva << endl;
+        s << "Dobijenih susreta(igraci): " << dpoena << endl;
+        s << "izgubljenih susreta(igraci): " << ipoena << endl;
+        s << "izjednacenih susreta(igraci): " << rpoena << endl;
+        if((rpoena+dpoena+ipoena)!=0)
+        s << "% pobeda u susretima(igraci): " << ((dpoena*100.0)/(rpoena+dpoena+ipoena)) << endl;
+
         s << "ukupno igraca: " << igraci.size() << endl;
         s << "ukupno partija: " << odigranih << endl;
         s << "ukupno zavrsenih: " << zavrsene << endl;
@@ -602,6 +678,7 @@ QString NkGames::toolbar()
         s << "Broj remija: " << remija << endl;
         s << "Prosecan rejting: " << raiting << endl;
         s << "Prosecan rejting protivnika: " << protivnik << endl;
+
     }
     return s.readAll();
 }
