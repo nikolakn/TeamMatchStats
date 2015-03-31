@@ -128,6 +128,13 @@ MainWindow::MainWindow(QWidget *parent) :
     toolMenu->addAction(tablestat);
     toolMenu->addAction(copytablestat);
 
+
+    about = new QAction(tr("&O Programu"), this);
+    connect(about, SIGNAL(triggered()), this, SLOT(onAbout()));
+    help = menuBar()->addMenu(tr("&Help"));
+    help->addAction(about);
+
+
     connect(dugme1, SIGNAL(clicked()), this, SLOT(onOK_click()));
     connect(dugme2, SIGNAL(clicked()), this, SLOT(onCVS_click()));
     connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
@@ -482,6 +489,12 @@ void MainWindow::copynktableStat()
 {
     QClipboard *p_Clipboard = QApplication::clipboard();
     p_Clipboard->setText(games.toolbar());
+
+}
+
+void MainWindow::onAbout()
+{
+    QMessageBox::about(this,"O programu"," (C) Copyright 2015 \n Nikola Knežević <nkcodeplus@gmail.com> \n Goran Lapčević <gorlap@gmail.com> \n\nThis program is free software; you can redistribute it and/or\n modify it under the terms of the GNU General Public License\nas published by the Free Software Foundation; version 2\nof the License." );
 
 }
 

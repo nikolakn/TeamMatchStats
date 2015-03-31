@@ -230,10 +230,8 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                     rr2=(rr2/x.reitinziprotivnika.size());
                 }
                 else{
-                    rr2=1200;
+                    rr2=0;
                 }
-                if(rr2==0)
-                    rr2=1200;
                 x.Pzp=(int)rr2;
 
                 ///////////////
@@ -249,10 +247,9 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                     rr2=(rr2/x.reitinziprotivnika2.size());
                 }
                 else{
-                    rr2=1200;
+                    rr2=0;
                 }
-                if(rr2==0)
-                    rr2=1200;
+
                 x.Prp=(int)rr2;
                 ////////////
                 nasao = true;
@@ -385,9 +382,7 @@ petlja:
             if(i.reitinziprotivnika.size()!=0)
                 rr=rr/i.reitinziprotivnika.size();
             else
-                rr=1200;
-            if(rr==0)
-                rr=1200;
+                rr=0;
             i.Pzp=(int)rr;
             ////////
             rr=0;
@@ -400,9 +395,8 @@ petlja:
             if(i.reitinziprotivnika2.size()!=0)
                 rr=rr/i.reitinziprotivnika2.size();
             else
-                rr=1200;
-            if(rr==0)
-                rr=1200;
+                rr=0;
+
             i.Prp=(int)rr;
             /////////
             igraci.push_back(i);
@@ -438,7 +432,7 @@ void NkGames::print(QTableWidget *resultView)
     QTableWidgetItem *h8 = new QTableWidgetItem("%");
     QTableWidgetItem *h9 = new QTableWidgetItem("Rzp");
     QTableWidgetItem *h10 = new QTableWidgetItem("rejting");
-    QTableWidgetItem *h122 = new QTableWidgetItem("Rrp");
+    QTableWidgetItem *h122 = new QTableWidgetItem("Prp");
     QTableWidgetItem *h12 = new QTableWidgetItem("Rp");
 
     QTableWidgetItem *h13 = new QTableWidgetItem("dobijenih meč.");
@@ -496,12 +490,12 @@ void NkGames::print(QTableWidget *resultView)
     QColor c4(77,77,240);
     QColor c5(177,177,177);
     for(players x : igraci){
-        int rp=1200;
+        int rp=0;
         if(x.brojzavrsenih !=0){
             rp = x.Pzp + (400 * x.bilans / x.brojzavrsenih);
         }
         if(rp<0)
-            rp=1200;
+            rp=0;
         QTableWidgetItem *newItem1 = new QTableWidgetItem(x.Ime);
         resultView->setItem(row, 0, newItem1);
 
@@ -595,15 +589,15 @@ QString NkGames::copyToClip()
 {
     QString oo;
     QTextStream s(&oo);
-    s << "Ime;"<<"Rejting;" <<"Meceva;"<<"Dobijenih meceva;"<<"Neresenih meceva;"<<"izgubljenih meceva;"<<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"pobede;"<<"remi;"<<"porazi;"<<"bodovi;"<<"bilans;"<<"%;"<<"pro.r. protivnika;"<<"Rp"<<endl;
+    s << "Ime;"<<"Rejting;" <<"Meceva;"<<"Dobijenih meceva;"<<"Neresenih meceva;"<<"izgubljenih meceva;"<<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"pobede;"<<"remi;"<<"porazi;"<<"bodovi;"<<"bilans;"<<"%;"<<"Prp;"<<"Rzp;"<<"Rp"<<endl;
 
     for(players x : igraci){
-        int rp=1200;
+        int rp=0;
         if(x.brojzavrsenih !=0){
             rp = x.Pzp + (400 * x.bilans / x.brojzavrsenih);
         }
         if(rp<0)
-            rp=1200;
+            rp=0;
         s << x.Ime << ";";
         s << x.rejting << ";";
         s << x.brojOdigranih/2<< ";";
@@ -620,6 +614,7 @@ QString NkGames::copyToClip()
         s << x.bilans<< ";";
         //s << x.doprinos<< ";";
         s << x.procenatPobeda<< ";";
+         s << x.Prp << ";";
         s << x.Pzp << ";";
         s << rp << endl;
     }
@@ -655,10 +650,10 @@ QString NkGames::toolbar()
         }
         if(protivnik==0)
 
-            protivnik=x.Pzp;
+            protivnik=x.Prp;
         else{
             if(x.Pzp!=0)
-                protivnik+=x.Pzp;
+                protivnik+=x.Prp;
         }
         pobeda+=x.pobeda;
         poraza+=x.poraza;
@@ -673,7 +668,7 @@ QString NkGames::toolbar()
         s << "izgubljenih susreta(igraci): " << ipoena << endl;
         s << "izjednacenih susreta(igraci): " << rpoena << endl;
         if((rpoena+dpoena+ipoena)!=0)
-        s << "% pobeda u susretima(igraci): " << ((dpoena*100.0)/(rpoena+dpoena+ipoena)) << endl;
+            s << "% pobeda u susretima(igraci): " << ((dpoena*100.0)/(rpoena+dpoena+ipoena)) << endl;
 
         s << "ukupno igraca: " << igraci.size() << endl;
         s << "ukupno partija: " << odigranih << endl;
