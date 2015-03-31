@@ -37,15 +37,21 @@ bool NkMecevi::parsPage(QString html, int st)
     QWebElement result = parse.findFirst("table.alternate tbody");
     QWebElementCollection result2 = result.findAll("tr");
     for(QWebElement x : result2){
-        QWebElementCollection result2 = result.findAll("td");
+        //qDebug() << x.toPlainText();
+        QWebElementCollection result2 = x.findAll("td");
         QWebElement link = x.findFirst("a");
         QWebElementCollection aaa = x.findAll("a");
-        //qDebug()<<aaa[2].toPlainText();
 
-        Mec m={aaa[2].toPlainText()+" / "+link.toPlainText(),link.attribute("href"),true};
+        QString a1=result2[2].toPlainText();
+        a1=a1.leftJustified(5, ' ');
+        QString a2=result2[3].toPlainText();
+        //a2=a2.leftJustified(12, ' ');
+        QString a3=result2[4].toPlainText();
+        QString a4=result2[5].toPlainText();
+        Mec m={aaa[2].toPlainText()+" / "+link.toPlainText(),link.attribute("href"),true,a1,a2,a3,a4};
 
         spisak.push_back(m);
-        //qDebug() << link.toPlainText() << link.attribute("href");
+
     }
     return true;
 }
@@ -70,14 +76,20 @@ bool NkMecevi::parsPageUtoku(QString html)
     QWebElement result = parse.findFirst("tbody");
     QWebElementCollection result2 = result.findAll("tr");
     for(QWebElement x : result2){
-
-        QWebElementCollection result2 = result.findAll("td");
+        //qDebug() << x.toPlainText();
+        QWebElementCollection result2 = x.findAll("td");
         QWebElement link = x.findFirst("a");
         QWebElementCollection aaa = x.findAll("a");
         //qDebug()<<aaa[2].toPlainText();
         //qDebug() <<link.attribute("href");
-        Mec m={aaa[2].toPlainText()+" / "+link.toPlainText(),link.attribute("href"),true};
-
+        QString a1=result2[2].toPlainText();
+        a1=a1.leftJustified(5, ' ');
+        QString a2=result2[3].toPlainText();
+        //a2=a2.leftJustified(12, ' ');
+        QString a3=result2[4].toPlainText();
+        QString a4=result2[5].toPlainText();
+        Mec m={aaa[2].toPlainText()+" / "+link.toPlainText(),link.attribute("href"),true,a1,a2,a3,a4};
+        //qDebug()<<result2[2].toPlainText()<<" "<<result2[3].toPlainText()<<" "<<result2[4].toPlainText()<<" "<<result2[5].toPlainText();
         spisak.push_back(m);
         //qDebug() << link.toPlainText() << link.attribute("href");
     }
@@ -113,8 +125,10 @@ void NkMecevi::clear()
 
 void NkMecevi::addLink(QString naziv,QString ime)
 {
-    Mec m={ime,"/groups/team_match?id="+naziv,true};
-
+    Mec m;
+    m.timovi=ime;
+    m.link = "/groups/team_match?id="+naziv;
+    m.selekted = true;
     spisak.push_back(m);
 }
 
@@ -156,6 +170,7 @@ void NkMecevi::save(QDataStream &out)
            out << (int)1;
         else
            out << (int)0;
+        out << x.tabli << x.rez << x.procenat << x.pobeda;
     }
 }
 
@@ -172,6 +187,12 @@ void NkMecevi::open(QDataStream &in)
        int tt;
        in >> tt;
        m.selekted=tt;
+
+       in >> m.tabli;
+       in >> m.rez;
+       in >> m.procenat;
+       in >> m.pobeda;
+
        spisak.push_back(m);
 
     }

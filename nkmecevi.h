@@ -22,6 +22,10 @@ struct Mec{
     QString timovi;
     QString link;
     bool selekted;
+    QString tabli;
+    QString rez;
+    QString procenat;
+    QString pobeda;
 };
 
 class NkMecevi : public QObject

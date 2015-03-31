@@ -77,6 +77,7 @@ private:
     QListView *listview;
     QStandardItemModel *model;
     QStandardItem *Item;
+    QStandardItem *Item2;
     QTableWidget *resultView;
     QPushButton *m1;
     QPushButton *m2;

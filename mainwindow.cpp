@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m2 = new QPushButton(tr("Nista"));
     m3 = new QPushButton(tr("Prvih x meceva"));
     m4 = new QPushButton(tr("Naziv sadrzi..."));
-    m5 = new QPushButton(tr("Unesi rucno link od meča..."));
+    //m5 = new QPushButton(tr("Unesi rucno link od meča..."));
     m6 = new QPushButton(tr("Napravi tabelu>>>"));
 
     m8 = new QPushButton(tr("Poslednjih x meceva"));
@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     levo->addWidget(m3);
     levo->addWidget(m8);
     levo->addWidget(m4);
-    levo->addWidget(m5);
+    //levo->addWidget(m5);
     levo->addWidget(m6);
     levo->addWidget(listview);
     leftSide->setLayout( levo );
@@ -135,7 +135,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m3, SIGNAL(clicked()), this, SLOT(onM3()));
     connect(m8, SIGNAL(clicked()), this, SLOT(onM8()));
     connect(m4, SIGNAL(clicked()), this, SLOT(onM4()));
-    connect(m5, SIGNAL(clicked()), this, SLOT(onM5()));
+    //connect(m5, SIGNAL(clicked()), this, SLOT(onM5()));
     connect(model,
             SIGNAL(itemChanged(QStandardItem*)), this, SLOT(ReceiveChange(QStandardItem*)));
     ucitavanje=true;
@@ -154,14 +154,39 @@ void MainWindow::makeList()
     for(Mec s : mm){
         Item = new QStandardItem();
         Item->setCheckable( true );
-        Item->setText(s.timovi);
+        QString a2=("("+s.rez+")");
+        Item->setText(s.tabli+" "+a2+"   "+s.timovi);
         if(s.selekted)
             Item->setCheckState( Qt::Checked );
         else
             Item->setCheckState( Qt::Unchecked );
-        //QBrush bb(QColor(255,100,100));
-        //Item->setForeground(bb);
-        model->setItem( i++, Item );
+        if(s.procenat=="Won"){
+            QBrush bb(QColor(50,200,50));
+            Item->setForeground(bb);
+        }
+        if(s.procenat=="Lost"){
+            QBrush bb(QColor(250,100,100));
+            Item->setForeground(bb);
+        }
+        QBrush bb2(QColor(220,220,220));
+        if(s.pobeda=="Winning"){
+            QBrush bb(QColor(50,200,50));
+            Item->setForeground(bb);
+
+            Item->setBackground(bb2);
+        }
+        if(s.pobeda=="Losing"){
+            QBrush bb(QColor(250,100,100));
+            Item->setForeground(bb);
+            Item->setBackground(bb2);
+        }
+        if(s.pobeda=="Tied"){
+            QBrush bb(QColor(0,0,0));
+            Item->setForeground(bb);
+            Item->setBackground(bb2);
+        }
+
+        model->setItem( i++,0, Item );
 
     }
     QString str;
