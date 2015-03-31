@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
     levo->addWidget(listview);
     leftSide->setLayout( levo );
 
-    model = new QStandardItemModel();
+    model = new QStandardItemModel(0,2,this);
 
     listview->setModel( model );
 
@@ -159,7 +159,10 @@ void MainWindow::makeList()
             Item->setCheckState( Qt::Checked );
         else
             Item->setCheckState( Qt::Unchecked );
+        //QBrush bb(QColor(255,100,100));
+        //Item->setForeground(bb);
         model->setItem( i++, Item );
+
     }
     QString str;
     str.setNum(mm.size());
