@@ -21,19 +21,23 @@ NkGames::NkGames(QObject *parent) :
 }
 
 bool NkGames::parsPage(QString html, QString Tim, int vrsta){
-    //qDebug() <<"prolaz";
+
     QString temp=html;
     QRegExp rx("<table class=\"default border-top alternate\">(.+)</table>");
     if (rx.indexIn(html) != -1)
         html = rx.cap(1);
     //qDebug()<<html;
     html="<table>"+html+"</table>";
+
+
     QWebPage page;
     QWebFrame * frame = page.mainFrame();
     frame->setHtml(html);
     QWebElement parse = frame->documentElement();
     QString tabela=parse.toPlainText();
-
+    int ind=tabela.indexOf(QRegExp("Comments"));
+    tabela=tabela.left(ind);
+    //qDebug() <<tabela;
     QStringList list= tabela.split(QRegExp("[\r\n]"),QString::SkipEmptyParts);
     if(list.size()==0) return false;
     QString timovi=list.at(0);
