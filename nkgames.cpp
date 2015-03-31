@@ -364,7 +364,7 @@ petlja:
             i.bodova=bodovi;
             i.doprinos=i.bilans*i.bodova;
             if(i.brojzavrsenih!=0 || i.bodova!=0){
-                i.procenatPobeda=(i.bodova*100.0/(i.brojzavrsenih/2));
+                i.procenatPobeda=(i.bodova*100.0/(i.brojzavrsenih));
             } else{
                 i.procenatPobeda=0;
             }
