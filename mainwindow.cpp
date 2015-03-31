@@ -170,24 +170,53 @@ void MainWindow::makeList()
         else
             Item->setCheckState( Qt::Unchecked );
         if(s.procenat=="Won"){
-            QBrush bb(QColor(50,200,50));
+            QBrush bb(QColor(20,150,20));
             Item->setForeground(bb);
         }
         if(s.procenat=="Lost"){
-            QBrush bb(QColor(250,100,100));
+            QBrush bb(QColor(150,0,0));
             Item->setForeground(bb);
+        }
+        int rez=-1;
+        QStringList list= s.rez.split(QRegExp("[|]"),QString::SkipEmptyParts);
+        if(list.size()==2){
+            QString tabli=s.tabli.trimmed();
+            QString r1=list[0].trimmed();
+            QString r2=list[1].trimmed();
+            double dr1=r1.toDouble();
+            double dr2=r2.toDouble();
+            double tab=tabli.toDouble();
+
+            if(dr1>tab)
+                rez=1;
+            if(dr2>tab)
+                rez=2;
+            //qDebug() << r1 << " " << r2;
         }
         QBrush bb2(QColor(220,220,220));
         if(s.pobeda=="Winning"){
-            QBrush bb(QColor(50,200,50));
-            Item->setForeground(bb);
+            if(rez==1){
+                QBrush bb(QColor(20,150,20));
+                Item->setForeground(bb);
+                Item->setBackground(bb2);
+            } else{
+                QBrush bb(QColor(0,0,200));
+                Item->setForeground(bb);
+                Item->setBackground(bb2);
+            }
 
-            Item->setBackground(bb2);
+
         }
         if(s.pobeda=="Losing"){
-            QBrush bb(QColor(250,100,100));
-            Item->setForeground(bb);
-            Item->setBackground(bb2);
+            if(rez==2){
+                QBrush bb(QColor(150,0,0));
+                Item->setForeground(bb);
+                Item->setBackground(bb2);
+            } else {
+                QBrush bb(QColor(250,100,100));
+                Item->setForeground(bb);
+                Item->setBackground(bb2);
+            }
         }
         if(s.pobeda=="Tied"){
             QBrush bb(QColor(0,0,0));
