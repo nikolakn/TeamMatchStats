@@ -30,8 +30,6 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
         html = rx.cap(1);
     //qDebug()<<html;
     html="<table>"+html+"</table>";
-
-
     QWebPage page;
     QWebFrame * frame = page.mainFrame();
     frame->setHtml(html);
@@ -205,10 +203,8 @@ bool NkGames::parsPage(QString html, QString Tim, int vrsta){
                 }
 
                 x.reitinziprotivnika2.push_back(rp);
-
                 x.bodova+=bodovi;
                 x.bilans = x.pobeda - x.poraza;
-
 
                 x.doprinos=x.bilans*x.bodova;
                 if(x.brojzavrsenih!=0 || x.bodova!=0){
@@ -276,7 +272,6 @@ petlja:
             i.dobijenihmeceva=0;
             i.izgubljenihmeceva=0;
             i.neresenihmeceva=0;
-
 
             i.bodova = bodovi;
             //dali je zavrsena
@@ -403,10 +398,6 @@ petlja:
         }
 
     }
-
-
-    //qDebug()<<"prolaz10";
-    //qDebug() << "odradio";
     return true;
 }
 
