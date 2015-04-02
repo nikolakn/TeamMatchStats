@@ -347,9 +347,11 @@ void MainWindow::stranicaSpremna()
 void MainWindow::onUcitajTabelu()
 {
     Dialog2 d(this);
-    d.exec();
-    odabrano = d.getOdabrano();
-    makeTable();
+    int rez =d.exec();
+    if(rez== QDialog::Accepted){
+        odabrano = d.getOdabrano();
+        makeTable();
+    }
 }
 
 void MainWindow::onM1()
