@@ -19,6 +19,7 @@
 #include <QFileDialog>
 #include "dialog2.h"
 #include "unosmecadialog.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -40,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     tim->setText("Srbija Tim");
     dugme1 = new QPushButton(tr("Ucitaj Mečeve"));
-    dugme2 = new QPushButton(tr("Copy CSV"));
+    dugme2 = new QPushButton(tr("Kopiraj CSV"));
 
     QHBoxLayout *adresaLayout = new QHBoxLayout;
     adresaLayout->addWidget(adresaLabel);
@@ -145,8 +146,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m8, SIGNAL(clicked()), this, SLOT(onM8()));
     connect(m4, SIGNAL(clicked()), this, SLOT(onM4()));
     //connect(m5, SIGNAL(clicked()), this, SLOT(onM5()));
-    connect(model,
-            SIGNAL(itemChanged(QStandardItem*)), this, SLOT(ReceiveChange(QStandardItem*)));
+    connect(model,SIGNAL(itemChanged(QStandardItem*)), this, SLOT(ReceiveChange(QStandardItem*)));
     ucitavanje=true;
 }
 
@@ -165,10 +165,12 @@ void MainWindow::makeList()
         Item->setCheckable( true );
         QString a2=("("+s.rez+")");
         Item->setText(s.tabli+" "+a2+"   "+s.timovi);
+
         if(s.selekted)
             Item->setCheckState( Qt::Checked );
         else
             Item->setCheckState( Qt::Unchecked );
+        //zavrsena partija
         if(s.procenat=="Won"){
             QBrush bb(QColor(20,150,20));
             Item->setForeground(bb);
@@ -194,6 +196,7 @@ void MainWindow::makeList()
             //qDebug() << r1 << " " << r2;
         }
         QBrush bb2(QColor(220,220,220));
+        // partija u toku
         if(s.pobeda=="Winning"){
             if(rez==1){
                 QBrush bb(QColor(20,150,20));
@@ -204,8 +207,6 @@ void MainWindow::makeList()
                 Item->setForeground(bb);
                 Item->setBackground(bb2);
             }
-
-
         }
         if(s.pobeda=="Losing"){
             if(rez==2){
@@ -223,9 +224,7 @@ void MainWindow::makeList()
             Item->setForeground(bb);
             Item->setBackground(bb2);
         }
-
         model->setItem( i++,0, Item );
-
     }
     QString str;
     str.setNum(mm.size());
@@ -262,7 +261,6 @@ void MainWindow::makeTable()
         }
         i++;
     }
-
 }
 
 void MainWindow::prebrojcekirane()
