@@ -674,3 +674,105 @@ QString NkGames::toolbar()
     }
     return s.readAll();
 }
+
+QString NkGames::toExcelXML()
+{
+    QString oo;
+    QTextStream s(&oo);
+
+    s << "<?xml version=\"1.0\"?>" << endl;
+    s << "<?mso-application progid=\"Excel.Sheet\"?>"<< endl;
+    s <<"<Workbook"<< endl;
+    s <<   "xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\""<< endl;
+    s <<   "xmlns:o=\"urn:schemas-microsoft-com:office:office\""<< endl;
+    s <<   "xmlns:x=\"urn:schemas-microsoft-com:office:excel\""<< endl;
+    s <<   "xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\""<< endl;
+    s <<   "xmlns:html=\"http://www.w3.org/TR/REC-html40\">"<< endl;
+    s << "<DocumentProperties xmlns=\"urn:schemas-microsoft-com:office:office\">"<< endl;
+    s <<   "<Author>Someone</Author>"<< endl;
+    s <<   "<LastAuthor>Self</LastAuthor>"<< endl;
+    s <<    "<Created>2015-03-15T23:04:04Z</Created>"<< endl;
+    s <<    "<Company>Eaton Corporation</Company>"<< endl;
+    s <<    "<Version>11.8036</Version>"<< endl;
+    s <<  "</DocumentProperties>"<< endl;
+    s <<  "<ExcelWorkbook xmlns=\"urn:schemas-microsoft-com:office:excel\">"<< endl;
+    s <<    "<WindowHeight>6795</WindowHeight>"<< endl;
+    s <<   "<WindowWidth>8460</WindowWidth>"<< endl;
+    s <<  "<WindowTopX>120</WindowTopX>"<< endl;
+    s <<   "<WindowTopY>15</WindowTopY>"<< endl;
+    s <<   "<ProtectStructure>False</ProtectStructure>"<< endl;
+    s <<   "<ProtectWindows>False</ProtectWindows>"<< endl;
+    s << "</ExcelWorkbook>"<< endl;
+    s << "<Styles>"<< endl;
+    s <<  "<Style ss:ID=\"Default\" ss:Name=\"Normal\">"<< endl;
+    s <<     "<Alignment ss:Vertical=\"Bottom\" />"<< endl;
+    s <<    "<Borders />"<< endl;
+    s <<     "<Font />"<< endl;
+    s <<     "<Interior />"<< endl;
+    s <<     "<NumberFormat />"<< endl;
+    s <<     "<Protection />"<< endl;
+    s << "</Style>"<< endl;
+    s <<  "<Style ss:ID=\"s21\">"<< endl;
+    s <<     "<Font x:Family=\"Swiss\" ss:Bold=\"1\" />"<< endl;
+    s <<  " </Style>"<< endl;
+    s <<  "</Styles>"    << endl;
+
+    s <<  "<Table ss:ExpandedColumnCount=\"2\" ss:ExpandedRowCount=\"5\" x:FullColumns=\"1\" x:FullRows=\"1\">"    << endl;
+
+
+
+    s <<  "</Table>"<< endl;
+     s <<  "<WorksheetOptions xmlns=\"urn:schemas-microsoft-com:office:excel\">"<< endl;
+         s <<  "<Print>"<< endl;
+           s <<  "<ValidPrinterInfo />"<< endl;
+           s <<  "<HorizontalResolution>600</HorizontalResolution>"<< endl;
+           s <<  "<VerticalResolution>600</VerticalResolution>"<< endl;
+         s <<  "</Print>"<< endl;
+         s <<  "<Selected />"<< endl;
+         s <<  "<Panes>"<< endl;
+           s <<  "<Pane>"<< endl;
+             s <<  "<Number>3</Number>"<< endl;
+             s <<  "<ActiveRow>5</ActiveRow>"<< endl;
+             s <<  "<ActiveCol>1</ActiveCol>"<< endl;
+           s <<  "</Pane>"<< endl;
+         s <<  "</Panes>"<< endl;
+         s <<  "<Table>"<< endl;
+         s <<  "</Table>"<< endl;
+         s <<  "<ProtectObjects>False</ProtectObjects>"<< endl;
+         s <<  "<ProtectScenarios>False</ProtectScenarios>"<< endl;
+       s <<  "</WorksheetOptions>"<< endl;
+     s <<  "</Worksheet>"<< endl;
+  s <<  "</Workbook>"<< endl;
+
+
+    s << "Ime;"<<"Rejting;" <<"Meceva;"<<"Dobijenih meceva;"<<"Neresenih meceva;"<<"izgubljenih meceva;"<<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"pobede;"<<"remi;"<<"porazi;"<<"bodovi;"<<"bilans;"<<"%;"<<"Prp;"<<"Rzp;"<<"Rp"<<endl;
+
+    for(players x : igraci){
+        int rp=0;
+        if(x.brojzavrsenih !=0){
+            rp = x.Pzp + (400 * x.bilans / x.brojzavrsenih);
+        }
+        if(rp<0)
+            rp=0;
+        s << x.Ime << ";";
+        s << x.rejting << ";";
+        s << x.brojOdigranih/2<< ";";
+        s << x.dobijenihmeceva<< ";";
+        s << x.neresenihmeceva<< ";";
+        s << x.izgubljenihmeceva<< ";";
+        s << x.brojOdigranih<< ";";
+        s << x.brojzavrsenih<< ";";
+        s << (x.brojOdigranih-x.brojzavrsenih)<< ";";
+        s << x.pobeda<< ";";
+        s << x.remija<< ";";
+        s << x.poraza<< ";";
+        s << x.bodova<< ";";
+        s << x.bilans<< ";";
+        //s << x.doprinos<< ";";
+        s << x.procenatPobeda<< ";";
+         s << x.Prp << ";";
+        s << x.Pzp << ";";
+        s << rp << endl;
+    }
+    return s.readAll();
+}
