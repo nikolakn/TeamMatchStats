@@ -57,6 +57,7 @@ public slots:
     void newFile();
     void open();
     void save();
+    void saveXml();
     void klik();
     void nktableStat();
     void copynktableStat();
@@ -68,6 +69,7 @@ private:
     QAction *newAct;
     QAction *openAct;
     QAction *saveAct;
+    QAction *saveXmlAct;
     QMenu *toolMenu;
     QMenu *help;
     QAction *about;

@@ -111,6 +111,11 @@ MainWindow::MainWindow(QWidget *parent) :
     saveAct->setStatusTip(tr("snimi listu"));
     connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
+
+    saveXmlAct = new QAction(tr("&Sacuvaj Tebelu u Excel xml"), this);
+    saveXmlAct->setStatusTip(tr("snimi tabelu"));
+    connect(saveXmlAct, SIGNAL(triggered()), this, SLOT(saveXml()));
+
     tablestat = new QAction(tr("&Timska statistika"), this);
     tablestat->setStatusTip(tr("Timska statistika"));
     connect(tablestat, SIGNAL(triggered()), this, SLOT(nktableStat()));
@@ -122,6 +127,7 @@ MainWindow::MainWindow(QWidget *parent) :
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(newAct);
     fileMenu->addAction(openAct);
+    fileMenu->addAction(saveXmlAct);
     fileMenu->addAction(saveAct);
     fileMenu->addSeparator();
 
@@ -501,6 +507,24 @@ void MainWindow::save()
         mecevi.save(out);
     }
 
+}
+
+void MainWindow::saveXml()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Sacuvaj tabeli"), "",
+                                                    tr("Lista meceva (*.xml);;All Files (*)"));
+    if (fileName.isEmpty())
+        return;
+    else {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QMessageBox::information(this, tr("Nemogu da otvorim fajl"),file.errorString());
+            return;
+        }
+        QTextStream outStream(&file);
+        outStream << games.toExcelXML();
+    }
 }
 
 void MainWindow::klik()
