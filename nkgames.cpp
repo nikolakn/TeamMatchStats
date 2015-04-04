@@ -712,67 +712,248 @@ QString NkGames::toExcelXML()
     s <<     "<NumberFormat />"<< endl;
     s <<     "<Protection />"<< endl;
     s << "</Style>"<< endl;
-    s <<  "<Style ss:ID=\"s21\">"<< endl;
-    s <<     "<Font x:Family=\"Swiss\" ss:Bold=\"1\" />"<< endl;
+
+    s <<  "<Style ss:ID=\"s11\">"<< endl;
+    s <<     "<Interior ss:Color=\"#FFFFFF\" ss:Pattern=\"Solid\"  />"<< endl;
+    s << "<Borders>"<< endl;
+    s << "<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "</Borders>"<< endl;
     s <<  " </Style>"<< endl;
+    //zelena
+    s <<  "<Style ss:ID=\"s23\">"<< endl;
+    s <<     "<Interior ss:Color=\"#5BDF83\" ss:Pattern=\"Solid\"  />"<< endl;
+    s << "<Borders>"<< endl;
+    s << "<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "</Borders>"<< endl;
+    s <<  " </Style>"<< endl;
+    //crvena
+    s <<  "<Style ss:ID=\"s24\">"<< endl;
+    s <<     "<Interior ss:Color=\"#CC4D4D\" ss:Pattern=\"Solid\"  />"<< endl;
+    s << "<Borders>"<< endl;
+    s << "<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "</Borders>"<< endl;
+    s <<  " </Style>"<< endl;
+    //braon
+    s <<  "<Style ss:ID=\"s25\">"<< endl;
+    s <<     "<Interior ss:Color=\"#B77184\" ss:Pattern=\"Solid\"  />"<< endl;
+    s << "<Borders>"<< endl;
+    s << "<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "</Borders>"<< endl;
+    s <<  " </Style>"<< endl;
+    //plava
+    s <<  "<Style ss:ID=\"s22\">"<< endl;
+    s << "<Borders>"<< endl;
+    s << "<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "</Borders>"<< endl;
+    s <<     "<Interior ss:Color=\"#4D4DF0\" ss:Pattern=\"Solid\"  />"<< endl;
+    s <<  " </Style>"<< endl;
+    //siva
+    s <<  "<Style ss:ID=\"s21\">"<< endl;
+    s << "<Borders>"<< endl;
+    s << "<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>"<< endl;
+    s << "</Borders>"<< endl;
+    s <<     "<Interior ss:Color=\"#B1B1B1\" ss:Pattern=\"Solid\"  />"<< endl;
+    s <<  " </Style>"<< endl;
+
+
     s <<  "</Styles>"    << endl;
+    s <<  "<Worksheet ss:Name=\"Sheet1\">"    << endl;
+    QString brojk=QString::number(igraci.size()+1);
 
-    s <<  "<Table ss:ExpandedColumnCount=\"2\" ss:ExpandedRowCount=\"5\" x:FullColumns=\"1\" x:FullRows=\"1\">"    << endl;
+    s <<  "<Table ss:ExpandedColumnCount=\"18\" ss:ExpandedRowCount=\""+brojk  +"\" x:FullColumns=\"1\" x:FullRows=\"1\">"    << endl;
+    s <<  "<ss:Column ss:Width=\"60\"/>"<< endl;
+    for(int i=0;i<17;i++)
+        s <<  "<ss:Column ss:Width=\"40\"/>"<< endl;
+
+    s <<  "<ss:Row>"<< endl;
+
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Ime</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Rejting</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Meceva</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Dobijenih meceva</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Neresenih meceva</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">izgubljenih meceva</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Odigrano</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Zavrseno</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">U toku</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">pobede</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">remi</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">porazi</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">bodovi</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">bilans</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">%</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Prp</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Rzp</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "<ss:Cell>"<< endl;
+    s <<  "<ss:Data ss:Type=\"String\">Rp</ss:Data>"<< endl;
+    s <<  "</ss:Cell>"<< endl;
+    s <<  "</ss:Row>"<< endl;
 
 
-
-    s <<  "</Table>"<< endl;
-     s <<  "<WorksheetOptions xmlns=\"urn:schemas-microsoft-com:office:excel\">"<< endl;
-         s <<  "<Print>"<< endl;
-           s <<  "<ValidPrinterInfo />"<< endl;
-           s <<  "<HorizontalResolution>600</HorizontalResolution>"<< endl;
-           s <<  "<VerticalResolution>600</VerticalResolution>"<< endl;
-         s <<  "</Print>"<< endl;
-         s <<  "<Selected />"<< endl;
-         s <<  "<Panes>"<< endl;
-           s <<  "<Pane>"<< endl;
-             s <<  "<Number>3</Number>"<< endl;
-             s <<  "<ActiveRow>5</ActiveRow>"<< endl;
-             s <<  "<ActiveCol>1</ActiveCol>"<< endl;
-           s <<  "</Pane>"<< endl;
-         s <<  "</Panes>"<< endl;
-         s <<  "<Table>"<< endl;
-         s <<  "</Table>"<< endl;
-         s <<  "<ProtectObjects>False</ProtectObjects>"<< endl;
-         s <<  "<ProtectScenarios>False</ProtectScenarios>"<< endl;
-       s <<  "</WorksheetOptions>"<< endl;
-     s <<  "</Worksheet>"<< endl;
-  s <<  "</Workbook>"<< endl;
-
-
-    s << "Ime;"<<"Rejting;" <<"Meceva;"<<"Dobijenih meceva;"<<"Neresenih meceva;"<<"izgubljenih meceva;"<<"Odigrano;"<<"Zavrseno;"<<"U toku;"<<"pobede;"<<"remi;"<<"porazi;"<<"bodovi;"<<"bilans;"<<"%;"<<"Prp;"<<"Rzp;"<<"Rp"<<endl;
 
     for(players x : igraci){
+        s <<  "<ss:Row>"<< endl;
         int rp=0;
         if(x.brojzavrsenih !=0){
             rp = x.Pzp + (400 * x.bilans / x.brojzavrsenih);
         }
         if(rp<0)
             rp=0;
-        s << x.Ime << ";";
-        s << x.rejting << ";";
-        s << x.brojOdigranih/2<< ";";
-        s << x.dobijenihmeceva<< ";";
-        s << x.neresenihmeceva<< ";";
-        s << x.izgubljenihmeceva<< ";";
-        s << x.brojOdigranih<< ";";
-        s << x.brojzavrsenih<< ";";
-        s << (x.brojOdigranih-x.brojzavrsenih)<< ";";
-        s << x.pobeda<< ";";
-        s << x.remija<< ";";
-        s << x.poraza<< ";";
-        s << x.bodova<< ";";
-        s << x.bilans<< ";";
-        //s << x.doprinos<< ";";
-        s << x.procenatPobeda<< ";";
-         s << x.Prp << ";";
-        s << x.Pzp << ";";
-        s << rp << endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s11\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"String\">"+x.Ime+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s11\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.rejting)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s11\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.brojOdigranih/2)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s21\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.dobijenihmeceva)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s21\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.neresenihmeceva)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s21\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.izgubljenihmeceva)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s22\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.brojOdigranih)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s22\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.brojzavrsenih)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s22\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number((x.brojOdigranih-x.brojzavrsenih))+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s23\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.pobeda)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s23\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.remija)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s23\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.poraza)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s24\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.bodova)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s24\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.bilans)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s24\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.procenatPobeda)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s25\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.Prp)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s25\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(x.Pzp)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "<ss:Cell ss:StyleID=\"s25\">"<< endl;
+        s <<  "<ss:Data ss:Type=\"Number\">"+QString::number(rp)+"</ss:Data>"<< endl;
+        s <<  "</ss:Cell>"<< endl;
+
+        s <<  "</ss:Row>"<< endl;
+
     }
+
+    s <<  "</Table>"<< endl;
+    s <<  "<WorksheetOptions xmlns=\"urn:schemas-microsoft-com:office:excel\">"<< endl;
+    s <<  "<Print>"<< endl;
+    s <<  "<ValidPrinterInfo />"<< endl;
+    s <<  "<HorizontalResolution>600</HorizontalResolution>"<< endl;
+    s <<  "<VerticalResolution>600</VerticalResolution>"<< endl;
+    s <<  "</Print>"<< endl;
+    s <<  "<Selected />"<< endl;
+    s <<  "<Panes>"<< endl;
+    s <<  "<Pane>"<< endl;
+    s <<  "<Number>3</Number>"<< endl;
+    s <<  "<ActiveRow>5</ActiveRow>"<< endl;
+    s <<  "<ActiveCol>1</ActiveCol>"<< endl;
+    s <<  "</Pane>"<< endl;
+    s <<  "</Panes>"<< endl;
+    s <<  "<Table>"<< endl;
+    s <<  "</Table>"<< endl;
+    s <<  "<ProtectObjects>False</ProtectObjects>"<< endl;
+    s <<  "<ProtectScenarios>False</ProtectScenarios>"<< endl;
+    s <<  "</WorksheetOptions>"<< endl;
+    s <<  "</Worksheet>"<< endl;
+    s <<  "</Workbook>"<< endl;
+
     return s.readAll();
 }

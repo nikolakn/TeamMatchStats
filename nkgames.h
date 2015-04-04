@@ -64,6 +64,7 @@ public:
     //copy table to clipbord
     QString copyToClip();
     QString toolbar();
+    QString toExcelXML();
 private:
     int nkbrojmeceva;
     QVector<players> igraci;

@@ -299,6 +299,7 @@ void MainWindow::onCVS_click()
 {
     QClipboard *p_Clipboard = QApplication::clipboard();
     p_Clipboard->setText(games.copyToClip());
+    //p_Clipboard->setText(games.toExcelXML());
 }
 
 void MainWindow::stranicaSpremna()
