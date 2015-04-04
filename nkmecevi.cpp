@@ -33,7 +33,7 @@ bool NkMecevi::parsPage(QString html, int st)
     //page num
     QWebElement str = parse.findFirst("ul.pagination li.current");
 
-    if(str.toPlainText().toInt()!=st)
+    if(str.toPlainText().toInt()!=st && st!=1)
         return false;
     //QWebElement result = parse.firstChild();
     QWebElement result = parse.findFirst("table.alternate tbody");

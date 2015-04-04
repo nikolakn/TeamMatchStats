@@ -35,11 +35,20 @@ MainWindow::MainWindow(QWidget *parent) :
     adresa->addItem("http://www.chess.com/groups/matches/srbija-tim?show_all_current=1");
     adresa->setEditable(true);
     timLabel = new QLabel(tr("Tim:"));
-    tim = new QLineEdit();
-    tim->setMaximumWidth(80);
-    tim->setFixedWidth(100);
+    tim = new QComboBox();
+    tim->addItem("Srbija Tim");
+    tim->addItem("ISK Crvena Zvezda");
+    tim->addItem("Serbia-Russia Team");
+    tim->addItem("The Orthodox Christian Chess Players");
+    tim->addItem("Svetozar Gligoric Chess Club");
 
-    tim->setText("Srbija Tim");
+
+
+    tim->setEditable(true);
+
+    tim->setMaximumWidth(80);
+    tim->setFixedWidth(200);
+
     dugme1 = new QPushButton(tr("Ucitaj Mečeve"));
     dugme2 = new QPushButton(tr("Kopiraj CSV"));
 
@@ -123,6 +132,9 @@ MainWindow::MainWindow(QWidget *parent) :
     copytablestat = new QAction(tr("&Copy Timska statistika"), this);
     copytablestat->setStatusTip(tr("Copy Timska statistika"));
     connect(copytablestat, SIGNAL(triggered()), this, SLOT(copynktableStat()));
+
+    connect(tim,SIGNAL(currentIndexChanged(const QString&)),
+            this,SLOT(timPromenjen(const QString&)));
 
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(newAct);
@@ -279,7 +291,7 @@ void MainWindow::prebrojcekirane()
     }
     QString str="";
     QString str1="";
-    setWindowTitle("Tim: ("+ tim->text()+") Ukupan broj mečeva u bazi: ("+str1.setNum(model->rowCount()) +") Broj odabranih mečeva: ("+str.setNum(brojcekiranih)+")");
+    setWindowTitle("Tim: ("+ tim->currentText()+") Ukupan broj mečeva u bazi: ("+str1.setNum(model->rowCount()) +") Broj odabranih mečeva: ("+str.setNum(brojcekiranih)+")");
 }
 
 void MainWindow::onOK_click()
@@ -341,7 +353,7 @@ void MainWindow::stranicaSpremna()
         //lodad page with games
         QString pp=web.get();
 
-        if(games.parsPage(pp,tim->text(),odabrano)){
+        if(games.parsPage(pp,tim->currentText(),odabrano)){
             if(kraj==1)
                 games.print(resultView);
             return;
@@ -559,5 +571,39 @@ void MainWindow::ReceiveChange(QStandardItem *i)
     else
         mecevi.UnCheck(i->index().row());
     prebrojcekirane();
+}
+
+void MainWindow::timPromenjen(const QString &)
+{
+
+    QString ss=tim->currentText();
+    if(ss == "Srbija Tim"){
+        adresa->clear();
+        adresa->addItem("http://www.chess.com/groups/team_match_archive?id=8083");
+        adresa->addItem("http://www.chess.com/groups/matches/srbija-tim?show_all_current=1");
+    }
+    if (ss == "ISK Crvena Zvezda"){
+        adresa->clear();
+        adresa->addItem("http://www.chess.com/groups/team_match_archive?id=11119");
+        adresa->addItem("http://www.chess.com/groups/matches/isk-crvena-zvezda?show_all_current=1");
+    }
+
+    if (ss == "Serbia-Russia Team"){
+        adresa->clear();
+        adresa->addItem("http://www.chess.com/groups/team_match_archive?id=28458");
+        adresa->addItem("http://www.chess.com/groups/matches/serbia-russia-team?show_all_current=1");
+    }
+
+    if (ss == "The Orthodox Christian Chess Players"){
+        adresa->clear();
+        adresa->addItem("http://www.chess.com/groups/team_match_archive?id=9938");
+        adresa->addItem("http://www.chess.com/groups/matches/the-orthodox-christian-chess-players?show_all_current=1");
+    }
+    if (ss == "Svetozar Gligoric Chess Club"){
+        adresa->clear();
+        adresa->addItem("http://www.chess.com/groups/team_match_archive?id=12539");
+        adresa->addItem("http://www.chess.com/groups/matches/svetozar-gligoric-chess-club?show_all_current=1");
+    }
+
 }
 

@@ -63,6 +63,7 @@ public slots:
     void copynktableStat();
     void onAbout();
     void ReceiveChange(QStandardItem* i);
+    void timPromenjen(const QString&);
 private:
     Ui::MainWindow *ui;
     QMenu *fileMenu;
@@ -78,7 +79,7 @@ private:
     QLabel *adresaLabel;
     QComboBox *adresa;
     QLabel *timLabel;
-    QLineEdit *tim;
+    QComboBox *tim;
     QPushButton *dugme1;
     QPushButton *dugme2;
     QListView *listview;
