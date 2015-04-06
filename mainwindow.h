@@ -29,6 +29,7 @@
 #include <QClipboard>
 #include <QMenuBar>
 #include <QComboBox>
+
 namespace Ui {
 class MainWindow;
 }
@@ -62,10 +63,12 @@ public slots:
     void nktableStat();
     void copynktableStat();
     void onAbout();
+    void onSettingsDialog();
     void ReceiveChange(QStandardItem* i);
     void timPromenjen(const QString&);
 private:
     Ui::MainWindow *ui;
+    //manu
     QMenu *fileMenu;
     QAction *newAct;
     QAction *openAct;
@@ -76,16 +79,19 @@ private:
     QAction *about;
     QAction *tablestat;
     QAction *copytablestat;
+    //addres bar
     QLabel *adresaLabel;
     QComboBox *adresa;
     QLabel *timLabel;
     QComboBox *tim;
     QPushButton *dugme1;
     QPushButton *dugme2;
+    //list
     QListView *listview;
     QStandardItemModel *model;
     QStandardItem *Item;
     QStandardItem *Item2;
+    //table
     QTableWidget *resultView;
     QPushButton *m1;
     QPushButton *m2;
@@ -95,6 +101,7 @@ private:
     QPushButton *m6;
     QPushButton *m7;
     QPushButton *m8;
+
     NkWeb web;
     NkMecevi mecevi;
     NkGames games;

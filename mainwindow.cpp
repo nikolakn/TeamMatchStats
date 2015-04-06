@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     adresa->addItem("http://www.chess.com/groups/team_match_archive?id=8083");
     adresa->addItem("http://www.chess.com/groups/matches/srbija-tim?show_all_current=1");
     adresa->setEditable(true);
+
     timLabel = new QLabel(tr("Tim:"));
     tim = new QComboBox();
     tim->addItem("Srbija Tim");
@@ -41,11 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tim->addItem("Serbia-Russia Team");
     tim->addItem("The Orthodox Christian Chess Players");
     tim->addItem("Svetozar Gligoric Chess Club");
-
-
-
     tim->setEditable(true);
-
     tim->setMaximumWidth(80);
     tim->setFixedWidth(200);
 
@@ -84,12 +81,10 @@ MainWindow::MainWindow(QWidget *parent) :
     leftSide->setLayout( levo );
 
     model = new QStandardItemModel(0,2,this);
-
     listview->setModel( model );
 
     resultView = new QTableWidget();
     resultView->setSortingEnabled(true);
-    //resultView->setColumnCount(7);
 
     splitter->addWidget(leftSide);
     splitter->addWidget(resultView);
@@ -114,12 +109,10 @@ MainWindow::MainWindow(QWidget *parent) :
     openAct->setStatusTip(tr("otvori sacuvanu listu"));
     connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
 
-
     saveAct = new QAction(tr("&Sacuvaj listu"), this);
     saveAct->setShortcuts(QKeySequence::Save);
     saveAct->setStatusTip(tr("snimi listu"));
     connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
-
 
     saveXmlAct = new QAction(tr("&Sacuvaj Tebelu u Excel xml"), this);
     saveXmlAct->setStatusTip(tr("snimi tabelu"));
@@ -147,12 +140,10 @@ MainWindow::MainWindow(QWidget *parent) :
     toolMenu->addAction(tablestat);
     toolMenu->addAction(copytablestat);
 
-
     about = new QAction(tr("&O Programu"), this);
     connect(about, SIGNAL(triggered()), this, SLOT(onAbout()));
     help = menuBar()->addMenu(tr("&Help"));
     help->addAction(about);
-
 
     connect(dugme1, SIGNAL(clicked()), this, SLOT(onOK_click()));
     connect(dugme2, SIGNAL(clicked()), this, SLOT(onCVS_click()));
@@ -424,9 +415,6 @@ void MainWindow::onM4()
 
 void MainWindow::onM5()
 {
-    //QString link = QInputDialog::getText(this, tr("Input"),
-    //                                     tr("Unesite Id meca (broj u linku od meca):"), QLineEdit::Normal);
-
     QString link="";
     QString ime="";
     unosmecaDialog dd;
@@ -478,8 +466,8 @@ void MainWindow::newFile()
 void MainWindow::open()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Otvori listu meceva"), "",
-                                                    tr("Lista meceva (*.mec);;All Files (*)"));
+                       tr("Otvori listu meceva"), "",
+                       tr("Lista meceva (*.mec);;All Files (*)"));
     if (fileName.isEmpty())
         return;
     else {
@@ -487,8 +475,8 @@ void MainWindow::open()
         QFile file(fileName);
 
         if (!file.open(QIODevice::ReadOnly)) {
-            QMessageBox::information(this, tr("Ne mogu da otvorim fajl"),
-                                     file.errorString());
+            QMessageBox::information(this,
+                         tr("Ne mogu da otvorim fajl"),file.errorString());
             return;
         }
 
@@ -504,8 +492,8 @@ void MainWindow::open()
 void MainWindow::save()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Sacuvaj listu meceva"), "",
-                                                    tr("Lista meceva (*.mec);;All Files (*)"));
+                       tr("Sacuvaj listu meceva"), "",
+                       tr("Lista meceva (*.mec);;All Files (*)"));
     if (fileName.isEmpty())
         return;
     else {
@@ -518,14 +506,13 @@ void MainWindow::save()
         out.setVersion(QDataStream::Qt_4_5);
         mecevi.save(out);
     }
-
 }
 
 void MainWindow::saveXml()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Sacuvaj tabeli"), "",
-                                                    tr("Lista meceva (*.xml);;All Files (*)"));
+                       tr("Sacuvaj tabeli"), "",
+                       tr("Lista meceva (*.xml);;All Files (*)"));
     if (fileName.isEmpty())
         return;
     else {
@@ -555,12 +542,16 @@ void MainWindow::copynktableStat()
 {
     QClipboard *p_Clipboard = QApplication::clipboard();
     p_Clipboard->setText(games.toolbar());
-
 }
 
 void MainWindow::onAbout()
 {
     QMessageBox::about(this,"O programu"," (C) Copyright 2015 \n Nikola Knežević <nkcodeplus@gmail.com> \n Goran Lapčević <gorlap@gmail.com> \n\nThis program is free software; you can redistribute it and/or\n modify it under the terms of the GNU General Public License\nas published by the Free Software Foundation; version 2\nof the License." );
+
+}
+
+void MainWindow::onSettingsDialog()
+{
 
 }
 
