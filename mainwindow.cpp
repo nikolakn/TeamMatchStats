@@ -46,8 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
     tim->setMaximumWidth(80);
     tim->setFixedWidth(200);
 
-    dugme1 = new QPushButton(tr("Ucitaj Mečeve"));
-    dugme2 = new QPushButton(tr("Kopiraj CSV"));
+    dugme1 = new QPushButton((QString::fromUtf8("Ucitaj Mečeve")));
+    dugme2 = new QPushButton(QString::fromUtf8("Kopiraj CSV"));
 
     QHBoxLayout *adresaLayout = new QHBoxLayout;
     adresaLayout->addWidget(adresaLabel);
@@ -62,14 +62,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     listview = new QListView();
     QVBoxLayout *levo = new QVBoxLayout;
-    m1 = new QPushButton(tr("Čekiraj Sve"));
-    m2 = new QPushButton(tr("Nista"));
-    m3 = new QPushButton(tr("Prvih x meceva"));
-    m4 = new QPushButton(tr("Naziv sadrzi..."));
+    m1 = new QPushButton(QString::fromUtf8("Čekiraj Sve"));
+    m2 = new QPushButton(QString::fromUtf8("Nista"));
+    m3 = new QPushButton(QString::fromUtf8("Prvih x meceva"));
+    m4 = new QPushButton(QString::fromUtf8("Naziv sadrzi..."));
     //m5 = new QPushButton(tr("Unesi rucno link od meča..."));
-    m6 = new QPushButton(tr("Napravi tabelu>>>"));
+    m6 = new QPushButton(QString::fromUtf8("Napravi tabelu>>>"));
 
-    m8 = new QPushButton(tr("Poslednjih x meceva"));
+    m8 = new QPushButton(QString::fromUtf8("Poslednjih x meceva"));
     levo->addWidget(m1);
     levo->addWidget(m2);
     levo->addWidget(m3);
@@ -282,7 +282,7 @@ void MainWindow::prebrojcekirane()
     }
     QString str="";
     QString str1="";
-    setWindowTitle("Tim: ("+ tim->currentText()+") Ukupan broj mečeva u bazi: ("+str1.setNum(model->rowCount()) +") Broj odabranih mečeva: ("+str.setNum(brojcekiranih)+")");
+    setWindowTitle("Tim: ("+ tim->currentText()+") Ukupan broj meceva u bazi: ("+str1.setNum(model->rowCount()) +") Broj odabranih meceva: ("+str.setNum(brojcekiranih)+")");
 }
 
 void MainWindow::onOK_click()
@@ -546,7 +546,7 @@ void MainWindow::copynktableStat()
 
 void MainWindow::onAbout()
 {
-    QMessageBox::about(this,"O programu"," (C) Copyright 2015 \n Nikola Knežević <nkcodeplus@gmail.com> \n Goran Lapčević <gorlap@gmail.com> \n\nThis program is free software; you can redistribute it and/or\n modify it under the terms of the GNU General Public License\nas published by the Free Software Foundation; version 2\nof the License." );
+    QMessageBox::about(this,"O programu",QString::fromUtf8(" (C) Copyright 2015 \n Nikola Knežević <nkcodeplus@gmail.com> \n Goran Lapčević <gorlap@gmail.com> \n\nThis program is free software; you can redistribute it and/or\n modify it under the terms of the GNU General Public License\nas published by the Free Software Foundation; version 2\nof the License." ));
 
 }
 
