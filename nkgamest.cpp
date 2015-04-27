@@ -98,3 +98,8 @@ void NkGamesT::clear(){
 QList<NkLink> NkGamesT::getLinks(){
     return mlinkovi;
 }
+
+void NkGamesT::setTime(int index, QString t)
+{
+    mlinkovi.at(index)= mlinkovi.at(index) +t;
+}

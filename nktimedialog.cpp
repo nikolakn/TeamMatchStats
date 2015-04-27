@@ -103,8 +103,10 @@ void NkTimeDialog::buildTable()
     connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna2()));
     vratio = 0;
     QList<NkLink> ll=games.getLinks();
+    int i=0;
     for(NkLink s : ll){
-        web.getPage(s.link, s.beli);
+        web.getPage(s.link, s.beli,i);
+        i++;
     }
 }
 
@@ -113,9 +115,10 @@ void NkTimeDialog::stranicaSpremna2()
     qDebug() << "ulazi";
     QString pp=web.get();
     int mi = web.mi;
+    int index =web.index;
     vratiotable ++;
     if(tab.parsPage(pp,mtim,mi)){
-
+        games.setTime(index,tab.getRez());
         if(vratiotable==games.getLinks().size())
             makeList();
             //games.print(resultView);

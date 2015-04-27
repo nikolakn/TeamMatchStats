@@ -76,8 +76,8 @@ bool NkMecevi::parsPageUtoku(QString html)
     //qDebug() <<parse.toPlainText();
     //QWebElement result = parse.firstChild();
     QWebElement result = parse.findFirst("tbody");
-    QWebElement x = result.findFirst("tr");
-    //for(QWebElement x : result2){
+    QWebElementCollection result2 = result.findAll("tr");
+    for(QWebElement x : result2){
         //qDebug() << x.toPlainText();
         QWebElementCollection result2 = x.findAll("td");
         QWebElement link = x.findFirst("a");
@@ -94,7 +94,7 @@ bool NkMecevi::parsPageUtoku(QString html)
         //qDebug()<<result2[2].toPlainText()<<" "<<result2[3].toPlainText()<<" "<<result2[4].toPlainText()<<" "<<result2[5].toPlainText();
         spisak.push_back(m);
         //qDebug() << link.toPlainText() << link.attribute("href");
-    //}
+    }
     return true;
 }
 

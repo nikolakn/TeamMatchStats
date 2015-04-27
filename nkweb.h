@@ -26,9 +26,10 @@ class NkWeb : public QObject
 public:
     NkWeb();
     ~NkWeb();
-    void getPage(QString adresa, int i = 0);
+    void getPage(QString adresa, int i = 0, int ind =0);
     QString get() {return strana;}
     int mi;
+    int index;
 public slots:
     void replyFinished(QNetworkReply*);
 

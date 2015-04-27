@@ -28,6 +28,7 @@ public:
     static int broj2;
     void clear();
     QList<NkLink> getLinks();
+    void setTime(int index,QString t);
 private:
     int nkbrojmeceva;
     QList<NkLink> mlinkovi;
