@@ -102,6 +102,25 @@ QList<NkLink> NkGamesT::getLinks(){
 void NkGamesT::setTime(int index, QString t)
 {
     //qDebug() << index;
+    mlinkovi[index].minita = 0;
+    if(t=="OUT OF TIME")
+        mlinkovi[index].minita = 26*60*100;
+    if(t.right(4)=="days"){
+        QString r = t.left(t.size()-4);
+        mlinkovi[index].minita=r.toInt()*24*60;
+    }
+    if(t.right(5)=="hours"){
+        QString r = t.left(t.size()-5);
+        mlinkovi[index].minita=r.toInt()*60;
+    }
+    if(t.right(5)=="hours"){
+        QString r = t.left(t.size()-5);
+        mlinkovi[index].minita=r.toInt()*60;
+    }
+    if(t.right(7)=="minutes"){
+        QString r = t.left(t.size()-7);
+        mlinkovi[index].minita=r.toInt();
+    }
     mlinkovi[index].vreme=t;
 }
 bool NkGamesT::getStranu(int index){

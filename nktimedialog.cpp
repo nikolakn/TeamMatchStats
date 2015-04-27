@@ -86,10 +86,28 @@ void NkTimeDialog::on_pushButton_clicked()
 void NkTimeDialog::makeList()
 {
     int i = 0;
+    games.sortiraj();
     QList<NkLink> ll=games.getLinks();
     for(NkLink s : ll){
         Item = new QStandardItem();
+        if(s.minita>(8*60)){
+            QBrush bb(QColor(0,250,0));
+            Item->setBackground(bb);
+        }
+        if(s.minita<(8*60) && s.minita>(5*60)){
+            QBrush bb(QColor(0,0,250));
+            Item->setBackground(bb);
+        }
+        if(s.minita<(5*60) && s.minita>(2*60)){
+            QBrush bb(QColor(200,200,10));
+            Item->setBackground(bb);
+        }
+        if(s.minita>(2*60)){
+            QBrush bb(QColor(250,0,0));
+            Item->setBackground(bb);
+        }
         if(s.beli)
+
             Item->setText(s.vreme+" "+s.ime + " beli "+s.link);
         else
             Item->setText(s.vreme+" "+s.ime +" crni "+s.link);
