@@ -15,7 +15,7 @@ NkGamesT::NkGamesT(QObject *parent) :
 }
 
 bool NkGamesT::parsPage(QString html, QString Tim, int vrsta){
-
+    //mlinkovi.clear();
     QString temp=html;
     QRegExp rx("<table class=\"default border-top alternate\">(.+)</table>");
     if (rx.indexIn(html) != -1)
@@ -26,19 +26,27 @@ bool NkGamesT::parsPage(QString html, QString Tim, int vrsta){
     QWebFrame * frame = page.mainFrame();
     frame->setHtml(html);
     QWebElement parse = frame->documentElement();
-    QString tabela=parse.toPlainText();
+    //QString tabela=parse.toPlainText();
 
     QWebElementCollection str = parse.findAll("tbody tr");
     for(QWebElement el : str){
-        NkGamesT::broj2 ++;
-        qDebug() <<el.toPlainText();
+        QWebElementCollection linkovi = parse.findAll("a");
+         for(QWebElement li : linkovi){
+             QString ss = li.attribute("href");
+             if(ss.left(8)=="/echess/") {
+                mlinkovi.push_back("http://www.chess.com"+ss);
+                //qDebug() << ss;
+             }
+         }
     }
-    qDebug() << NkGamesT::broj2;
-
+    //qDebug() << NkGamesT::broj2;
 
     return true;
 }
 void NkGamesT::clear(){
-    igraci.clear();
+    mlinkovi.clear();
     nkbrojmeceva=0;
+}
+QList<QString> NkGamesT::getLinks(){
+    return mlinkovi;
 }

@@ -5,6 +5,7 @@
 #include "nkweb.h"
 #include "nkmecevi.h"
 #include "nkgamest.h"
+#include <QStandardItemModel>
 
 namespace Ui {
 class NkTimeDialog;
@@ -18,6 +19,7 @@ public:
     explicit NkTimeDialog(QWidget *parent,QString tim,QString adresa);
     ~NkTimeDialog();
     void makeTable();
+    void makeList();
 public slots:
     void stranicaSpremna();
     void onOK_click();
@@ -26,6 +28,9 @@ private slots:
 
 private:
     Ui::NkTimeDialog *ui;
+    QStandardItemModel *model;
+    QStandardItem *Item;
+    QStandardItem *Item2;
     QString mtim;
     QString madresa;
     NkWeb web;

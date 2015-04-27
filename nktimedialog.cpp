@@ -10,6 +10,8 @@ NkTimeDialog::NkTimeDialog(QWidget *parent,QString tim,QString adresa) :
     kraj=0;
     madresa = adresa;
     isGame=false;
+    model = new QStandardItemModel(0,2,this);
+    ui->listView->setModel( model );
     connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
 }
 
@@ -41,6 +43,7 @@ void NkTimeDialog::stranicaSpremna()
 
         if(games.parsPage(pp,mtim,0)){
             if(kraj==1)
+                makeList();
                 //games.print(resultView);
             return;
         }
@@ -70,4 +73,16 @@ void NkTimeDialog::makeTable()
 void NkTimeDialog::on_pushButton_clicked()
 {
    onOK_click();
+}
+
+void NkTimeDialog::makeList()
+{
+    int i = 0;
+    QList<QString> ll=games.getLinks();
+    for(QString s : ll){
+        Item = new QStandardItem();
+
+        Item->setText(s);
+        model->setItem( i++,0, Item );
+    }
 }
