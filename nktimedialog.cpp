@@ -94,6 +94,10 @@ void NkTimeDialog::makeList()
             QBrush bb(QColor(0,250,0));
             Item->setBackground(bb);
         }
+        if(s.minita==(100*60*24)){
+            QBrush bb(QColor(100,100,100));
+            Item->setBackground(bb);
+        }
         if(s.minita<(8*60) && s.minita>(5*60)){
             QBrush bb(QColor(0,0,250));
             Item->setBackground(bb);
@@ -102,7 +106,7 @@ void NkTimeDialog::makeList()
             QBrush bb(QColor(200,200,10));
             Item->setBackground(bb);
         }
-        if(s.minita>(2*60)){
+        if(s.minita<(2*60)){
             QBrush bb(QColor(250,0,0));
             Item->setBackground(bb);
         }
