@@ -11,6 +11,7 @@ NkTimeDialog::NkTimeDialog(QWidget *parent,QString tim,QString adresa) :
     vratio = 0;
     vratiotable = 0;
     madresa = adresa;
+    ui->progressBar->setValue(0);
     isGame=false;
     model = new QStandardItemModel(0,2,this);
     ui->listView->setModel( model );
@@ -30,6 +31,10 @@ void NkTimeDialog::onOK_click()
     kraj=0;
     vratio = 0;
     vratiotable = 0;
+    mecevi.clear();
+    games.clear();
+
+    tab.clear();
     web.getPage(madresa);
 }
 
@@ -124,7 +129,10 @@ void NkTimeDialog::buildTable()
     disconnect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
     connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna2()));
     vratio = 0;
+
     QList<NkLink> ll=games.getLinks();
+    prog = 0;
+    ui->progressBar->setRange(10,ll.size());
     int i=0;
     for(NkLink s : ll){
         cekaj =true;
@@ -142,6 +150,8 @@ void NkTimeDialog::stranicaSpremna2()
     int mi = games.getStranu(index);
     vratiotable ++;
     if(tab.parsPage(pp,mtim,mi)){
+        ui->progressBar->setValue(prog);
+        prog++;
         games.setTime(index,tab.getRez());
         if(vratiotable==games.getLinks().size())
             makeList();

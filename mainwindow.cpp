@@ -555,7 +555,7 @@ void MainWindow::onvremedijalog()
         NkTimeDialog td(0,tim->currentText(), adresa->currentText());
         td.exec();
     } else {
-        QMessageBox::about(this,"greska",QString::fromUtf8("Adresa nije dobra, uneti ime tima i adresu." ));
+        QMessageBox::about(this,"greska",QString::fromUtf8("Adresa nije dobra, uneti ime tima i adresu meceva u toku." ));
 
     }
 

@@ -38,6 +38,7 @@ private:
     NkWeb web;
     NkMecevi mecevi;
     NkGamesT games;
+    int prog;
     bool isGame;
     int kraj;
     int vratio;
