@@ -6,7 +6,7 @@
 #include "nkmecevi.h"
 #include "nkgamest.h"
 #include <QStandardItemModel>
-
+#include "nktabla.h"
 namespace Ui {
 class NkTimeDialog;
 }
@@ -20,8 +20,10 @@ public:
     ~NkTimeDialog();
     void makeTable();
     void makeList();
+    void buildTable();
 public slots:
     void stranicaSpremna();
+    void stranicaSpremna2();
     void onOK_click();
 private slots:
     void on_pushButton_clicked();
@@ -38,6 +40,9 @@ private:
     NkGamesT games;
     bool isGame;
     int kraj;
+    int vratio;
+    NkTabla tab;
+    int vratiotable;
 };
 
 #endif // NKTIMEDIALOG_H

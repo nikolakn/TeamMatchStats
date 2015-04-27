@@ -1,6 +1,6 @@
 #include "nktimedialog.h"
 #include "ui_nktimedialog.h"
-
+#include <qdebug.h>
 NkTimeDialog::NkTimeDialog(QWidget *parent,QString tim,QString adresa) :
     QDialog(parent),
     ui(new Ui::NkTimeDialog)
@@ -8,11 +8,13 @@ NkTimeDialog::NkTimeDialog(QWidget *parent,QString tim,QString adresa) :
     ui->setupUi(this);
     mtim = tim;
     kraj=0;
+    vratio = 0;
+    vratiotable = 0;
     madresa = adresa;
     isGame=false;
     model = new QStandardItemModel(0,2,this);
     ui->listView->setModel( model );
-    connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
+    //connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
 }
 
 NkTimeDialog::~NkTimeDialog()
@@ -22,8 +24,12 @@ NkTimeDialog::~NkTimeDialog()
 
 void NkTimeDialog::onOK_click()
 {
+    disconnect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna2()));
+    connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
     isGame=false;
     kraj=0;
+    vratio = 0;
+    vratiotable = 0;
     web.getPage(madresa);
 }
 
@@ -40,10 +46,12 @@ void NkTimeDialog::stranicaSpremna()
     else{
         //lodad page with games
         QString pp=web.get();
-
+        vratio ++;
         if(games.parsPage(pp,mtim,0)){
-            if(kraj==1)
-                makeList();
+
+            if(vratio==mecevi.getList().size())
+                buildTable();
+                //makeList();
                 //games.print(resultView);
             return;
         }
@@ -78,11 +86,40 @@ void NkTimeDialog::on_pushButton_clicked()
 void NkTimeDialog::makeList()
 {
     int i = 0;
-    QList<QString> ll=games.getLinks();
-    for(QString s : ll){
+    QList<NkLink> ll=games.getLinks();
+    for(NkLink s : ll){
         Item = new QStandardItem();
-
-        Item->setText(s);
+        if(s.beli)
+            Item->setText(s.link+"  "+s.ime + " beli");
+        else
+            Item->setText(s.link+"  "+s.ime +" crni");
         model->setItem( i++,0, Item );
     }
+}
+void NkTimeDialog::buildTable()
+{
+
+    disconnect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna()));
+    connect(&web, SIGNAL(gotovo()), this, SLOT(stranicaSpremna2()));
+    vratio = 0;
+    QList<NkLink> ll=games.getLinks();
+    for(NkLink s : ll){
+        web.getPage(s.link, s.beli);
+    }
+}
+
+void NkTimeDialog::stranicaSpremna2()
+{
+    qDebug() << "ulazi";
+    QString pp=web.get();
+    int mi = web.mi;
+    vratiotable ++;
+    if(tab.parsPage(pp,mtim,mi)){
+
+        if(vratiotable==games.getLinks().size())
+            makeList();
+            //games.print(resultView);
+        return;
+    }
+
 }

@@ -26,8 +26,9 @@ class NkWeb : public QObject
 public:
     NkWeb();
     ~NkWeb();
-    void getPage(QString adresa);
+    void getPage(QString adresa, int i = 0);
     QString get() {return strana;}
+    int mi;
 public slots:
     void replyFinished(QNetworkReply*);
 
@@ -38,6 +39,7 @@ private:
     QUrl url;
     QNetworkAccessManager *manager;
     QString strana;
+
 };
 
 #endif // NKWEB_H

@@ -10,7 +10,14 @@
 #include <QList>
 #include <QTableWidget>
 
-
+struct NkLink{
+    QString link;
+    QString ime;
+    bool beli;
+    QString vreme;
+    int minita;
+    int sati;
+};
 
 class NkGamesT : public QObject
 {
@@ -20,10 +27,11 @@ public:
     bool parsPage(QString html, QString Tim, int vrsta);
     static int broj2;
     void clear();
-    QList<QString> getLinks();
+    QList<NkLink> getLinks();
 private:
     int nkbrojmeceva;
-    QList<QString> mlinkovi;
+    QList<NkLink> mlinkovi;
+
 
 };
 

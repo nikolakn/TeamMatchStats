@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     dialog2.cpp \
     unosmecadialog.cpp \
     nktimedialog.cpp \
-    nkgamest.cpp
+    nkgamest.cpp \
+    nktabla.cpp
 
 HEADERS  += mainwindow.h \
     nkweb.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     dialog2.h \
     unosmecadialog.h \
     nktimedialog.h \
-    nkgamest.h
+    nkgamest.h \
+    nktabla.h
 
 FORMS    += mainwindow.ui \
     dialog.ui \

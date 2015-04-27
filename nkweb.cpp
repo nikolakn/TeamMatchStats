@@ -26,8 +26,9 @@ NkWeb::~NkWeb()
     delete manager;
 }
 
-void NkWeb::getPage(QString adresa)
+void NkWeb::getPage(QString adresa, int i)
 {
+    mi = i;
     strana="";
     manager->get(QNetworkRequest(QUrl(adresa)));
 }
