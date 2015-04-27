@@ -107,3 +107,11 @@ void NkGamesT::setTime(int index, QString t)
 bool NkGamesT::getStranu(int index){
     return mlinkovi[index].beli;
 }
+bool variantLessThan(const NkLink &v1, const NkLink &v2)
+{
+    return v1.minita < v2.minita;
+}
+void NkGamesT::sortiraj()
+{
+    qSort(mlinkovi.begin(), mlinkovi.end(), variantLessThan);
+}

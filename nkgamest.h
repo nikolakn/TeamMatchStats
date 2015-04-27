@@ -30,6 +30,9 @@ public:
     QList<NkLink> getLinks();
     void setTime(int index,QString t);
     bool getStranu(int index);
+    void sortiraj();
+
+
 private:
     int nkbrojmeceva;
     QList<NkLink> mlinkovi;
