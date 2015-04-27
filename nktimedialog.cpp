@@ -90,9 +90,9 @@ void NkTimeDialog::makeList()
     for(NkLink s : ll){
         Item = new QStandardItem();
         if(s.beli)
-            Item->setText(s.link+"  "+s.ime + " beli");
+            Item->setText(s.vreme+" "+s.ime + " beli "+s.link);
         else
-            Item->setText(s.link+"  "+s.ime +" crni");
+            Item->setText(s.vreme+" "+s.ime +" crni "+s.link);
         model->setItem( i++,0, Item );
     }
 }

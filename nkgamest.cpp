@@ -101,5 +101,5 @@ QList<NkLink> NkGamesT::getLinks(){
 
 void NkGamesT::setTime(int index, QString t)
 {
-    mlinkovi.at(index)= mlinkovi.at(index) +t;
+    mlinkovi[index].vreme=t;
 }
