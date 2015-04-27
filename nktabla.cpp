@@ -39,11 +39,12 @@ bool NkTabla::parsPage(QString html, QString Tim,int igrac){
 
     QString tabela=parse.toPlainText();
 
-    rez = tabela;
+
     //qDebug() << tabela;
         ///////////////////////////////
-        //QStringList partija= el.toPlainText().split(QRegExp("\\s+"));
-
+    QStringList partija= tabela.split(QRegExp("\\s+"));
+    if(partija.size()>0)
+        rez = partija[0];
 
     return true;
 }

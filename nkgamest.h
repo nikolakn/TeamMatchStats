@@ -29,6 +29,7 @@ public:
     void clear();
     QList<NkLink> getLinks();
     void setTime(int index,QString t);
+    bool getStranu(int index);
 private:
     int nkbrojmeceva;
     QList<NkLink> mlinkovi;

@@ -43,6 +43,7 @@ private:
     int vratio;
     NkTabla tab;
     int vratiotable;
+    bool cekaj;
 };
 
 #endif // NKTIMEDIALOG_H

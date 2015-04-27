@@ -31,7 +31,11 @@ void NkWeb::getPage(QString adresa, int i, int ind)
     mi = i;
     index = ind;
     strana="";
-    manager->get(QNetworkRequest(QUrl(adresa)));
+    QNetworkRequest nr;
+    QVariant v(ind);
+    nr.setAttribute(QNetworkRequest::CustomVerbAttribute,v);
+    nr.setUrl(QUrl(adresa));
+    manager->get(nr);
 }
 
 
@@ -40,6 +44,8 @@ void NkWeb::replyFinished(QNetworkReply* pReply)
     QByteArray data=pReply->readAll();
     QString str(data);
     strana=str;
-    //qDebug() << strana;
+    QVariant v=pReply->request().attribute(QNetworkRequest::CustomVerbAttribute);
+    //qDebug() << v.toInt();
+    index = v.toInt();
     emit gotovo();
 }

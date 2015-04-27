@@ -101,5 +101,9 @@ QList<NkLink> NkGamesT::getLinks(){
 
 void NkGamesT::setTime(int index, QString t)
 {
+    //qDebug() << index;
     mlinkovi[index].vreme=t;
+}
+bool NkGamesT::getStranu(int index){
+    return mlinkovi[index].beli;
 }
