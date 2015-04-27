@@ -15,7 +15,7 @@ bool NkTabla::parsPage(QString html, QString Tim,int igrac){
     if (rx.indexIn(html) != -1)
         html = rx.cap(1);
 
-    html="<div><div><div>"+html;
+    html="<div>"+html+"<div><div>";
     } else {
         QRegExp rx("<div class=\"plyrb\" id=\"topplayerdiv\">(.+)<div class=\"brd\">");
         if (rx.indexIn(html) != -1)
@@ -35,16 +35,17 @@ bool NkTabla::parsPage(QString html, QString Tim,int igrac){
     QWebFrame * frame = page.mainFrame();
     frame->setHtml(html);
     QWebElement parse = frame->documentElement();
-    //QWebElement str = parse.findFirst("div.topplayerdiv");
+    QWebElementCollection str = parse.findAll("div");
 
-    QString tabela=parse.toPlainText();
+    QString tabela=str[1].toPlainText();
 
 
     //qDebug() << tabela;
         ///////////////////////////////
-    QStringList partija= tabela.split(QRegExp("\\s+"));
-    if(partija.size()>0)
-        rez = partija[0];
+    //QStringList partija= tabela.split(QRegExp("\\s+"));
+    //if(partija.size()>0)
+    //    rez = partija[0];
+    rez = tabela;
 
     return true;
 }
