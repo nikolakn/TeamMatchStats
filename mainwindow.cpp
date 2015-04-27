@@ -19,6 +19,7 @@
 #include <QFileDialog>
 #include "dialog2.h"
 #include "unosmecadialog.h"
+#include "nktimedialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -129,6 +130,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(tim,SIGNAL(currentIndexChanged(const QString&)),
             this,SLOT(timPromenjen(const QString&)));
 
+    actiontimedialog = new QAction(tr("&Pracenje isteka vremena..."), this);
+    connect(actiontimedialog, SIGNAL(triggered()), this, SLOT(onvremedijalog()));
+
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu->addAction(newAct);
     fileMenu->addAction(openAct);
@@ -139,6 +143,7 @@ MainWindow::MainWindow(QWidget *parent) :
     toolMenu = menuBar()->addMenu(tr("&Tools"));
     toolMenu->addAction(tablestat);
     toolMenu->addAction(copytablestat);
+    toolMenu->addAction(actiontimedialog);
 
     about = new QAction(tr("&O Programu"), this);
     connect(about, SIGNAL(triggered()), this, SLOT(onAbout()));
@@ -544,6 +549,18 @@ void MainWindow::copynktableStat()
     p_Clipboard->setText(games.toolbar());
 }
 
+void MainWindow::onvremedijalog()
+{
+    if(adresa->currentText().left(36)=="http://www.chess.com/groups/matches/"){
+        NkTimeDialog td(0,tim->currentText(), adresa->currentText());
+        td.exec();
+    } else {
+        QMessageBox::about(this,"greska",QString::fromUtf8("Adresa nije dobra, uneti ime tima i adresu." ));
+
+    }
+
+}
+
 void MainWindow::onAbout()
 {
     QMessageBox::about(this,"O programu",QString::fromUtf8(" (C) Copyright 2015 \n Nikola Knežević <nkcodeplus@gmail.com> \n Goran Lapčević <gorlap@gmail.com> \n\nThis program is free software; you can redistribute it and/or\n modify it under the terms of the GNU General Public License\nas published by the Free Software Foundation; version 2\nof the License." ));
@@ -566,7 +583,7 @@ void MainWindow::ReceiveChange(QStandardItem *i)
 
 void MainWindow::timPromenjen(const QString &)
 {
-
+    newFile();
     QString ss=tim->currentText();
     if(ss == "Srbija Tim"){
         adresa->clear();

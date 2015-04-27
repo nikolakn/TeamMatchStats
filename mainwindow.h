@@ -29,7 +29,7 @@
 #include <QClipboard>
 #include <QMenuBar>
 #include <QComboBox>
-
+#include <vector>
 namespace Ui {
 class MainWindow;
 }
@@ -62,6 +62,7 @@ public slots:
     void klik();
     void nktableStat();
     void copynktableStat();
+    void onvremedijalog();
     void onAbout();
     void onSettingsDialog();
     void ReceiveChange(QStandardItem* i);
@@ -79,6 +80,7 @@ private:
     QAction *about;
     QAction *tablestat;
     QAction *copytablestat;
+    QAction *actiontimedialog;
     //addres bar
     QLabel *adresaLabel;
     QComboBox *adresa;
