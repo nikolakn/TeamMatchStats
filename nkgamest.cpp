@@ -51,9 +51,15 @@ bool NkGamesT::parsPage(QString html, QString Tim, int vrsta){
         //qDebug() << el.toPlainText();
         ///////////////////////////////
         QStringList partija= el.toPlainText().split(QRegExp("\\s+"));
+        bool ok;
+        partija.at(0).toInt(&ok);
+        if(ok==0){
+            continue;
+        }
         QString ime="";
         int bodovi = partija.at(3).toDouble();
         int bodoviProt = partija.at(7).toDouble();
+        bool preskoci=false;
         if((bodovi+bodoviProt)==2)
             continue;
         if(strana)
