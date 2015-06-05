@@ -37,9 +37,9 @@ signals:
 
     void gotovo();
 private:
-    QUrl url;
+    QUrl url; //url stranice
     QNetworkAccessManager *manager;
-    QString strana;
+    QString strana; //html code stranice
 
 };
 

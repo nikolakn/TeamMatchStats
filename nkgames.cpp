@@ -403,6 +403,9 @@ petlja:
 
 void NkGames::print(QTableWidget *resultView)
 {
+
+
+
     resultView->clear();
     resultView->setSortingEnabled(false);
     resultView->setColumnCount(18);
